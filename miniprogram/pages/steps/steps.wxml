@@ -1,0 +1,77 @@
+<view class="page-steps">
+  <!-- 进度条 -->
+  <view class="progress-bar">
+    <view class="progress-info">
+      <text class="progress-text">步骤 {{currentStep + 1}}/{{totalSteps}}</text>
+      <text class="progress-percent">{{progressPercent}}%</text>
+    </view>
+    <view class="progress-track">
+      <view class="progress-fill" style="width: {{progressPercent}}%"></view>
+    </view>
+  </view>
+
+  <!-- 食材清单 -->
+  <view class="card ingredients-card">
+    <view class="card-header">
+      <text class="card-title">准备食材</text>
+      <text class="check-count">{{checkedCount}}/{{dish.ingredients.length}}</text>
+    </view>
+    <view class="ingredient-checklist">
+      <view 
+        wx:for="{{ingredients}}" 
+        wx:key="name"
+        class="check-item {{item.checked ? 'checked' : ''}}"
+        bindtap="toggleIngredient"
+        data-index="{{index}}"
+      >
+        <view class="checkbox {{item.checked ? 'checked' : ''}}">
+          <text wx:if="{{item.checked}}">✓</text>
+        </view>
+        <image class="check-icon" src="{{item.icon}}" mode="aspectFit" />
+        <text class="check-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 步骤时间线 -->
+  <view class="steps-timeline">
+    <step-item
+      wx:for="{{steps}}"
+      wx:key="title"
+      step="{{item}}"
+      index="{{index}}"
+      status="{{index < currentStep ? 'completed' : (index === currentStep ? 'current' : 'upcoming')}}"
+      isLast="{{index === steps.length - 1}}"
+    />
+  </view>
+
+  <!-- 步骤间配图 -->
+  <view wx:if="{{currentStep >= 1}}" class="step-image">
+    <image class="step-img" src="/images/cooking-step.svg" mode="aspectFill" />
+    <text class="step-img-caption">跟着步骤来，你也可以做出美味佳肴</text>
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="bottom-actions">
+    <view class="action-row">
+      <button 
+        class="btn-prev {{currentStep === 0 ? 'disabled' : ''}}" 
+        bindtap="onPrevStep"
+        disabled="{{currentStep === 0}}"
+      >
+        上一步
+      </button>
+      <button 
+        class="btn-next" 
+        bindtap="onNextStep"
+      >
+        {{currentStep === totalSteps - 1 ? '完成！' : '下一步'}}
+      </button>
+    </view>
+    <view class="link-row">
+      <text class="link-text" bindtap="onWatchVideo">看教学视频</text>
+      <text class="link-divider">|</text>
+      <text class="link-text" bindtap="onAskAssistant">不懂？问问数字人</text>
+    </view>
+  </view>
+</view>

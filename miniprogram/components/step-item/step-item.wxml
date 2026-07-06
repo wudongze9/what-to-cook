@@ -1,0 +1,23 @@
+<view class="step-item step-{{status}}">
+  <!-- 左侧时间线 -->
+  <view class="timeline">
+    <view class="step-number {{status === 'current' ? 'pulse' : ''}}">
+      <text wx:if="{{status === 'completed'}}" class="check-icon">✓</text>
+      <text wx:else>{{index + 1}}</text>
+    </view>
+    <view class="timeline-line" wx:if="{{!isLast}}"></view>
+  </view>
+
+  <!-- 右侧内容 -->
+  <view class="step-content">
+    <view class="step-header">
+      <text class="step-title">{{step.title}}</text>
+      <view class="step-meta">
+        <text class="time-badge">{{step.time}}分钟</text>
+        <text wx:if="{{status === 'completed'}}" class="status-badge completed">已完成</text>
+        <text wx:if="{{status === 'current'}}" class="status-badge current">进行中</text>
+      </view>
+    </view>
+    <text class="step-desc">{{step.desc}}</text>
+  </view>
+</view>

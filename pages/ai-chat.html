@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字人问答</title>
+    <style id="theme-vars">
+/* ============================================
+   What to Cook — Brand Design System
+   Warm, homey, food-centric mobile-first design
+   ============================================ */
+
+/* --- Brand Prefix --- */
+:root {
+  /* Primary Color — Warm Orange */
+  --color-primary: #F28C38;
+  --color-primary-light: #F9B77A;
+  --color-primary-lighter: #FDDFAD;
+  --color-primary-lightest: #FFF3E4;
+  --color-primary-dark: #D96A14;
+  --color-primary-darker: #B8550E;
+
+  /* Backgrounds */
+  --color-bg: #FFF9F3;
+  --color-bg-secondary: #FFF1E4;
+  --color-bg-tertiary: #FFEAD1;
+
+  /* Surface / Card */
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #FFF5EA;
+
+  /* Text */
+  --color-text: #3D2B1F;
+  --color-text-secondary: #7A6258;
+  --color-text-tertiary: #A89288;
+  --color-text-on-primary: #FFFFFF;
+  --color-text-on-dark: #FFF9F3;
+
+  /* Borders */
+  --color-border: #F0DCC8;
+  --color-border-light: #F7EDE0;
+
+  /* State Colors */
+  --state-success: #4CAF50;
+  --state-success-bg: #E8F5E9;
+  --state-warning: #FF9800;
+  --state-warning-bg: #FFF3E0;
+  --state-error: #E74C3C;
+  --state-error-bg: #FFEBEE;
+  --state-info: #2196F3;
+  --state-info-bg: #E3F2FD;
+
+  /* Radius Scale */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-display: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Type Scale */
+  --text-xs: 11px;
+  --text-sm: 13px;
+  --text-base: 15px;
+  --text-lg: 17px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 30px;
+  --text-4xl: 36px;
+
+  /* Line Height */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(61, 43, 31, 0.04);
+  --shadow-md: 0 4px 12px rgba(61, 43, 31, 0.06);
+  --shadow-lg: 0 8px 24px rgba(61, 43, 31, 0.08);
+  --shadow-float: 0 12px 32px rgba(61, 43, 31, 0.12);
+
+  /* CTA */
+  --cta-bg: var(--color-primary);
+  --cta-text: var(--color-text-on-primary);
+  --cta-hover-bg: var(--color-primary-dark);
+  --cta-radius: var(--radius-full);
+  --cta-padding-x: 24px;
+  --cta-padding-y: 12px;
+
+  /* Navigation */
+  --nav-height: 56px;
+  --tab-bar-height: 64px;
+}
+
+/* --- Dark Mode (App switch) --- */
+html.dark {
+  --color-primary: #F28C38;
+  --color-primary-light: #D96A14;
+  --color-primary-lighter: #B8550E;
+  --color-primary-lightest: #3D2B1F;
+  --color-primary-dark: #F9B77A;
+  --color-primary-darker: #FDDFAD;
+
+  --color-bg: #1A1210;
+  --color-bg-secondary: #241C16;
+  --color-bg-tertiary: #2E241C;
+
+  --color-surface: #241C16;
+  --color-surface-secondary: #2E241C;
+
+  --color-text: #FFF5EA;
+  --color-text-secondary: #C4A898;
+  --color-text-tertiary: #8A7468;
+  --color-text-on-primary: #FFFFFF;
+  --color-text-on-dark: #FFF5EA;
+
+  --color-border: #3D2B1F;
+  --color-border-light: #2E241C;
+
+  --state-success: #66BB6A;
+  --state-success-bg: #1A1210;
+  --state-warning: #FFA726;
+  --state-warning-bg: #1A1210;
+  --state-error: #EF5350;
+  --state-error-bg: #1A1210;
+  --state-info: #42A5F5;
+  --state-info-bg: #1A1210;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-float: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Typography Classes --- */
+.text-xs { font-size: var(--text-xs); line-height: var(--leading-normal); }
+.text-sm { font-size: var(--text-sm); line-height: var(--leading-normal); }
+.text-base { font-size: var(--text-base); line-height: var(--leading-normal); }
+.text-lg { font-size: var(--text-lg); line-height: var(--leading-tight); }
+.text-xl { font-size: var(--text-xl); line-height: var(--leading-tight); }
+.text-2xl { font-size: var(--text-2xl); line-height: var(--leading-tight); }
+.text-3xl { font-size: var(--text-3xl); line-height: var(--leading-tight); }
+.text-4xl { font-size: var(--text-4xl); line-height: var(--leading-tight); }
+
+.font-display { font-family: var(--font-display); }
+.font-body { font-family: var(--font-body); }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-primary: var(--color-primary);
+    --color-border: var(--color-border);
+  }
+  @layer base {
+    body { background: var(--color-surface); color: var(--color-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+<!-- Mini Program System Capsule -->
+<div class="w-[87px] h-8 rounded-full border border-white/30 bg-black/10 backdrop-blur-md flex items-center justify-center gap-0 fixed top-2 right-3 z-50">
+  <button class="flex items-center justify-center w-8 h-8" aria-label="更多">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="19" cy="12" r="1.5" fill="currentColor"/></svg>
+  </button>
+  <span class="w-px h-4 bg-white/40 inline-block"></span>
+  <button class="flex items-center justify-center w-8 h-8" aria-label="关闭">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+  </button>
+</div>
+
+<!-- ========== App Shell ========== -->
+<div id="app" class="chat-page relative mx-auto min-h-screen flex flex-col" style="max-width: 375px; background: var(--color-bg); font-family: var(--font-body);">
+
+  <!-- ========== Chat Header ========== -->
+  <header class="chat-header sticky top-0 z-50 flex items-center gap-3 px-4" style="height: var(--nav-height);">
+    <!-- Back button -->
+    <a href="#" class="flex items-center justify-center" style="color: var(--color-text-secondary); width: 32px; height: 32px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5"/>
+        <path d="M12 19l-7-7 7-7"/>
+      </svg>
+    </a>
+
+    <!-- Avatar with online indicator -->
+    <div class="relative">
+      <div class="avatar-ring">
+        <img src="../assets/ai-avatar.jpg" alt="小厨娘头像">
+      </div>
+      <span class="online-dot"></span>
+    </div>
+
+    <!-- Name and subtitle -->
+    <div class="flex flex-col">
+      <span style="font-size: var(--text-lg); font-weight: 600; color: var(--color-text); line-height: var(--leading-tight);">小厨娘</span>
+      <span style="font-size: var(--text-xs); color: var(--color-text-tertiary); line-height: var(--leading-normal);">你的智能烹饪助手</span>
+    </div>
+  </header>
+
+  <!-- ========== Chat Messages ========== -->
+  <main class="chat-messages no-scrollbar" style="padding-bottom: calc(var(--tab-bar-height) + 72px);">
+
+    <!-- AI Welcome Message -->
+    <div class="msg-row ai">
+      <img src="../assets/ai-avatar.jpg" alt="小厨娘" class="msg-avatar">
+      <div class="bubble-ai">
+        你好呀！我是小厨娘，你的专属烹饪助手。有什么做菜方面的问题都可以问我哦~ 😊
+      </div>
+    </div>
+
+    <!-- User Message 1 -->
+    <div class="msg-row user">
+      <div class="msg-avatar-placeholder"></div>
+      <div class="bubble-user">
+        番茄炒蛋怎么做才能不粘锅？
+      </div>
+    </div>
+
+    <!-- AI Response 1 -->
+    <div class="msg-row ai">
+      <img src="../assets/ai-avatar.jpg" alt="小厨娘" class="msg-avatar">
+      <div class="bubble-ai">
+        不粘锅的秘诀来啦！主要有3点：<br>
+        1️⃣ 锅要烧热再倒油，油温七成热<br>
+        2️⃣ 鸡蛋加一点点水打散，会更嫩滑<br>
+        3️⃣ 翻炒时用锅铲推而不是用力搅<br><br>
+        试试看，一定不会粘！
+      </div>
+    </div>
+
+    <!-- User Message 2 -->
+    <div class="msg-row user">
+      <div class="msg-avatar-placeholder"></div>
+      <div class="bubble-user">
+        那番茄要怎么炒出汁？
+      </div>
+    </div>
+
+    <!-- AI Response 2 -->
+    <div class="msg-row ai">
+      <img src="../assets/ai-avatar.jpg" alt="小厨娘" class="msg-avatar">
+      <div class="bubble-ai">
+        教你一个小技巧：<br>
+        🍅 番茄先在顶部划十字，用开水烫30秒后去皮<br>
+        🍳 切小块，更容易出汁<br>
+        🔥 中火慢炒，用锅铲按压帮助出汁<br>
+        ✨ 加一点点糖可以提鲜哦！
+      </div>
+    </div>
+
+    <!-- AI Suggestion Card -->
+    <div class="msg-row ai">
+      <img src="../assets/ai-avatar.jpg" alt="小厨娘" class="msg-avatar">
+      <a href="#" class="suggestion-card" data-dom-id="shortcut-shuffle">
+        <span class="shuffle-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 3h5v5"/>
+            <path d="M4 20L21 3"/>
+            <path d="M21 16v5h-5"/>
+            <path d="M15 15l6 6"/>
+            <path d="M4 4l5 5"/>
+          </svg>
+        </span>
+        <span>还想换一道菜？试试摇一摇吧！</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- ========== Bottom Input Area ========== -->
+  <div class="input-area fixed bottom-0 left-1/2 flex items-center gap-2" style="transform: translateX(-50%); max-width: 375px; width: 100%; z-index: 99; border-top: 1px solid var(--color-border-light); background: var(--color-surface); padding-bottom: calc(var(--tab-bar-height) + env(safe-area-inset-bottom, 0px)); padding-top: var(--space-sm);">
+    <input
+      type="text"
+      class="input-field"
+      placeholder="输入你的烹饪问题..."
+    >
+    <!-- Voice input button -->
+    <button class="btn-voice" aria-label="语音输入">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+        <line x1="12" y1="19" x2="12" y2="23"/>
+        <line x1="8" y1="23" x2="16" y2="23"/>
+      </svg>
+    </button>
+    <!-- Send button -->
+    <button class="btn-send" aria-label="发送">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"/>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ========== Bottom Tab Bar ========== -->
+  <nav
+    class="fixed bottom-0 left-1/2 flex items-center justify-around"
+    style="
+      transform: translateX(-50%);
+      max-width: 375px;
+      width: 100%;
+      height: var(--tab-bar-height);
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      z-index: 100;
+    "
+    data-dom-id="bottom-tab-bar"
+  >
+    <!-- Tab: 首页 (Home / Shuffle) -->
+    <a
+      href="#"
+      class="tab-item flex flex-col items-center justify-center gap-1 flex-1 h-full transition-colors duration-200"
+      data-nav-key="home"
+      data-dom-id="nav-home"
+      data-active="false"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+        <path d="M16 3h5v5"/>
+        <path d="M4 20L21 3"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M15 15l6 6"/>
+        <path d="M4 4l5 5"/>
+      </svg>
+      <span class="tab-label" style="font-size: var(--text-xs);">首页</span>
+    </a>
+
+    <!-- Tab: 视频 (Video) -->
+    <a
+      href="#"
+      class="tab-item flex flex-col items-center justify-center gap-1 flex-1 h-full transition-colors duration-200"
+      data-nav-key="videos"
+      data-dom-id="nav-videos"
+      data-active="false"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+        <rect x="2" y="4" width="20" height="16" rx="3"/>
+        <polygon points="10,8.5 16,12 10,15.5"/>
+      </svg>
+      <span class="tab-label" style="font-size: var(--text-xs);">视频</span>
+    </a>
+
+    <!-- Tab: 问答 (AI Chat) — ACTIVE -->
+    <a
+      href="#"
+      class="tab-item flex flex-col items-center justify-center gap-1 flex-1 h-full transition-colors duration-200"
+      data-nav-key="chat"
+      data-dom-id="nav-chat"
+      data-active="true"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      <span class="tab-label" style="font-size: var(--text-xs);">问答</span>
+    </a>
+
+    <!-- Tab: 我的 (Profile) -->
+    <a
+      href="#"
+      class="tab-item flex flex-col items-center justify-center gap-1 flex-1 h-full transition-colors duration-200"
+      data-nav-key="profile"
+      data-active="false"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M20 21a8 8 0 1 0-16 0"/>
+      </svg>
+      <span class="tab-label" style="font-size: var(--text-xs);">我的</span>
+    </a>
+  </nav>
+
+</div><!-- /#app -->
+
+<script>lucide.createIcons();</script>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+
+    <!-- ========== Chat Page Custom Styles ========== -->
+    <style>
+      /* Chat page layout */
+      .chat-page {
+        background: var(--color-bg);
+        font-family: var(--font-body);
+      }
+
+      /* Chat header */
+      .chat-header {
+        background: var(--color-surface);
+        border-bottom: 1px solid var(--color-border-light);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .chat-header .avatar-ring {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        padding: 2px;
+        background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+        flex-shrink: 0;
+      }
+
+      .chat-header .avatar-ring img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--color-surface);
+      }
+
+      .online-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--state-success);
+        border: 2px solid var(--color-surface);
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+
+      /* Chat messages area */
+      .chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: var(--space-md) var(--space-md) var(--space-sm);
+        scroll-behavior: smooth;
+      }
+
+      .chat-messages::-webkit-scrollbar {
+        display: none;
+      }
+      .chat-messages {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* Message row */
+      .msg-row {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-sm);
+        margin-bottom: var(--space-md);
+      }
+
+      .msg-row.user {
+        flex-direction: row-reverse;
+      }
+
+      /* Avatar in chat */
+      .msg-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+
+      .msg-avatar-placeholder {
+        width: 32px;
+        flex-shrink: 0;
+      }
+
+      /* AI bubble — left aligned, white bg, warm float shadow */
+      .bubble-ai {
+        background: var(--color-surface);
+        color: var(--color-text);
+        font-size: var(--text-base);
+        line-height: var(--leading-relaxed);
+        padding: var(--space-sm) var(--space-md);
+        border-radius: var(--radius-md) var(--radius-md) var(--radius-md) 4px;
+        max-width: 260px;
+        box-shadow: 0 2px 8px rgba(242, 140, 56, 0.06), 0 1px 3px rgba(61, 43, 31, 0.04);
+        word-break: break-word;
+      }
+
+      /* User bubble — right aligned, primary bg */
+      .bubble-user {
+        background: var(--color-primary);
+        color: var(--color-text-on-primary);
+        font-size: var(--text-base);
+        line-height: var(--leading-relaxed);
+        padding: var(--space-sm) var(--space-md);
+        border-radius: var(--radius-md) var(--radius-md) 4px var(--radius-md);
+        max-width: 260px;
+        word-break: break-word;
+      }
+
+      /* AI suggestion card — playful dashed border */
+      .suggestion-card {
+        border: 1.5px dashed var(--color-primary-light);
+        background: var(--color-primary-lightest);
+        border-radius: var(--radius-md);
+        padding: var(--space-sm) var(--space-md);
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-sm);
+        text-decoration: none;
+        color: var(--color-primary-dark);
+        font-size: var(--text-sm);
+        cursor: pointer;
+        transition: background 0.2s ease, border-color 0.2s ease;
+      }
+
+      .suggestion-card:hover {
+        background: var(--color-bg-secondary);
+        border-color: var(--color-primary);
+      }
+
+      .suggestion-card .shuffle-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-primary);
+        flex-shrink: 0;
+      }
+
+      /* Input area */
+      .input-area {
+        background: var(--color-surface);
+        border-top: 1px solid var(--color-border-light);
+        padding: var(--space-sm) var(--space-md);
+      }
+
+      .input-field {
+        flex: 1;
+        background: var(--color-bg);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-full);
+        padding: 10px var(--space-md);
+        font-size: var(--text-base);
+        color: var(--color-text);
+        outline: none;
+        font-family: var(--font-body);
+        transition: border-color 0.2s ease;
+      }
+
+      .input-field::placeholder {
+        color: var(--color-text-tertiary);
+      }
+
+      .input-field:focus {
+        border-color: var(--color-primary-light);
+      }
+
+      .btn-send {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--color-primary);
+        color: var(--color-text-on-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        cursor: pointer;
+        border: none;
+        transition: background 0.2s ease;
+        box-shadow: 0 2px 6px rgba(242, 140, 56, 0.25);
+      }
+
+      .btn-send:hover {
+        background: var(--color-primary-dark);
+      }
+
+      .btn-voice {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: transparent;
+        color: var(--color-text-tertiary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        cursor: pointer;
+        border: none;
+        transition: color 0.2s ease;
+      }
+
+      .btn-voice:hover {
+        color: var(--color-primary);
+      }
+
+      /* Tab bar active overrides */
+      .tab-item {
+        color: var(--color-text-tertiary);
+        text-decoration: none;
+        outline: none;
+      }
+
+      .tab-item:hover {
+        color: var(--color-primary-light);
+      }
+
+      .tab-item[data-active="true"] {
+        color: var(--color-primary);
+      }
+
+      .tab-item[data-active="true"] .tab-icon {
+        stroke: var(--color-primary);
+      }
+
+      .tab-item[data-active="true"] .tab-label {
+        font-weight: 600;
+        color: var(--color-primary);
+      }
+
+      .tab-icon {
+        width: 24px;
+        height: 24px;
+        transition: stroke-color 0.2s ease;
+      }
+    </style>
+</body>
+</html>

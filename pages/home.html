@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今天吃什么 - 摇一摇</title>
+    <style id="theme-vars">
+/* ============================================
+   What to Cook — Brand Design System
+   Warm, homey, food-centric mobile-first design
+   ============================================ */
+
+/* --- Brand Prefix --- */
+:root {
+  /* Primary Color — Warm Orange */
+  --color-primary: #F28C38;
+  --color-primary-light: #F9B77A;
+  --color-primary-lighter: #FDDFAD;
+  --color-primary-lightest: #FFF3E4;
+  --color-primary-dark: #D96A14;
+  --color-primary-darker: #B8550E;
+
+  /* Backgrounds */
+  --color-bg: #FFF9F3;
+  --color-bg-secondary: #FFF1E4;
+  --color-bg-tertiary: #FFEAD1;
+
+  /* Surface / Card */
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #FFF5EA;
+
+  /* Text */
+  --color-text: #3D2B1F;
+  --color-text-secondary: #7A6258;
+  --color-text-tertiary: #A89288;
+  --color-text-on-primary: #FFFFFF;
+  --color-text-on-dark: #FFF9F3;
+
+  /* Borders */
+  --color-border: #F0DCC8;
+  --color-border-light: #F7EDE0;
+
+  /* State Colors */
+  --state-success: #4CAF50;
+  --state-success-bg: #E8F5E9;
+  --state-warning: #FF9800;
+  --state-warning-bg: #FFF3E0;
+  --state-error: #E74C3C;
+  --state-error-bg: #FFEBEE;
+  --state-info: #2196F3;
+  --state-info-bg: #E3F2FD;
+
+  /* Radius Scale */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-display: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Type Scale */
+  --text-xs: 11px;
+  --text-sm: 13px;
+  --text-base: 15px;
+  --text-lg: 17px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 30px;
+  --text-4xl: 36px;
+
+  /* Line Height */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(61, 43, 31, 0.04);
+  --shadow-md: 0 4px 12px rgba(61, 43, 31, 0.06);
+  --shadow-lg: 0 8px 24px rgba(61, 43, 31, 0.08);
+  --shadow-float: 0 12px 32px rgba(61, 43, 31, 0.12);
+
+  /* CTA */
+  --cta-bg: var(--color-primary);
+  --cta-text: var(--color-text-on-primary);
+  --cta-hover-bg: var(--color-primary-dark);
+  --cta-radius: var(--radius-full);
+  --cta-padding-x: 24px;
+  --cta-padding-y: 12px;
+
+  /* Navigation */
+  --nav-height: 56px;
+  --tab-bar-height: 64px;
+}
+
+/* --- Dark Mode (App switch) --- */
+html.dark {
+  --color-primary: #F28C38;
+  --color-primary-light: #D96A14;
+  --color-primary-lighter: #B8550E;
+  --color-primary-lightest: #3D2B1F;
+  --color-primary-dark: #F9B77A;
+  --color-primary-darker: #FDDFAD;
+
+  --color-bg: #1A1210;
+  --color-bg-secondary: #241C16;
+  --color-bg-tertiary: #2E241C;
+
+  --color-surface: #241C16;
+  --color-surface-secondary: #2E241C;
+
+  --color-text: #FFF5EA;
+  --color-text-secondary: #C4A898;
+  --color-text-tertiary: #8A7468;
+  --color-text-on-primary: #FFFFFF;
+  --color-text-on-dark: #FFF5EA;
+
+  --color-border: #3D2B1F;
+  --color-border-light: #2E241C;
+
+  --state-success: #66BB6A;
+  --state-success-bg: #1A1210;
+  --state-warning: #FFA726;
+  --state-warning-bg: #1A1210;
+  --state-error: #EF5350;
+  --state-error-bg: #1A1210;
+  --state-info: #42A5F5;
+  --state-info-bg: #1A1210;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-float: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Typography Classes --- */
+.text-xs { font-size: var(--text-xs); line-height: var(--leading-normal); }
+.text-sm { font-size: var(--text-sm); line-height: var(--leading-normal); }
+.text-base { font-size: var(--text-base); line-height: var(--leading-normal); }
+.text-lg { font-size: var(--text-lg); line-height: var(--leading-tight); }
+.text-xl { font-size: var(--text-xl); line-height: var(--leading-tight); }
+.text-2xl { font-size: var(--text-2xl); line-height: var(--leading-tight); }
+.text-3xl { font-size: var(--text-3xl); line-height: var(--leading-tight); }
+.text-4xl { font-size: var(--text-4xl); line-height: var(--leading-tight); }
+
+.font-display { font-family: var(--font-display); }
+.font-body { font-family: var(--font-body); }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-primary: var(--color-primary);
+    --color-border: var(--color-border);
+  }
+  @layer base {
+    body { background: var(--color-surface); color: var(--color-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased" style="background: var(--color-bg); color: var(--color-text); font-family: var(--font-body);">
+<!-- Mini Program System Capsule -->
+<div class="w-[87px] h-8 rounded-full border border-white/30 bg-black/10 backdrop-blur-md flex items-center justify-center gap-0 fixed top-2 right-3 z-50">
+  <button class="flex items-center justify-center w-8 h-8" aria-label="更多">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="19" cy="12" r="1.5" fill="currentColor"/></svg>
+  </button>
+  <span class="w-px h-4 bg-white/40 inline-block"></span>
+  <button class="flex items-center justify-center w-8 h-8" aria-label="关闭">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+  </button>
+</div>
+
+  <!-- Outer app wrapper — mobile-first, max 375px simulation -->
+  <div id="app" class="relative mx-auto min-h-screen flex flex-col" style="max-width: 375px; background: var(--color-bg); font-family: var(--font-body);">
+
+    <!-- ========== Page Content ========== -->
+    <main class="flex-1 overflow-y-auto pb-[var(--tab-bar-height)] px-6 flex flex-col items-center">
+
+      <!-- Header Area -->
+      <header class="w-full text-center pt-10 pb-6">
+        <h1 class="font-display" style="font-size: var(--text-3xl); font-weight: 800; color: var(--color-text); line-height: var(--leading-tight);">
+          今天吃什么
+        </h1>
+        <p class="mt-2" style="font-size: var(--text-sm); color: var(--color-text-secondary); line-height: var(--leading-relaxed);">
+          不知道吃什么？摇一摇帮你决定！
+        </p>
+      </header>
+
+      <!-- Food Wheel -->
+      <section class="flex flex-col items-center mb-8">
+        <div class="food-wheel"></div>
+      </section>
+
+      <!-- Ingredient Bubbles -->
+      <section class="w-full mb-8">
+        <div class="ingredient-grid">
+          <div class="ingredient-bubble">🍅</div>
+          <div class="ingredient-bubble">🥚</div>
+          <div class="ingredient-bubble">🥦</div>
+          <div class="ingredient-bubble">🍗</div>
+          <div class="ingredient-bubble">🍄</div>
+          <div class="ingredient-bubble">🦐</div>
+          <div class="ingredient-bubble">🧅</div>
+          <div class="ingredient-bubble">🍚</div>
+        </div>
+      </section>
+
+      <!-- CTA Shuffle Button -->
+      <section class="w-full mb-4 px-2">
+        <a
+          href="#"
+          class="cta-shuffle"
+          data-dom-id="cta-shuffle-result"
+        >
+          <span class="shake-icon">🤲</span>
+          摇一摇
+        </a>
+      </section>
+
+      <!-- Tip Text -->
+      <p class="text-center mb-6" style="font-size: var(--text-xs); color: var(--color-text-tertiary); line-height: var(--leading-normal);">
+        点击按钮，随机为你推荐菜品
+      </p>
+
+    </main>
+
+    <!-- ========== Bottom Tab Bar ========== -->
+    <nav
+      class="fixed bottom-0 left-1/2 flex items-center justify-around"
+      style="
+        transform: translateX(-50%);
+        max-width: 375px;
+        width: 100%;
+        height: var(--tab-bar-height);
+        background: var(--color-surface);
+        border-top: 1px solid var(--color-border);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+        z-index: 100;
+      "
+      data-dom-id="bottom-tab-bar"
+    >
+      <!-- Tab: 首页 (Home / Shuffle) — ACTIVE -->
+      <a
+        href="#"
+        class="tab-item flex flex-col items-center justify-center gap-1 flex-1 h-full transition-colors duration-200"
+        data-nav-key="home"
+        data-dom-id="nav-home"
+        data-active="true"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+          <!-- Shuffle / Home icon -->
+          <path d="M16 3h5v5"/>
+          <path d="M4 20L21 3"/>
+          <path d="M21 16v5h-5"/>
+          <path d="M15 15l6 6"/>
+          <path d="M4 4l5 5"/>
+        </svg>
+        <span class="tab-label text-xs" style="font-size: var(--text-xs);">首页</span>
+      </a>
+
+      <!-- Tab: 视频 (Video) -->
+      <a
+        href="#"
+        class="tab-item flex flex-col items-center justify-center gap-1 flex-1 h-full transition-colors duration-200"
+        data-nav-key="videos"
+        data-dom-id="nav-videos"
+        data-active="false"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+          <!-- Video play icon -->
+          <rect x="2" y="4" width="20" height="16" rx="3"/>
+          <polygon points="10,8.5 16,12 10,15.5"/>
+        </svg>
+        <span class="tab-label text-xs" style="font-size: var(--text-xs);">视频</span>
+      </a>
+
+      <!-- Tab: 问答 (AI Chat) -->
+      <a
+        href="#"
+        class="tab-item flex flex-col items-center justify-center gap-1 flex-1 h-full transition-colors duration-200"
+        data-nav-key="chat"
+        data-dom-id="nav-chat"
+        data-active="false"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+          <!-- Chat bubble icon -->
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        <span class="tab-label text-xs" style="font-size: var(--text-xs);">问答</span>
+      </a>
+
+      <!-- Tab: 我的 (Profile) -->
+      <a
+        href="#"
+        class="tab-item flex flex-col items-center justify-center gap-1 flex-1 h-full transition-colors duration-200"
+        data-nav-key="profile"
+        data-dom-id="nav-profile"
+        data-active="false"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+          <!-- User profile icon -->
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M20 21a8 8 0 1 0-16 0"/>
+        </svg>
+        <span class="tab-label text-xs" style="font-size: var(--text-xs);">我的</span>
+      </a>
+    </nav>
+
+  </div><!-- /#app -->
+
+  <script>lucide.createIcons();</script>
+
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+
+    <!-- ========== Page-specific custom styles ========== -->
+    <style>
+      /* Food Wheel */
+      .food-wheel {
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: url('../assets/hero-food-wheel.jpg') center/cover no-repeat;
+        border: 4px solid var(--color-border);
+        box-shadow: var(--shadow-md), 0 0 0 8px var(--color-primary-lightest);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .food-wheel::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15) 0%, transparent 60%);
+      }
+
+      /* Ingredient Bubbles */
+      .ingredient-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--space-md);
+        justify-items: center;
+      }
+
+      .ingredient-bubble {
+        width: 56px;
+        height: 56px;
+        border-radius: var(--radius-lg);
+        background: var(--color-surface);
+        border: 1.5px solid var(--color-border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        box-shadow: var(--shadow-sm);
+        animation: gentle-bob 3s ease-in-out infinite;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .ingredient-bubble:hover {
+        transform: scale(1.08);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* Staggered animation delays for each bubble */
+      .ingredient-bubble:nth-child(1) { animation-delay: 0s; }
+      .ingredient-bubble:nth-child(2) { animation-delay: 0.15s; }
+      .ingredient-bubble:nth-child(3) { animation-delay: 0.3s; }
+      .ingredient-bubble:nth-child(4) { animation-delay: 0.45s; }
+      .ingredient-bubble:nth-child(5) { animation-delay: 0.6s; }
+      .ingredient-bubble:nth-child(6) { animation-delay: 0.75s; }
+      .ingredient-bubble:nth-child(7) { animation-delay: 0.9s; }
+      .ingredient-bubble:nth-child(8) { animation-delay: 1.05s; }
+
+      @keyframes gentle-bob {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        25% { transform: translateY(-3px) rotate(2deg); }
+        75% { transform: translateY(2px) rotate(-1.5deg); }
+      }
+
+      /* CTA Shuffle Button */
+      .cta-shuffle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-sm);
+        width: 100%;
+        padding: var(--cta-padding-y) var(--cta-padding-x);
+        border-radius: var(--cta-radius);
+        background: var(--cta-bg);
+        color: var(--cta-text);
+        font-family: var(--font-body);
+        font-size: var(--text-xl);
+        font-weight: 700;
+        line-height: 1;
+        text-decoration: none;
+        box-shadow: 0 4px 16px rgba(242, 140, 56, 0.35);
+        transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cta-shuffle:hover {
+        background: var(--cta-hover-bg);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(242, 140, 56, 0.45);
+      }
+
+      .cta-shuffle:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 10px rgba(242, 140, 56, 0.3);
+      }
+
+      /* Hand-shake icon in CTA */
+      .cta-shuffle .shake-icon {
+        display: inline-block;
+        animation: shake-hand 1.5s ease-in-out infinite;
+        font-size: 22px;
+      }
+
+      @keyframes shake-hand {
+        0%, 100% { transform: rotate(0deg); }
+        15% { transform: rotate(12deg); }
+        30% { transform: rotate(-10deg); }
+        45% { transform: rotate(8deg); }
+        60% { transform: rotate(-6deg); }
+        75% { transform: rotate(3deg); }
+      }
+
+      /* Tab bar overrides */
+      .tab-item {
+        color: var(--color-text-tertiary);
+        text-decoration: none;
+        outline: none;
+      }
+
+      .tab-item:hover {
+        color: var(--color-primary-light);
+      }
+
+      .tab-item[data-active="true"] {
+        color: var(--color-primary);
+      }
+
+      .tab-item[data-active="true"] .tab-icon {
+        stroke: var(--color-primary);
+      }
+
+      .tab-item[data-active="true"] .tab-label {
+        font-weight: 600;
+        color: var(--color-primary);
+      }
+
+      .tab-icon {
+        width: 24px;
+        height: 24px;
+        transition: stroke-color 0.2s ease;
+      }
+    </style>
+</body>
+</html>

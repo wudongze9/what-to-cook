@@ -1,0 +1,326 @@
+.slot-machine {
+  margin: 26rpx 28rpx 0;
+  padding: 28rpx;
+  border-radius: 36rpx;
+  color: #fff;
+  background:
+    radial-gradient(circle at 16% 10%, rgba(255,255,255,0.28), transparent 160rpx),
+    linear-gradient(135deg, #5b2b6f 0%, #ff3d6e 48%, #ff7a1a 100%);
+  box-shadow: 0 22rpx 54rpx rgba(91,43,111,0.22);
+  overflow: hidden;
+  position: relative;
+}
+
+.slot-machine::after {
+  content: '';
+  position: absolute;
+  inset: 12rpx;
+  border: 2rpx solid rgba(255,255,255,0.22);
+  border-radius: 28rpx;
+  pointer-events: none;
+}
+
+.machine-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+
+.machine-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+}
+
+.machine-icon {
+  width: 54rpx;
+  height: 54rpx;
+  border-radius: 18rpx;
+}
+
+.machine-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 900;
+}
+
+.machine-subtitle {
+  display: block;
+  margin-top: 4rpx;
+  font-size: 21rpx;
+  color: rgba(255,255,255,0.72);
+}
+
+.machine-lights {
+  display: flex;
+  gap: 9rpx;
+  padding-top: 10rpx;
+}
+
+.light {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.light.glow {
+  animation: glow 1.4s ease-in-out infinite alternate;
+}
+
+.light.blink {
+  animation: blink 0.34s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { opacity: 0.45; box-shadow: 0 0 0 rgba(255,255,255,0); }
+  to { opacity: 1; box-shadow: 0 0 18rpx rgba(255,255,255,0.88); }
+}
+
+@keyframes blink {
+  from { background: #fff; transform: scale(0.8); }
+  to { background: #ffeb7a; transform: scale(1.22); box-shadow: 0 0 24rpx #ffeb7a; }
+}
+
+.machine-screen {
+  position: relative;
+  z-index: 1;
+  padding: 20rpx;
+  border-radius: 28rpx;
+  background: #2a1735;
+  box-shadow: inset 0 8rpx 18rpx rgba(0,0,0,0.36);
+}
+
+.screen-inner {
+  display: flex;
+  gap: 12rpx;
+  align-items: stretch;
+}
+
+.screen-inner.slot-count-4 {
+  gap: 8rpx;
+}
+
+.screen-inner.slot-count-2 {
+  gap: 18rpx;
+}
+
+.slot {
+  flex: 1;
+  min-width: 0;
+}
+
+.slot-window {
+  height: 176rpx;
+  overflow: hidden;
+  border-radius: 22rpx;
+  background: linear-gradient(180deg, #fffaf5 0%, #ffffff 100%);
+  border: 4rpx solid rgba(255,176,110,0.95);
+  position: relative;
+  transform: translateZ(0);
+}
+
+.slot-window::before,
+.slot-window::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 38rpx;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.slot-window.settled::before,
+.slot-window.settled::after {
+  display: none;
+}
+
+.slot-window::before {
+  top: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.96), transparent);
+}
+
+.slot-window::after {
+  bottom: 0;
+  background: linear-gradient(0deg, rgba(255,255,255,0.96), transparent);
+}
+
+.reel-item {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 16rpx 8rpx 12rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  will-change: transform, opacity;
+}
+
+.reel-item.is-spinning {
+  animation: reelPulse 0.16s ease-out infinite;
+}
+
+.reel-item.is-settled {
+  animation: reelSettle 0.28s cubic-bezier(.2, .9, .2, 1) both;
+}
+
+.reel-icon {
+  width: 74rpx;
+  height: 74rpx;
+  flex-shrink: 0;
+  filter: drop-shadow(0 8rpx 12rpx rgba(91,43,111,0.12));
+}
+
+.reel-name {
+  max-width: 100%;
+  min-height: 42rpx;
+  padding: 0 4rpx;
+  color: #2a1735;
+  font-size: 23rpx;
+  line-height: 1.15;
+  font-weight: 850;
+  text-align: center;
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: keep-all;
+}
+
+.slot-count-2 .slot-window {
+  height: 188rpx;
+}
+
+.slot-count-2 .reel-icon {
+  width: 90rpx;
+  height: 90rpx;
+}
+
+.slot-count-2 .reel-name {
+  font-size: 25rpx;
+}
+
+.slot-count-4 .slot-window {
+  height: 154rpx;
+  border-width: 3rpx;
+  border-radius: 18rpx;
+}
+
+.slot-count-4 .reel-item {
+  padding: 12rpx 4rpx 10rpx;
+  gap: 6rpx;
+}
+
+.slot-count-4 .reel-icon {
+  width: 52rpx;
+  height: 52rpx;
+}
+
+.slot-count-4 .reel-name {
+  min-height: 36rpx;
+  font-size: 19rpx;
+  line-height: 1.12;
+}
+
+.screen-glass {
+  position: absolute;
+  inset: 0;
+  border-radius: 28rpx;
+  background: linear-gradient(135deg, rgba(255,255,255,0.16), transparent 45%, rgba(255,255,255,0.08));
+  pointer-events: none;
+}
+
+.machine-footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 28rpx;
+}
+
+.lever-area {
+  width: 160rpx;
+  height: 92rpx;
+  position: relative;
+}
+
+.lever-base {
+  position: absolute;
+  bottom: 0;
+  left: 20rpx;
+  width: 112rpx;
+  height: 34rpx;
+  border-radius: 999rpx;
+  background: #2a1735;
+  box-shadow: inset 0 4rpx 8rpx rgba(255,255,255,0.18);
+}
+
+.lever-stick {
+  position: absolute;
+  bottom: 18rpx;
+  left: 48rpx;
+  width: 16rpx;
+  height: 96rpx;
+  border-radius: 999rpx;
+  background: linear-gradient(90deg, #fff, #ffd7c2);
+  transform-origin: bottom center;
+  transition: transform 0.26s ease;
+}
+
+.lever-stick.pulled {
+  transform: rotate(44deg);
+}
+
+.lever-stick.shaking {
+  animation: leverShake 0.46s ease-in-out infinite;
+}
+
+.lever-ball {
+  position: absolute;
+  top: -24rpx;
+  left: 50%;
+  width: 54rpx;
+  height: 54rpx;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle at 30% 30%, #ffb6c7 0%, #ff3d6e 42%, #a11138 100%);
+  box-shadow: 0 10rpx 18rpx rgba(42,23,53,0.25);
+}
+
+.lever-touch {
+  position: absolute;
+  inset: -30rpx -20rpx;
+}
+
+.machine-tip {
+  flex: 1;
+  color: rgba(255,255,255,0.84);
+  font-size: 23rpx;
+  font-weight: 700;
+  text-align: right;
+}
+
+@keyframes leverShake {
+  0%, 100% { transform: rotate(0); }
+  35% { transform: rotate(6deg); }
+  70% { transform: rotate(-4deg); }
+}
+
+@keyframes reelPulse {
+  0% { opacity: 0.76; transform: translateY(-4rpx) scale(0.98); filter: blur(0.6rpx); }
+  100% { opacity: 1; transform: translateY(4rpx) scale(1.02); filter: blur(0); }
+}
+
+@keyframes reelSettle {
+  0% { opacity: 0.35; transform: translateY(-18rpx) scale(0.92); }
+  70% { opacity: 1; transform: translateY(4rpx) scale(1.04); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}

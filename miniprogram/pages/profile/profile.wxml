@@ -1,0 +1,78 @@
+<view class="page-profile">
+  <view class="profile-hero">
+    <image class="avatar" src="/images/icons/chef.svg" mode="aspectFit" />
+    <view class="user-info">
+      <text class="nickname">美食探索者</text>
+      <text class="signature">把不知道吃什么，变成今天的小期待</text>
+    </view>
+  </view>
+
+  <view class="stats-card">
+    <view class="stat-item">
+      <text class="stat-num">{{historyCount}}</text>
+      <text class="stat-label">推荐记录</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num">{{favoritesCount}}</text>
+      <text class="stat-label">我的收藏</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-header">
+      <view class="section-title-wrap">
+        <image class="section-icon" src="/images/icons/spark.svg" mode="aspectFit" />
+        <text class="section-title">我的收藏</text>
+      </view>
+      <text class="section-count">{{favoritesCount}}道</text>
+    </view>
+    <view wx:if="{{favorites.length === 0}}" class="empty-tip">
+      <image class="empty-icon" src="/images/icons/dice.svg" mode="aspectFit" />
+      <text class="empty-title">还没有收藏菜品</text>
+      <text class="empty-text">去摇一摇发现值得再吃一次的美味</text>
+    </view>
+    <view wx:else class="dish-list">
+      <view wx:for="{{favorites}}" wx:key="id" class="dish-item" bindtap="onDishTap" data-dish="{{item}}">
+        <view class="dish-mark">藏</view>
+        <view class="dish-info">
+          <text class="dish-name">{{item.name}}</text>
+          <text class="dish-meta">{{item.difficulty}} · {{item.time}}分钟</text>
+        </view>
+        <text class="remove-btn" catchtap="onRemoveFavorite" data-dish="{{item}}">取消</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-header">
+      <view class="section-title-wrap">
+        <image class="section-icon" src="/images/icons/plate.svg" mode="aspectFit" />
+        <text class="section-title">推荐历史</text>
+      </view>
+      <text wx:if="{{history.length > 0}}" class="clear-btn" bindtap="onClearHistory">清空</text>
+    </view>
+    <view wx:if="{{history.length === 0}}" class="empty-tip compact">
+      <text class="empty-text">暂无推荐记录</text>
+    </view>
+    <view wx:else class="dish-list">
+      <view wx:for="{{history}}" wx:key="id" class="dish-item" bindtap="onDishTap" data-dish="{{item}}">
+        <view class="dish-mark history">吃</view>
+        <view class="dish-info">
+          <text class="dish-name">{{item.name}}</text>
+          <text class="dish-meta">{{item.category}}</text>
+        </view>
+        <text class="arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section settings-section">
+    <view class="setting-item" bindtap="onAbout">
+      <view class="section-title-wrap">
+        <image class="section-icon" src="/images/icons/user.svg" mode="aspectFit" />
+        <text class="setting-text">关于今天吃什么</text>
+      </view>
+      <text class="arrow">›</text>
+    </view>
+  </view>
+</view>

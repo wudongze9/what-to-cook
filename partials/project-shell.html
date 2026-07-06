@@ -1,0 +1,134 @@
+<!-- ============================================
+     今天吃什么 — Project Shell (Partial)
+     Shared bottom tab bar for all pages.
+     Leaf pages include this fragment and fill
+     the <!-- SLOT --> placeholders.
+     ============================================ -->
+
+<!-- Outer app wrapper — mobile-first, max 375px simulation -->
+<div id="app" class="relative mx-auto min-h-screen flex flex-col" style="max-width: 375px; background: var(--color-bg); font-family: var(--font-body);">
+
+  <!-- ========== Page Content Slot ========== -->
+  <!-- Leaf pages inject their main content here -->
+  <main class="flex-1 overflow-y-auto pb-[var(--tab-bar-height)]">
+    <!-- SLOT: pageContent -->
+  </main>
+
+  <!-- ========== Bottom Tab Bar ========== -->
+  <nav
+    class="fixed bottom-0 left-1/2 flex items-center justify-around"
+    style="
+      transform: translateX(-50%);
+      max-width: 375px;
+      width: 100%;
+      height: var(--tab-bar-height);
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      z-index: 100;
+    "
+    data-dom-id="bottom-tab-bar"
+  >
+    <!-- SLOT: activeTabKey -->
+
+    <!-- Tab: 首页 (Home / Shuffle) -->
+    <a
+      href="#"
+      class="tab-item flex flex-col items-center justify-center gap-1 flex-1 h-full transition-colors duration-200"
+      data-nav-key="home"
+      data-active="false"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+        <!-- Shuffle / Home icon -->
+        <path d="M16 3h5v5"/>
+        <path d="M4 20L21 3"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M15 15l6 6"/>
+        <path d="M4 4l5 5"/>
+      </svg>
+      <span class="tab-label text-xs" style="font-size: var(--text-xs);">首页</span>
+    </a>
+
+    <!-- Tab: 视频 (Video) -->
+    <a
+      href="#"
+      class="tab-item flex flex-col items-center justify-center gap-1 flex-1 h-full transition-colors duration-200"
+      data-nav-key="videos"
+      data-dom-id="nav-videos"
+      data-active="false"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+        <!-- Video play icon -->
+        <rect x="2" y="4" width="20" height="16" rx="3"/>
+        <polygon points="10,8.5 16,12 10,15.5"/>
+      </svg>
+      <span class="tab-label text-xs" style="font-size: var(--text-xs);">视频</span>
+    </a>
+
+    <!-- Tab: 问答 (AI Chat) -->
+    <a
+      href="#"
+      class="tab-item flex flex-col items-center justify-center gap-1 flex-1 h-full transition-colors duration-200"
+      data-nav-key="chat"
+      data-dom-id="nav-chat"
+      data-active="false"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+        <!-- Chat bubble icon -->
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      <span class="tab-label text-xs" style="font-size: var(--text-xs);">问答</span>
+    </a>
+
+    <!-- Tab: 我的 (Profile) -->
+    <a
+      href="#"
+      class="tab-item flex flex-col items-center justify-center gap-1 flex-1 h-full transition-colors duration-200"
+      data-nav-key="profile"
+      data-active="false"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+        <!-- User profile icon -->
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M20 21a8 8 0 1 0-16 0"/>
+      </svg>
+      <span class="tab-label text-xs" style="font-size: var(--text-xs);">我的</span>
+    </a>
+  </nav>
+
+</div><!-- /#app -->
+
+<!-- ========== Tab Bar Styles ========== -->
+<style>
+  /* Inactive tab defaults */
+  .tab-item {
+    color: var(--color-text-tertiary);   /* #A89288 */
+    text-decoration: none;
+    outline: none;
+  }
+
+  .tab-item:hover {
+    color: var(--color-primary-light);
+  }
+
+  /* Active tab state — applied via data-active="true" by leaf pages */
+  .tab-item[data-active="true"] {
+    color: var(--color-primary);        /* #F28C38 */
+  }
+
+  .tab-item[data-active="true"] .tab-icon {
+    stroke: var(--color-primary);
+  }
+
+  .tab-item[data-active="true"] .tab-label {
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  /* Icon sizing */
+  .tab-icon {
+    width: 24px;
+    height: 24px;
+    transition: stroke-color 0.2s ease;
+  }
+</style>

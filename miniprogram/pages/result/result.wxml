@@ -1,0 +1,99 @@
+<view class="page-result">
+  <!-- 菜品大图 -->
+  <view class="hero-section">
+    <image class="hero-img" src="/images/dish-default.svg" mode="aspectFill" />
+    <view class="hero-overlay"></view>
+  </view>
+
+  <!-- 菜品信息 -->
+  <view class="dish-info">
+    <view class="info-card">
+      <view class="info-header">
+        <text class="dish-name">{{dish.name}}</text>
+        <view class="category-tag">{{dish.category}}</view>
+      </view>
+      <view class="favorite-btn {{isFavorited ? 'active' : ''}}" bindtap="onToggleFavorite">
+        <text class="fav-icon">{{isFavorited ? '♥' : '♡'}}</text>
+        <text>{{isFavorited ? '已收藏' : '收藏'}}</text>
+      </view>
+      <text class="dish-desc">{{dish.description}}</text>
+    </view>
+  </view>
+
+  <!-- 食材组合 -->
+  <view class="card ingredients-card">
+    <view class="card-label-wrap">
+      <image class="label-img" src="/images/icons/basket.svg" mode="aspectFit" />
+      <text class="card-label">食材组合</text>
+    </view>
+    <view class="ingredient-tags">
+      <view wx:for="{{dish.ingredientItems}}" wx:key="name" class="tag ingredient-tag" style="animation-delay: {{index * 0.04}}s;">
+        <image class="ingredient-icon" src="{{item.icon}}" mode="aspectFit" />
+        <text>{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 信息行 -->
+  <view class="info-row">
+    <view class="info-item">
+      <image class="info-icon-img" src="/images/icons/spark.svg" mode="aspectFit" />
+      <text class="info-label">难度</text>
+      <text class="info-value">{{dish.difficulty}}</text>
+    </view>
+    <view class="info-item">
+      <image class="info-icon-img" src="/images/icons/plate.svg" mode="aspectFit" />
+      <text class="info-label">时间</text>
+      <text class="info-value">{{dish.time}}分钟</text>
+    </view>
+    <view class="info-item">
+      <image class="info-icon-img" src="/images/icons/fire.svg" mode="aspectFit" />
+      <text class="info-label">热量</text>
+      <text class="info-value">{{dish.calories}}kcal</text>
+    </view>
+  </view>
+
+  <!-- 备选菜品 -->
+  <view wx:if="{{matchedDishes.length > 0}}" class="alternatives-section">
+    <view class="section-label-wrap">
+      <image class="label-img" src="/images/icons/spark.svg" mode="aspectFit" />
+      <text class="section-label">更多组合推荐</text>
+    </view>
+    <scroll-view scroll-x class="alternatives-scroll" show-scrollbar="{{false}}">
+      <view class="alternatives-list">
+        <view
+          wx:for="{{matchedDishes}}"
+          wx:key="id"
+          class="alternative-item"
+          style="animation-delay: {{index * 0.08}}s;"
+          bindtap="onSwitchDish"
+          data-dish="{{item}}"
+        >
+          <text class="alt-name">{{item.name}}</text>
+          <text class="alt-meta">{{item.category}} · {{item.time}}分钟</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- CTA 按钮 -->
+  <view class="action-buttons">
+    <button class="btn-primary btn-glow" bindtap="onStartCooking">开始做菜</button>
+    <button class="btn-outline" bindtap="onWatchVideo">看教学视频</button>
+    <view class="link-text" bindtap="onAskAssistant">
+      <image class="link-icon-img" src="/images/icons/chat.svg" mode="aspectFit" />
+      <text>不懂？问问数字人</text>
+    </view>
+  </view>
+
+  <!-- 小贴士 -->
+  <view wx:if="{{dish.tips}}" class="card tips-card">
+    <view class="tips-header">
+      <view class="tips-icon-wrap">
+        <image class="tips-icon-img" src="/images/icons/spark.svg" mode="aspectFit" />
+      </view>
+      <text class="tips-title">小贴士</text>
+    </view>
+    <text class="tips-text">{{dish.tips}}</text>
+  </view>
+</view>

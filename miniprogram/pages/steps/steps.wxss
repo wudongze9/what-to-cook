@@ -1,0 +1,202 @@
+.page-steps {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #fff7f0 0%, #ffffff 78%);
+  padding: 0 32rpx;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 200rpx);
+}
+
+/* 进度条 */
+.progress-bar {
+  padding: 24rpx 0;
+  margin-bottom: 16rpx;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+}
+
+.progress-text {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--color-text, #3D2B1F);
+}
+
+.progress-percent {
+  font-size: 24rpx;
+  color: var(--color-primary, #F28C38);
+  font-weight: 600;
+}
+
+.progress-track {
+  height: 12rpx;
+  background: var(--color-border, #F0DCC8);
+  border-radius: 999rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #ff3d6e 0%, #ff7a1a 100%);
+  border-radius: 999rpx;
+  transition: width 0.5s ease;
+}
+
+/* 食材清单 */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.card-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--color-text, #3D2B1F);
+}
+
+.check-count {
+  font-size: 24rpx;
+  color: var(--color-primary, #F28C38);
+  font-weight: 600;
+}
+
+.ingredient-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  min-height: 68rpx;
+  padding: 10rpx 12rpx;
+  border-radius: 22rpx;
+  background: #fff7f0;
+}
+
+.checkbox {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 12rpx;
+  border: 2rpx solid var(--color-border, #F0DCC8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 28rpx;
+  color: #FFFFFF;
+  transition: all 0.2s;
+}
+
+.checkbox.checked {
+  background: #2fb875;
+  border-color: #2fb875;
+}
+
+.check-icon {
+  width: 46rpx;
+  height: 46rpx;
+  flex-shrink: 0;
+}
+
+.check-item.checked .check-name {
+  text-decoration: line-through;
+  color: var(--color-text-tertiary, #A89288);
+}
+
+.check-name {
+  font-size: 28rpx;
+  color: var(--color-text, #3D2B1F);
+}
+
+/* 步骤时间线 */
+.steps-timeline {
+  margin-top: 32rpx;
+}
+
+/* 配图 */
+.step-image {
+  margin: 32rpx 0;
+  border-radius: 20rpx;
+  overflow: hidden;
+  position: relative;
+}
+
+.step-img {
+  width: 100%;
+  height: 300rpx;
+}
+
+.step-img-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20rpx 24rpx;
+  background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+  color: #FFFFFF;
+  font-size: 24rpx;
+}
+
+/* 底部操作 */
+.bottom-actions {
+  margin-top: 48rpx;
+}
+
+.action-row {
+  display: flex;
+  gap: 20rpx;
+}
+
+.btn-prev, .btn-next {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 999rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  border: none;
+  text-align: center;
+}
+
+.btn-prev::after, .btn-next::after {
+  border: none;
+}
+
+.btn-prev {
+  background: var(--color-surface, #FFFFFF);
+  color: var(--color-text-secondary, #7A6258);
+  border: 2rpx solid var(--color-border, #F0DCC8);
+}
+
+.btn-prev.disabled {
+  opacity: 0.4;
+}
+
+.btn-next {
+  background: linear-gradient(135deg, #ff3d6e 0%, #ff7a1a 100%);
+  color: #FFFFFF;
+  box-shadow: 0 10rpx 28rpx rgba(255, 107, 26, 0.28);
+}
+
+.link-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 32rpx;
+  gap: 20rpx;
+}
+
+.link-text {
+  font-size: 26rpx;
+  color: var(--color-primary, #F28C38);
+}
+
+.link-divider {
+  color: var(--color-border, #F0DCC8);
+}

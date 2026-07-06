@@ -1,0 +1,148 @@
+<view class="page-index">
+  <view class="hero-bg">
+    <view class="hero-orbit orbit-one"></view>
+    <view class="hero-orbit orbit-two"></view>
+    <view class="hero-grid"></view>
+  </view>
+
+  <view class="header">
+    <view class="eyebrow">
+      <image class="eyebrow-icon" src="/images/icons/spark.svg" mode="aspectFit" />
+      <text>今日灵感厨房</text>
+    </view>
+    <view class="title-wrap">
+      <image class="title-icon" src="/images/icons/chef.svg" mode="aspectFit" />
+      <text class="title">今天吃什么</text>
+    </view>
+    <text class="subtitle">拉下摇杆，把冰箱里的可能性变成一道菜</text>
+  </view>
+
+  <view class="config-card">
+    <view class="panel-heading">
+      <view>
+        <text class="panel-title">定制你的口味</text>
+        <text class="panel-subtitle">少选一点也没关系，惊喜会自动补齐</text>
+      </view>
+      <view class="panel-badge">AI Mix</view>
+    </view>
+
+    <view class="config-row count-row">
+      <view class="config-label">
+        <image class="label-icon-img" src="/images/icons/plate.svg" mode="aspectFit" />
+        <text>食材个数</text>
+      </view>
+      <view class="count-options">
+        <view
+          wx:for="{{ingredientCounts}}"
+          wx:key="*this"
+          class="count-pill {{activeCount === item ? 'active' : ''}}"
+          bindtap="onCountTap"
+          data-count="{{item}}"
+        >
+          <text class="pill-number">{{item}}</text>
+          <text class="pill-unit">种食材</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="config-row">
+      <view class="config-label">
+        <image class="label-icon-img" src="/images/icons/basket.svg" mode="aspectFit" />
+        <text>食材种类</text>
+      </view>
+      <scroll-view scroll-x class="type-scroll" enhanced show-scrollbar="{{false}}">
+        <view class="config-options">
+          <view
+            wx:for="{{ingredientTypes}}"
+            wx:key="key"
+            class="type-pill {{activeIngredientType === item.key ? 'active' : ''}}"
+            bindtap="onTypeTap"
+            data-type="{{item}}"
+          >
+            <image class="pill-icon" src="{{item.icon}}" mode="aspectFit" />
+            <text>{{item.name}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <view class="config-row">
+      <view class="config-label">
+        <image class="label-icon-img" src="/images/icons/pot.svg" mode="aspectFit" />
+        <text>目标菜系</text>
+      </view>
+      <scroll-view scroll-x class="category-scroll" enhanced show-scrollbar="{{false}}">
+        <view class="config-options">
+          <view
+            wx:for="{{cuisineTypes}}"
+            wx:key="key"
+            class="type-pill cuisine-pill {{activeCuisine === item.key ? 'active' : ''}}"
+            bindtap="onCuisineTap"
+            data-cuisine="{{item.key}}"
+          >
+            <image class="pill-icon" src="{{item.icon}}" mode="aspectFit" />
+            <text>{{item.name}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <view class="config-row">
+      <view class="config-label">
+        <image class="label-icon-img" src="/images/icons/pepper.svg" mode="aspectFit" />
+        <text>口味程度</text>
+      </view>
+      <scroll-view scroll-x class="spice-scroll" enhanced show-scrollbar="{{false}}">
+        <view class="config-options">
+          <view
+            wx:for="{{spiceLevels}}"
+            wx:key="key"
+            class="type-pill spice-pill {{activeSpiceLevel === item.key ? 'active' : ''}}"
+            bindtap="onSpiceTap"
+            data-spice="{{item.key}}"
+          >
+            <image class="pill-icon" src="{{item.icon}}" mode="aspectFit" />
+            <text>{{item.name}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <food-wheel
+    id="slotMachine"
+    slotCount="{{activeCount}}"
+    ingredientType="{{activeIngredientType}}"
+    bind:spinend="onSpinEnd"
+  />
+
+  <view class="action-area">
+    <button class="shuffle-btn {{spinning ? 'disabled' : ''}}" bindtap="onShuffleTap" disabled="{{spinning}}">
+      <image class="shuffle-icon" src="/images/icons/dice.svg" mode="aspectFit" />
+      <text>{{spinning ? '正在组合专属菜单...' : '拉下摇杆，开饭！'}}</text>
+    </button>
+  </view>
+
+  <view wx:if="{{history.length > 0}}" class="history-card">
+    <view class="section-header">
+      <view class="section-title-wrap">
+        <image class="section-icon-img" src="/images/icons/spark.svg" mode="aspectFit" />
+        <text class="section-title">最近推荐</text>
+      </view>
+      <text class="section-more" bindtap="onClearHistory">清空</text>
+    </view>
+    <scroll-view scroll-x class="history-scroll" show-scrollbar="{{false}}">
+      <view
+        wx:for="{{history}}"
+        wx:key="id"
+        class="history-item"
+        style="animation-delay: {{index * 0.06}}s;"
+        bindtap="onHistoryTap"
+        data-dish="{{item}}"
+      >
+        <text class="history-name">{{item.name}}</text>
+        <text class="history-category">{{item.category}}</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>

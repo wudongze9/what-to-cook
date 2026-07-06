@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "food-wheel": "../../components/food-wheel/food-wheel"
+  },
+  "navigationBarTitleText": "今天吃什么"
+}

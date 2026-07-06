@@ -1,0 +1,53 @@
+<view class="page-videos">
+  <view class="video-hero">
+    <view class="hero-copy">
+      <text class="hero-kicker">Chef Studio</text>
+      <text class="page-title">视频教学</text>
+      <text class="page-subtitle">跟着大厨看火候、看手法，比文字更快上手</text>
+    </view>
+    <image class="hero-icon" src="/images/icons/video.svg" mode="aspectFit" />
+  </view>
+
+  <scroll-view scroll-x class="category-bar" show-scrollbar="{{false}}">
+    <view
+      wx:for="{{categories}}"
+      wx:key="*this"
+      class="category-pill {{activeCategory === item ? 'active' : ''}}"
+      bindtap="onCategoryTap"
+      data-category="{{item}}"
+    >
+      {{item}}
+    </view>
+  </scroll-view>
+
+  <view wx:if="{{featuredVideo}}" class="featured-section">
+    <view class="section-heading">
+      <text class="section-title">精选推荐</text>
+      <text class="section-note">先看这一道</text>
+    </view>
+    <video-card video="{{featuredVideo}}" featured="{{true}}" bind:play="onPlayVideo" />
+  </view>
+
+  <view class="section-header">
+    <text class="section-title">全部视频</text>
+    <text class="video-count">共{{allVideos.length}}个</text>
+  </view>
+
+  <view class="video-grid">
+    <view wx:for="{{filteredVideos}}" wx:key="id" class="grid-item">
+      <video-card video="{{item}}" bind:play="onPlayVideo" />
+    </view>
+  </view>
+
+  <view wx:if="{{allVideos.length === 0}}" class="empty-state">
+    <image class="empty-icon" src="/images/icons/video.svg" mode="aspectFit" />
+    <text class="empty-title">这类视频正在备菜</text>
+    <text class="empty-text">换个分类看看，或者让小厨娘直接教你</text>
+    <button class="empty-btn" bindtap="onAskAssistant">问问数字人</button>
+  </view>
+
+  <view class="bottom-link" bindtap="onAskAssistant">
+    <image class="link-icon" src="/images/icons/chat.svg" mode="aspectFit" />
+    <text class="link-text">有疑问？问问数字人</text>
+  </view>
+</view>

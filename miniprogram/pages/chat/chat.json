@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "chat-bubble": "../../components/chat-bubble/chat-bubble"
+  },
+  "navigationBarTitleText": "数字人问答"
+}

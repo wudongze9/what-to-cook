@@ -1,0 +1,149 @@
+/* ============================================
+   What to Cook — Brand Design System
+   Warm, homey, food-centric mobile-first design
+   ============================================ */
+
+/* --- Brand Prefix --- */
+:root {
+  /* Primary Color — Warm Orange */
+  --color-primary: #F28C38;
+  --color-primary-light: #F9B77A;
+  --color-primary-lighter: #FDDFAD;
+  --color-primary-lightest: #FFF3E4;
+  --color-primary-dark: #D96A14;
+  --color-primary-darker: #B8550E;
+
+  /* Backgrounds */
+  --color-bg: #FFF9F3;
+  --color-bg-secondary: #FFF1E4;
+  --color-bg-tertiary: #FFEAD1;
+
+  /* Surface / Card */
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #FFF5EA;
+
+  /* Text */
+  --color-text: #3D2B1F;
+  --color-text-secondary: #7A6258;
+  --color-text-tertiary: #A89288;
+  --color-text-on-primary: #FFFFFF;
+  --color-text-on-dark: #FFF9F3;
+
+  /* Borders */
+  --color-border: #F0DCC8;
+  --color-border-light: #F7EDE0;
+
+  /* State Colors */
+  --state-success: #4CAF50;
+  --state-success-bg: #E8F5E9;
+  --state-warning: #FF9800;
+  --state-warning-bg: #FFF3E0;
+  --state-error: #E74C3C;
+  --state-error-bg: #FFEBEE;
+  --state-info: #2196F3;
+  --state-info-bg: #E3F2FD;
+
+  /* Radius Scale */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-display: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Type Scale */
+  --text-xs: 11px;
+  --text-sm: 13px;
+  --text-base: 15px;
+  --text-lg: 17px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 30px;
+  --text-4xl: 36px;
+
+  /* Line Height */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(61, 43, 31, 0.04);
+  --shadow-md: 0 4px 12px rgba(61, 43, 31, 0.06);
+  --shadow-lg: 0 8px 24px rgba(61, 43, 31, 0.08);
+  --shadow-float: 0 12px 32px rgba(61, 43, 31, 0.12);
+
+  /* CTA */
+  --cta-bg: var(--color-primary);
+  --cta-text: var(--color-text-on-primary);
+  --cta-hover-bg: var(--color-primary-dark);
+  --cta-radius: var(--radius-full);
+  --cta-padding-x: 24px;
+  --cta-padding-y: 12px;
+
+  /* Navigation */
+  --nav-height: 56px;
+  --tab-bar-height: 64px;
+}
+
+/* --- Dark Mode (App switch) --- */
+html.dark {
+  --color-primary: #F28C38;
+  --color-primary-light: #D96A14;
+  --color-primary-lighter: #B8550E;
+  --color-primary-lightest: #3D2B1F;
+  --color-primary-dark: #F9B77A;
+  --color-primary-darker: #FDDFAD;
+
+  --color-bg: #1A1210;
+  --color-bg-secondary: #241C16;
+  --color-bg-tertiary: #2E241C;
+
+  --color-surface: #241C16;
+  --color-surface-secondary: #2E241C;
+
+  --color-text: #FFF5EA;
+  --color-text-secondary: #C4A898;
+  --color-text-tertiary: #8A7468;
+  --color-text-on-primary: #FFFFFF;
+  --color-text-on-dark: #FFF5EA;
+
+  --color-border: #3D2B1F;
+  --color-border-light: #2E241C;
+
+  --state-success: #66BB6A;
+  --state-success-bg: #1A1210;
+  --state-warning: #FFA726;
+  --state-warning-bg: #1A1210;
+  --state-error: #EF5350;
+  --state-error-bg: #1A1210;
+  --state-info: #42A5F5;
+  --state-info-bg: #1A1210;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-float: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Typography Classes --- */
+.text-xs { font-size: var(--text-xs); line-height: var(--leading-normal); }
+.text-sm { font-size: var(--text-sm); line-height: var(--leading-normal); }
+.text-base { font-size: var(--text-base); line-height: var(--leading-normal); }
+.text-lg { font-size: var(--text-lg); line-height: var(--leading-tight); }
+.text-xl { font-size: var(--text-xl); line-height: var(--leading-tight); }
+.text-2xl { font-size: var(--text-2xl); line-height: var(--leading-tight); }
+.text-3xl { font-size: var(--text-3xl); line-height: var(--leading-tight); }
+.text-4xl { font-size: var(--text-4xl); line-height: var(--leading-tight); }
+
+.font-display { font-family: var(--font-display); }
+.font-body { font-family: var(--font-body); }

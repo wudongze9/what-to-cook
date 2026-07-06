@@ -1,0 +1,45 @@
+<view class="slot-machine">
+  <view class="machine-top">
+    <view class="machine-title-wrap">
+      <image class="machine-icon" src="/images/icons/dice.svg" mode="aspectFit" />
+      <view>
+        <text class="machine-title">美食摇杆机</text>
+        <text class="machine-subtitle">随机组合你的今日菜单</text>
+      </view>
+    </view>
+    <view class="machine-lights">
+      <view
+        wx:for="{{[1,2,3,4,5]}}"
+        wx:key="*this"
+        class="light {{internalSpinning ? 'blink' : 'glow'}}"
+        style="animation-delay: {{index * 0.12}}s;"
+      ></view>
+    </view>
+  </view>
+
+  <view class="machine-screen">
+    <view class="screen-inner slot-count-{{slots.length}}">
+      <view wx:for="{{slots}}" wx:key="index" class="slot">
+        <view class="slot-window {{item.settled ? 'settled' : 'spinning'}}">
+          <view class="reel-item {{item.settled ? 'is-settled' : 'is-spinning'}}">
+            <image class="reel-icon" src="{{item.current.icon}}" mode="aspectFit" />
+            <text class="reel-name">{{item.current.name}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="screen-glass"></view>
+  </view>
+
+  <view class="machine-footer">
+    <view class="lever-area" bindtap="onLeverTap">
+      <view class="lever-base">
+        <view class="lever-stick {{leverPulling ? 'pulled' : ''}} {{internalSpinning ? 'shaking' : ''}}">
+          <view class="lever-ball"></view>
+        </view>
+      </view>
+      <view class="lever-touch"></view>
+    </view>
+    <text class="machine-tip">{{internalSpinning ? '正在寻找最搭的一口' : '点击摇杆或下方按钮开始'}}</text>
+  </view>
+</view>

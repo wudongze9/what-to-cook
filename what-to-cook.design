@@ -1,0 +1,268 @@
+{
+  "data": [
+    {
+      "id": "page-home",
+      "title": "首页摇一摇",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1751774200000,
+      "canvasData": {
+        "x": 0,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/home.html",
+        "interactions": [
+          {
+            "domId": "cta-shuffle-result",
+            "targetPageId": "page-result"
+          },
+          {
+            "domId": "nav-videos",
+            "targetPageId": "page-videos",
+            "hideEdge": true
+          },
+          {
+            "domId": "nav-chat",
+            "targetPageId": "page-ai-chat",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-result",
+      "title": "菜品结果",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1751774200000,
+      "canvasData": {
+        "x": 433,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/result.html",
+        "interactions": [
+          {
+            "domId": "cta-start-cooking",
+            "targetPageId": "page-steps"
+          },
+          {
+            "domId": "link-watch-video",
+            "targetPageId": "page-videos"
+          },
+          {
+            "domId": "back-home",
+            "targetPageId": "page-home",
+            "hideEdge": true
+          },
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-home",
+            "hideEdge": true
+          },
+          {
+            "domId": "nav-videos",
+            "targetPageId": "page-videos",
+            "hideEdge": true
+          },
+          {
+            "domId": "nav-chat",
+            "targetPageId": "page-ai-chat",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-steps",
+      "title": "做菜步骤",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1751774200000,
+      "canvasData": {
+        "x": 866,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/steps.html",
+        "interactions": [
+          {
+            "domId": "cta-ask-assistant",
+            "targetPageId": "page-ai-chat"
+          },
+          {
+            "domId": "link-watch-video",
+            "targetPageId": "page-videos"
+          },
+          {
+            "domId": "back-result",
+            "targetPageId": "page-result",
+            "hideEdge": true
+          },
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-home",
+            "hideEdge": true
+          },
+          {
+            "domId": "nav-videos",
+            "targetPageId": "page-videos",
+            "hideEdge": true
+          },
+          {
+            "domId": "nav-chat",
+            "targetPageId": "page-ai-chat",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-videos",
+      "title": "视频教学",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1751774200000,
+      "canvasData": {
+        "x": 1299,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/videos.html",
+        "interactions": [
+          {
+            "domId": "cta-ask-assistant",
+            "targetPageId": "page-ai-chat"
+          },
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-home",
+            "hideEdge": true
+          },
+          {
+            "domId": "nav-chat",
+            "targetPageId": "page-ai-chat",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-ai-chat",
+      "title": "数字人问答",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1751774200000,
+      "canvasData": {
+        "x": 1732,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/ai-chat.html",
+        "interactions": [
+          {
+            "domId": "shortcut-shuffle",
+            "targetPageId": "page-home",
+            "hideEdge": true
+          },
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-home",
+            "hideEdge": true
+          },
+          {
+            "domId": "nav-videos",
+            "targetPageId": "page-videos",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "image-001",
+      "title": "食材转盘主视觉",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1751774200000,
+      "canvasData": {
+        "x": 0,
+        "y": 462
+      },
+      "devMetadata": {
+        "imageSrc": "assets/hero-food-wheel.jpg"
+      }
+    },
+    {
+      "id": "image-002",
+      "title": "菜品结果展示",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1751774200000,
+      "canvasData": {
+        "x": 620,
+        "y": 462
+      },
+      "devMetadata": {
+        "imageSrc": "assets/dish-result-hero.jpg"
+      }
+    },
+    {
+      "id": "image-003",
+      "title": "烹饪步骤示意",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1751774200000,
+      "canvasData": {
+        "x": 1240,
+        "y": 462
+      },
+      "devMetadata": {
+        "imageSrc": "assets/cooking-step.jpg"
+      }
+    },
+    {
+      "id": "image-004",
+      "title": "视频教学缩略图",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1751774200000,
+      "canvasData": {
+        "x": 1860,
+        "y": 462
+      },
+      "devMetadata": {
+        "imageSrc": "assets/video-thumbnails.jpg"
+      }
+    },
+    {
+      "id": "image-005",
+      "title": "数字人助手头像",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1751774200000,
+      "canvasData": {
+        "x": 2480,
+        "y": 462
+      },
+      "devMetadata": {
+        "imageSrc": "assets/ai-avatar.jpg"
+      }
+    }
+  ],
+  "config": {
+    "autoLayout": true,
+    "deviceType": "freeSize",
+    "projectName": "今天吃什么",
+    "designLibrary": null,
+    "windowSize": {
+      "width": 800,
+      "height": 600
+    }
+  }
+}

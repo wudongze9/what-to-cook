@@ -1,0 +1,21 @@
+<view class="video-card {{featured ? 'featured' : ''}}" bindtap="onTap">
+  <view class="cover-wrap">
+    <image class="cover-img" src="{{video.cover || fallbackCover}}" mode="aspectFill" binderror="onCoverError" />
+    <view class="cover-tint"></view>
+    <view class="play-btn">
+      <view class="play-triangle"></view>
+    </view>
+    <view class="duration-badge">{{video.duration}}</view>
+    <view class="category-badge">{{video.category}}</view>
+  </view>
+
+  <view class="card-info">
+    <text class="card-title">{{video.title}}</text>
+    <text wx:if="{{featured && video.description}}" class="card-desc">{{video.description}}</text>
+    <view class="card-meta">
+      <image class="chef-avatar" src="{{video.chefAvatar || fallbackAvatar}}" mode="aspectFill" binderror="onAvatarError" />
+      <text class="chef-name">{{video.chef}}</text>
+      <text class="views">{{video.views}}次观看</text>
+    </view>
+  </view>
+</view>

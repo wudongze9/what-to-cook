@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "step-item": "../../components/step-item/step-item"
+  },
+  "navigationBarTitleText": "做菜步骤"
+}

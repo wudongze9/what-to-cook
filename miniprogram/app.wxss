@@ -1,0 +1,137 @@
+/* ============================================
+   今天吃什么 - 全局样式
+   ============================================ */
+
+/* 品牌色彩变量通过 page CSS 变量定义 */
+page {
+  --color-primary: #FF6B1A;
+  --color-primary-dark: #D84A05;
+  --color-primary-light: #FFB06E;
+  --color-primary-lightest: #FFF1E8;
+  --color-accent: #FF3D6E;
+  --color-accent-dark: #C81E4A;
+  --color-ink: #2A1735;
+  --color-purple: #5B2B6F;
+  --color-green: #2FB875;
+  --color-gold: #FFB703;
+  --color-bg: #FFF7F0;
+  --color-bg-secondary: #FFEFE5;
+  --color-surface: #FFFFFF;
+  --color-text: #2A1735;
+  --color-text-secondary: #6D536C;
+  --color-text-tertiary: #A78A96;
+  --color-border: #FFD7C2;
+  --shadow-card: 0 18rpx 48rpx rgba(91, 43, 111, 0.10);
+  --shadow-pop: 0 18rpx 42rpx rgba(255, 107, 26, 0.28);
+
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+/* 通用容器 */
+.container {
+  padding: 0 32rpx;
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 120rpx);
+}
+
+/* 通用卡片 */
+.card {
+  background: var(--color-surface);
+  border-radius: 28rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  border: 2rpx solid rgba(255, 215, 194, 0.85);
+  box-shadow: var(--shadow-card);
+}
+
+/* 主 CTA 按钮 */
+.btn-primary {
+  width: 100%;
+  height: 96rpx;
+  line-height: 96rpx;
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary) 100%);
+  color: #FFFFFF;
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: 999rpx;
+  text-align: center;
+  border: none;
+  letter-spacing: 0;
+  box-shadow: var(--shadow-pop);
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+.btn-primary:active {
+  opacity: 0.85;
+}
+
+/* 描边按钮 */
+.btn-outline {
+  width: 100%;
+  height: 96rpx;
+  line-height: 96rpx;
+  background: #FFFFFF;
+  color: var(--color-purple);
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: 999rpx;
+  text-align: center;
+  border: 2rpx solid var(--color-border);
+  letter-spacing: 0;
+}
+
+.btn-outline::after {
+  border: none;
+}
+
+/* 食材标签 */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 10rpx 20rpx;
+  background: var(--color-primary-lightest);
+  color: var(--color-ink);
+  font-size: 24rpx;
+  border-radius: 999rpx;
+  margin-right: 12rpx;
+  margin-bottom: 12rpx;
+  border: 1rpx solid rgba(255, 107, 26, 0.25);
+}
+
+/* 文本工具类 */
+.text-primary { color: var(--color-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary { color: var(--color-text-tertiary); }
+.text-bold { font-weight: 600; }
+.text-center { text-align: center; }
+
+/* Flex 工具 */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-row { flex-direction: row; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-1 { flex: 1; }
+
+/* 间距 */
+.mt-8 { margin-top: 8rpx; }
+.mt-16 { margin-top: 16rpx; }
+.mt-24 { margin-top: 24rpx; }
+.mt-32 { margin-top: 32rpx; }
+.mb-8 { margin-bottom: 8rpx; }
+.mb-16 { margin-bottom: 16rpx; }
+.mb-24 { margin-bottom: 24rpx; }
+.mb-32 { margin-bottom: 32rpx; }
+.p-16 { padding: 16rpx; }
+.p-24 { padding: 24rpx; }
+.p-32 { padding: 32rpx; }

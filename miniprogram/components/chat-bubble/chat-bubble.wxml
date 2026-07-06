@@ -1,0 +1,9 @@
+<view class="bubble-wrap {{isUser ? 'user' : 'ai'}}">
+  <!-- AI 头像（仅 AI 消息） -->
+  <image wx:if="{{!isUser && showAvatar}}" class="avatar" src="{{avatarUrl}}" mode="aspectFill" />
+
+  <!-- 气泡 -->
+  <view class="bubble {{isUser ? 'user-bubble' : 'ai-bubble'}}">
+    <text class="bubble-text">{{message}}</text>
+  </view>
+</view>

@@ -1,0 +1,69 @@
+{
+  "root": {
+    "nodeId": "gen-project-shell",
+    "kind": "project-shell",
+    "pageIds": ["page-home", "page-result", "page-steps", "page-videos", "page-ai-chat"],
+    "output": "partials/project-shell.html",
+    "sharedRegions": ["bottomTabBar"],
+    "privateRegions": [],
+    "mutableSlots": ["activeTabKey"],
+    "status": "planned",
+    "children": [
+      {
+        "nodeId": "gen-page-home",
+        "kind": "page-leaf",
+        "pageIds": ["page-home"],
+        "output": "pages/home.html",
+        "sharedRegions": [],
+        "privateRegions": ["shuffle interface body"],
+        "mutableSlots": ["activeTabKey"],
+        "status": "planned",
+        "children": []
+      },
+      {
+        "nodeId": "gen-page-result",
+        "kind": "page-leaf",
+        "pageIds": ["page-result"],
+        "output": "pages/result.html",
+        "sharedRegions": [],
+        "privateRegions": ["dish result body"],
+        "mutableSlots": ["activeTabKey"],
+        "status": "planned",
+        "children": []
+      },
+      {
+        "nodeId": "gen-page-steps",
+        "kind": "page-leaf",
+        "pageIds": ["page-steps"],
+        "output": "pages/steps.html",
+        "sharedRegions": [],
+        "privateRegions": ["cooking steps body"],
+        "mutableSlots": ["activeTabKey"],
+        "status": "planned",
+        "children": []
+      },
+      {
+        "nodeId": "gen-page-videos",
+        "kind": "page-leaf",
+        "pageIds": ["page-videos"],
+        "output": "pages/videos.html",
+        "sharedRegions": [],
+        "privateRegions": ["video list body"],
+        "mutableSlots": ["activeTabKey"],
+        "status": "planned",
+        "children": []
+      },
+      {
+        "nodeId": "gen-page-ai-chat",
+        "kind": "page-leaf",
+        "pageIds": ["page-ai-chat"],
+        "output": "pages/ai-chat.html",
+        "sharedRegions": [],
+        "privateRegions": ["chat interface body"],
+        "mutableSlots": ["activeTabKey"],
+        "status": "planned",
+        "children": []
+      }
+    ]
+  }
+}

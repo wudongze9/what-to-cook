@@ -1,0 +1,46 @@
+<view class="video-player-page" wx:if="{{video}}">
+  <!-- 视频播放区 -->
+  <view class="video-container">
+    <video
+      class="player"
+      src="{{video.videoUrl}}"
+      poster="{{video.cover}}"
+      controls
+      autoplay
+      show-center-play-btn="{{false}}"
+      enable-play-gesture
+      object-fit="contain"
+      binderror="onVideoError"
+    />
+  </view>
+
+  <!-- 视频信息 -->
+  <view class="video-detail">
+    <text class="video-title">{{video.title}}</text>
+    <view class="video-meta">
+      <text class="meta-chef">{{video.chef}}</text>
+      <text class="meta-views">{{video.views}}次观看</text>
+    </view>
+    <text class="video-desc">{{video.description}}</text>
+  </view>
+
+  <!-- 相关视频 -->
+  <view wx:if="{{relatedVideos.length > 0}}" class="related-section">
+    <text class="related-title">相关推荐</text>
+    <view class="related-list">
+      <view
+        wx:for="{{relatedVideos}}"
+        wx:key="id"
+        class="related-item"
+        bindtap="onRelatedVideo"
+        data-video="{{item}}"
+      >
+        <image class="related-cover" src="{{item.cover}}" mode="aspectFill" />
+        <view class="related-info">
+          <text class="related-name">{{item.title}}</text>
+          <text class="related-chef">{{item.chef}} · {{item.duration}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

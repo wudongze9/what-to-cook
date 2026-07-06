@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>做菜步骤</title>
+    <style id="theme-vars">
+/* ============================================
+   What to Cook — Brand Design System
+   Warm, homey, food-centric mobile-first design
+   ============================================ */
+
+/* --- Brand Prefix --- */
+:root {
+  /* Primary Color — Warm Orange */
+  --color-primary: #F28C38;
+  --color-primary-light: #F9B77A;
+  --color-primary-lighter: #FDDFAD;
+  --color-primary-lightest: #FFF3E4;
+  --color-primary-dark: #D96A14;
+  --color-primary-darker: #B8550E;
+
+  /* Backgrounds */
+  --color-bg: #FFF9F3;
+  --color-bg-secondary: #FFF1E4;
+  --color-bg-tertiary: #FFEAD1;
+
+  /* Surface / Card */
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #FFF5EA;
+
+  /* Text */
+  --color-text: #3D2B1F;
+  --color-text-secondary: #7A6258;
+  --color-text-tertiary: #A89288;
+  --color-text-on-primary: #FFFFFF;
+  --color-text-on-dark: #FFF9F3;
+
+  /* Borders */
+  --color-border: #F0DCC8;
+  --color-border-light: #F7EDE0;
+
+  /* State Colors */
+  --state-success: #4CAF50;
+  --state-success-bg: #E8F5E9;
+  --state-warning: #FF9800;
+  --state-warning-bg: #FFF3E0;
+  --state-error: #E74C3C;
+  --state-error-bg: #FFEBEE;
+  --state-info: #2196F3;
+  --state-info-bg: #E3F2FD;
+
+  /* Radius Scale */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-display: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Type Scale */
+  --text-xs: 11px;
+  --text-sm: 13px;
+  --text-base: 15px;
+  --text-lg: 17px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 30px;
+  --text-4xl: 36px;
+
+  /* Line Height */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(61, 43, 31, 0.04);
+  --shadow-md: 0 4px 12px rgba(61, 43, 31, 0.06);
+  --shadow-lg: 0 8px 24px rgba(61, 43, 31, 0.08);
+  --shadow-float: 0 12px 32px rgba(61, 43, 31, 0.12);
+
+  /* CTA */
+  --cta-bg: var(--color-primary);
+  --cta-text: var(--color-text-on-primary);
+  --cta-hover-bg: var(--color-primary-dark);
+  --cta-radius: var(--radius-full);
+  --cta-padding-x: 24px;
+  --cta-padding-y: 12px;
+
+  /* Navigation */
+  --nav-height: 56px;
+  --tab-bar-height: 64px;
+}
+
+/* --- Dark Mode (App switch) --- */
+html.dark {
+  --color-primary: #F28C38;
+  --color-primary-light: #D96A14;
+  --color-primary-lighter: #B8550E;
+  --color-primary-lightest: #3D2B1F;
+  --color-primary-dark: #F9B77A;
+  --color-primary-darker: #FDDFAD;
+
+  --color-bg: #1A1210;
+  --color-bg-secondary: #241C16;
+  --color-bg-tertiary: #2E241C;
+
+  --color-surface: #241C16;
+  --color-surface-secondary: #2E241C;
+
+  --color-text: #FFF5EA;
+  --color-text-secondary: #C4A898;
+  --color-text-tertiary: #8A7468;
+  --color-text-on-primary: #FFFFFF;
+  --color-text-on-dark: #FFF5EA;
+
+  --color-border: #3D2B1F;
+  --color-border-light: #2E241C;
+
+  --state-success: #66BB6A;
+  --state-success-bg: #1A1210;
+  --state-warning: #FFA726;
+  --state-warning-bg: #1A1210;
+  --state-error: #EF5350;
+  --state-error-bg: #1A1210;
+  --state-info: #42A5F5;
+  --state-info-bg: #1A1210;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-float: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Typography Classes --- */
+.text-xs { font-size: var(--text-xs); line-height: var(--leading-normal); }
+.text-sm { font-size: var(--text-sm); line-height: var(--leading-normal); }
+.text-base { font-size: var(--text-base); line-height: var(--leading-normal); }
+.text-lg { font-size: var(--text-lg); line-height: var(--leading-tight); }
+.text-xl { font-size: var(--text-xl); line-height: var(--leading-tight); }
+.text-2xl { font-size: var(--text-2xl); line-height: var(--leading-tight); }
+.text-3xl { font-size: var(--text-3xl); line-height: var(--leading-tight); }
+.text-4xl { font-size: var(--text-4xl); line-height: var(--leading-tight); }
+
+.font-display { font-family: var(--font-display); }
+.font-body { font-family: var(--font-body); }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-primary: var(--color-primary);
+    --color-border: var(--color-border);
+  }
+  @layer base {
+    body { background: var(--color-surface); color: var(--color-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+<!-- Mini Program System Capsule -->
+<div class="w-[87px] h-8 rounded-full border border-white/30 bg-black/10 backdrop-blur-md flex items-center justify-center gap-0 fixed top-2 right-3 z-50">
+  <button class="flex items-center justify-center w-8 h-8" aria-label="更多">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="19" cy="12" r="1.5" fill="currentColor"/></svg>
+  </button>
+  <span class="w-px h-4 bg-white/40 inline-block"></span>
+  <button class="flex items-center justify-center w-8 h-8" aria-label="关闭">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+  </button>
+</div>
+
+<div id="app" class="relative mx-auto min-h-screen flex flex-col" style="max-width: 375px; background: var(--color-bg); font-family: var(--font-body);">
+
+  <main class="flex-1 overflow-y-auto" style="padding-bottom: var(--tab-bar-height);">
+
+    <!-- ========== Header Bar ========== -->
+    <header class="steps-header">
+      <a href="#" class="back-btn" data-dom-id="back-result" aria-label="返回">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </a>
+      <h1 class="header-title">番茄炒蛋 - 做法详解</h1>
+      <span style="width: 32px; flex-shrink: 0;"></span>
+    </header>
+
+    <!-- ========== Progress Bar ========== -->
+    <div class="progress-wrapper">
+      <div class="progress-label">步骤 2/5</div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width: 40%;"></div>
+      </div>
+    </div>
+
+    <!-- ========== Ingredient Checklist Card ========== -->
+    <div class="ingredient-card">
+      <div class="card-header">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+          <rect x="9" y="3" width="6" height="4" rx="1"/>
+        </svg>
+        准备食材
+      </div>
+      <ul class="ingredient-list">
+        <li class="checked-item">
+          <span class="check-icon checked">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </span>
+          2个番茄
+        </li>
+        <li class="checked-item">
+          <span class="check-icon checked">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </span>
+          3个鸡蛋
+        </li>
+        <li class="checked-item">
+          <span class="check-icon checked">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </span>
+          葱花
+        </li>
+        <li>
+          <span class="check-icon unchecked"></span>
+          盐
+        </li>
+        <li>
+          <span class="check-icon unchecked"></span>
+          糖
+        </li>
+      </ul>
+    </div>
+
+    <!-- ========== Step Timeline ========== -->
+    <div class="step-timeline">
+
+      <!-- Step 1: Completed -->
+      <div class="step-card completed">
+        <div class="step-number">1</div>
+        <div class="step-title">
+          <span>准备食材</span>
+          <span class="completed-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            已完成
+          </span>
+        </div>
+        <div class="step-description">番茄切块，鸡蛋打散加少许盐搅匀</div>
+      </div>
+
+      <!-- Step 2: Current (you are here) -->
+      <div class="step-card current">
+        <div class="step-number">2</div>
+        <div class="step-title">
+          <span>炒鸡蛋</span>
+          <span class="time-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            2分钟
+          </span>
+        </div>
+        <div class="step-description">热锅倒油，油温七成热时倒入蛋液，快速翻炒至凝固盛出</div>
+      </div>
+
+      <!-- Cooking image between step 2 and step 3 -->
+      <div class="cooking-image-wrapper">
+        <img src="../assets/cooking-step.jpg" alt="炒菜参考图" />
+        <div class="cooking-image-caption">翻炒至蛋液凝固即可盛出备用</div>
+      </div>
+
+      <!-- Step 3: Upcoming -->
+      <div class="step-card upcoming">
+        <div class="step-number">3</div>
+        <div class="step-title">
+          <span>炒番茄</span>
+          <span class="time-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            3分钟
+          </span>
+        </div>
+        <div class="step-description">锅中再加少许油，放入番茄块翻炒出汁</div>
+      </div>
+
+      <!-- Step 4: Upcoming -->
+      <div class="step-card upcoming">
+        <div class="step-number">4</div>
+        <div class="step-title">
+          <span>合炒调味</span>
+          <span class="time-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            1分钟
+          </span>
+        </div>
+        <div class="step-description">倒回鸡蛋，加盐和少许糖翻炒均匀</div>
+      </div>
+
+      <!-- Step 5: Upcoming -->
+      <div class="step-card upcoming">
+        <div class="step-number">5</div>
+        <div class="step-title">
+          <span>出锅装盘</span>
+          <span class="time-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            1分钟
+          </span>
+        </div>
+        <div class="step-description">撒上葱花，翻炒几下即可出锅</div>
+      </div>
+
+    </div>
+
+    <!-- ========== Bottom CTA Area ========== -->
+    <div class="bottom-cta-area">
+      <a href="#" class="cta-outline-btn" data-dom-id="link-watch-video">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="3"/>
+          <polygon points="10,8.5 16,12 10,15.5"/>
+        </svg>
+        看教学视频
+      </a>
+      <a href="#" class="cta-text-link" data-dom-id="cta-ask-assistant">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        不懂？问问数字人
+      </a>
+    </div>
+
+  </main>
+
+  <!-- ========== Bottom Tab Bar ========== -->
+  <nav
+    class="fixed bottom-0 left-1/2 flex items-center justify-around"
+    style="
+      transform: translateX(-50%);
+      max-width: 375px;
+      width: 100%;
+      height: var(--tab-bar-height);
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      z-index: 100;
+    "
+    data-dom-id="bottom-tab-bar"
+  >
+    <!-- Tab: 首页 (Home / Shuffle) -->
+    <a
+      href="#"
+      class="tab-item flex flex-col items-center justify-center gap-1 flex-1 h-full transition-colors duration-200"
+      data-nav-key="home"
+      data-dom-id="nav-home"
+      data-active="false"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+        <path d="M16 3h5v5"/>
+        <path d="M4 20L21 3"/>
+        <path d="M21 16v5h-5"/>
+        <path d="M15 15l6 6"/>
+        <path d="M4 4l5 5"/>
+      </svg>
+      <span class="tab-label" style="font-size: var(--text-xs);">首页</span>
+    </a>
+
+    <!-- Tab: 视频 (Video) -->
+    <a
+      href="#"
+      class="tab-item flex flex-col items-center justify-center gap-1 flex-1 h-full transition-colors duration-200"
+      data-nav-key="videos"
+      data-dom-id="nav-videos"
+      data-active="false"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+        <rect x="2" y="4" width="20" height="16" rx="3"/>
+        <polygon points="10,8.5 16,12 10,15.5"/>
+      </svg>
+      <span class="tab-label" style="font-size: var(--text-xs);">视频</span>
+    </a>
+
+    <!-- Tab: 问答 (AI Chat) -->
+    <a
+      href="#"
+      class="tab-item flex flex-col items-center justify-center gap-1 flex-1 h-full transition-colors duration-200"
+      data-nav-key="chat"
+      data-dom-id="nav-chat"
+      data-active="false"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      <span class="tab-label" style="font-size: var(--text-xs);">问答</span>
+    </a>
+
+    <!-- Tab: 我的 (Profile) -->
+    <a
+      href="#"
+      class="tab-item flex flex-col items-center justify-center gap-1 flex-1 h-full transition-colors duration-200"
+      data-nav-key="profile"
+      data-active="false"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M20 21a8 8 0 1 0-16 0"/>
+      </svg>
+      <span class="tab-label" style="font-size: var(--text-xs);">我的</span>
+    </a>
+  </nav>
+
+</div><!-- /#app -->
+
+<script>lucide.createIcons();</script>
+
+
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+
+    <!-- ========== Steps Page Custom Styles ========== -->
+    <style>
+      body {
+        background: var(--color-bg);
+        color: var(--color-text);
+        font-family: var(--font-body);
+        max-width: 375px;
+        margin: 0 auto;
+        min-height: 100vh;
+      }
+
+      /* Header bar */
+      .steps-header {
+        display: flex;
+        align-items: center;
+        height: var(--nav-height);
+        padding: 0 var(--space-md);
+        background: var(--color-surface);
+        border-bottom: 1px solid var(--color-border-light);
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      }
+      .steps-header .back-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: var(--radius-full);
+        text-decoration: none;
+        color: var(--color-text);
+        flex-shrink: 0;
+      }
+      .steps-header .header-title {
+        flex: 1;
+        text-align: center;
+        font-size: var(--text-lg);
+        font-weight: 600;
+        color: var(--color-text);
+        margin: 0 8px 0 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* Progress bar */
+      .progress-wrapper {
+        padding: var(--space-sm) var(--space-lg) var(--space-md);
+        background: var(--color-bg);
+      }
+      .progress-label {
+        font-size: var(--text-xs);
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-xs);
+        text-align: center;
+      }
+      .progress-track {
+        width: 100%;
+        height: 6px;
+        background: var(--color-border);
+        border-radius: var(--radius-full);
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--color-primary);
+        border-radius: var(--radius-full);
+        transition: width 0.4s ease;
+      }
+
+      /* Ingredient checklist card */
+      .ingredient-card {
+        margin: 0 var(--space-md) var(--space-md);
+        background: var(--color-surface);
+        border-radius: var(--radius-lg);
+        padding: var(--space-md);
+        box-shadow: var(--shadow-sm);
+      }
+      .ingredient-card .card-header {
+        font-size: var(--text-base);
+        font-weight: 600;
+        color: var(--color-text);
+        margin-bottom: var(--space-sm);
+        display: flex;
+        align-items: center;
+        gap: var(--space-xs);
+      }
+      .ingredient-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .ingredient-list li {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        padding: var(--space-xs) 0;
+        font-size: var(--text-sm);
+        color: var(--color-text-secondary);
+        border-bottom: 1px solid var(--color-border-light);
+      }
+      .ingredient-list li:last-child {
+        border-bottom: none;
+      }
+      .ingredient-list .check-icon {
+        width: 20px;
+        height: 20px;
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 12px;
+      }
+      .ingredient-list .check-icon.checked {
+        background: var(--state-success);
+        color: white;
+      }
+      .ingredient-list .check-icon.unchecked {
+        border: 2px solid var(--color-border);
+        background: transparent;
+      }
+      .ingredient-list li.checked-item {
+        color: var(--state-success);
+        text-decoration: line-through;
+        text-decoration-color: var(--state-success);
+      }
+
+      /* Step timeline */
+      .step-timeline {
+        padding: 0 var(--space-md);
+        margin-bottom: var(--space-md);
+      }
+      .step-card {
+        position: relative;
+        background: var(--color-surface);
+        border-radius: var(--radius-lg);
+        padding: var(--space-md);
+        padding-left: calc(var(--space-md) + 44px);
+        margin-bottom: var(--space-sm);
+        box-shadow: var(--shadow-sm);
+        border: 1.5px solid transparent;
+        transition: all 0.3s ease;
+      }
+      .step-card::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        border-radius: var(--radius-full) 0 0 var(--radius-full);
+      }
+
+      /* Completed step */
+      .step-card.completed {
+        border-color: var(--state-success-bg);
+        opacity: 0.85;
+      }
+      .step-card.completed::before {
+        background: var(--state-success);
+      }
+      .step-card.completed .step-number {
+        background: var(--state-success);
+        color: white;
+      }
+
+      /* Current step (you are here) */
+      .step-card.current {
+        border-color: var(--color-primary-light);
+        box-shadow: var(--shadow-md), 0 0 0 1px var(--color-primary-lighter), 0 0 20px rgba(242, 140, 56, 0.15);
+      }
+      .step-card.current::before {
+        background: var(--color-primary);
+      }
+      .step-card.current .step-number {
+        background: var(--color-primary);
+        color: white;
+        animation: pulse-glow 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse-glow {
+        0%, 100% {
+          box-shadow: 0 0 0 0 rgba(242, 140, 56, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 0 8px rgba(242, 140, 56, 0);
+        }
+      }
+
+      /* Upcoming step */
+      .step-card.upcoming {
+        border-color: var(--color-border-light);
+      }
+      .step-card.upcoming::before {
+        background: var(--color-border);
+      }
+      .step-card.upcoming .step-number {
+        background: var(--color-border);
+        color: var(--color-text-tertiary);
+      }
+
+      /* Step number circle */
+      .step-number {
+        position: absolute;
+        left: var(--space-md);
+        top: var(--space-md);
+        width: 32px;
+        height: 32px;
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--text-sm);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      /* Step content */
+      .step-title {
+        font-size: var(--text-base);
+        font-weight: 600;
+        color: var(--color-text);
+        margin-bottom: var(--space-xs);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .step-description {
+        font-size: var(--text-sm);
+        color: var(--color-text-secondary);
+        line-height: var(--leading-relaxed);
+      }
+
+      /* Time badge */
+      .time-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        font-size: var(--text-xs);
+        color: var(--color-text-tertiary);
+        background: var(--color-surface-secondary);
+        padding: 2px 8px;
+        border-radius: var(--radius-full);
+        white-space: nowrap;
+      }
+
+      /* Completed checkmark overlay */
+      .completed-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+        font-size: var(--text-xs);
+        color: var(--state-success);
+        background: var(--state-success-bg);
+        padding: 2px 8px;
+        border-radius: var(--radius-full);
+        font-weight: 500;
+      }
+
+      /* Cooking image between steps */
+      .cooking-image-wrapper {
+        margin: var(--space-sm) var(--space-md) var(--space-md);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+        position: relative;
+      }
+      .cooking-image-wrapper img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+        max-height: 180px;
+      }
+      .cooking-image-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: var(--space-sm) var(--space-md);
+        background: linear-gradient(transparent, rgba(61, 43, 31, 0.5));
+        color: white;
+        font-size: var(--text-xs);
+        text-align: center;
+      }
+
+      /* Bottom CTA area */
+      .bottom-cta-area {
+        margin: var(--space-md);
+        padding: var(--space-md);
+        background: var(--color-surface);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        text-align: center;
+      }
+      .cta-outline-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-xs);
+        padding: 10px var(--space-lg);
+        border: 1.5px solid var(--color-primary);
+        border-radius: var(--radius-full);
+        color: var(--color-primary);
+        font-size: var(--text-base);
+        font-weight: 600;
+        text-decoration: none;
+        background: transparent;
+        transition: all 0.2s ease;
+        width: 100%;
+        margin-bottom: var(--space-sm);
+      }
+      .cta-outline-btn:hover {
+        background: var(--color-primary-lightest);
+      }
+      .cta-text-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: var(--text-sm);
+        color: var(--color-primary);
+        text-decoration: none;
+        font-weight: 500;
+        padding: var(--space-xs) 0;
+        transition: color 0.2s ease;
+      }
+      .cta-text-link:hover {
+        color: var(--color-primary-dark);
+      }
+
+      /* Tab bar overrides for sub-page */
+      .tab-item[data-active="false"] {
+        color: var(--color-text-tertiary);
+        text-decoration: none;
+        outline: none;
+      }
+      .tab-item[data-active="false"] .tab-icon {
+        stroke: var(--color-text-tertiary);
+      }
+      .tab-item[data-active="false"] .tab-label {
+        font-weight: 400;
+        color: var(--color-text-tertiary);
+      }
+    </style>
+</body>
+</html>
