@@ -1,9 +1,45 @@
 """
-AI 对话服务 - 从 miniprogram/mock/ai-replies.js 迁移逻辑
-后续可替换为真实大模型 API（DeepSeek / 通义千问等）
+AI 对话服务 - 接入本地 Ollama qwen3.5 模型
+Ollama 服务地址：http://127.0.0.1:11434
+当 Ollama 不可用时降级到本地关键词匹配。
 """
+import os
+import json
 import random
+import logging
 from app.data.dishes import dishes
+
+logger = logging.getLogger(__name__)
+
+# Ollama 配置
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434/api/chat")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen3.5:0.8b")
+OLLAMA_TIMEOUT = float(os.environ.get("OLLAMA_TIMEOUT", "120"))
+
+# 系统提示词 - 小厨娘人设 + 菜品库上下文
+SYSTEM_PROMPT = """你是小厨娘，一位友好的中文烹饪助手。你的职责：
+1. 回答做菜问题（火候、调味、食材处理、刀工等）
+2. 根据用户已有食材推荐菜品
+3. 提供菜品的详细做法步骤
+4. 给出食材替换建议
+
+回答要求：
+- 用中文回答，语气亲切友好，可以适当用 emoji
+- 简洁实用，不超过 300 字
+- 如果用户问某道菜怎么做，给出简洁的步骤
+- 如果用户问食材替换，给出常见的替换方案
+
+你内置了 100 道家常菜谱，包括家常菜、川菜、粤菜、湘菜、鲁菜、东北菜、海鲜、汤煲、主食等菜系。
+常见菜有：番茄炒蛋、麻婆豆腐、宫保鸡丁、红烧肉、鱼香肉丝、清蒸鲈鱼、白切鸡、回锅肉等。"""
+
+
+def _build_dish_summary():
+    """构建菜品库摘要供 AI 参考"""
+    names = [d["name"] for d in dishes[:30]]
+    return "、".join(names)
+
+
+# ==================== 本地降级回复（Ollama 不可用时）====================
 
 reply_rules = [
     {
@@ -43,13 +79,12 @@ reply_rules = [
 default_replies = [
     "这个问题很好！你可以试着摇一摇，看看今天适合做什么菜~ 如果有具体做菜的问题，随时问我哦！",
     "嗯，让我想想... 你可以告诉我想做什么菜，我可以给你详细的步骤指导！",
-    "我虽然是原形模式，但基本的做菜问题都可以回答哦~ 试试问我关于火候、调味、食材处理的问题吧！"
+    "我是小厨娘，基本的做菜问题都可以回答哦~ 试试问我关于火候、调味、食材处理的问题吧！"
 ]
 
 
 def get_ai_reply(user_message: str) -> str:
-    """根据用户消息获取 AI 回复"""
-    # 关键词匹配
+    """本地关键词匹配回复（降级用）"""
     for rule in reply_rules:
         for keyword in rule["keywords"]:
             if keyword in user_message:
@@ -64,28 +99,51 @@ def get_ai_reply(user_message: str) -> str:
             steps_text += f"💡 小贴士：{dish['tips']}"
             return steps_text
 
-    # 默认回复
     return random.choice(default_replies)
 
 
-# TODO: 替换为真实大模型 API
+# ==================== Ollama 调用 ====================
+
 async def call_ai_api(user_message: str, context: list[dict] = None) -> str:
-    """
-    调用真实 AI API 的占位函数
-    替换示例：
+    """调用本地 Ollama qwen3.5 模型，失败时降级到本地匹配"""
+    try:
         import httpx
-        async with httpx.AsyncClient() as client:
-            resp = await client.post(
-                "https://api.deepseek.com/v1/chat/completions",
-                headers={"Authorization": "Bearer YOUR_API_KEY"},
-                json={
-                    "model": "deepseek-chat",
-                    "messages": [
-                        {"role": "system", "content": "你是小厨娘，一位友好的烹饪助手..."},
-                        {"role": "user", "content": user_message}
-                    ]
-                }
-            )
-            return resp.json()["choices"][0]["message"]["content"]
-    """
-    return get_ai_reply(user_message)
+    except ImportError:
+        logger.warning("httpx 未安装，降级到本地匹配")
+        return get_ai_reply(user_message)
+
+    # 构建消息列表
+    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+    if context:
+        # 取最近 6 条上下文
+        for msg in context[-6:]:
+            role = msg.get("role", "user")
+            content = msg.get("content", "")
+            if role in ("user", "assistant") and content:
+                messages.append({"role": role, "content": content})
+    messages.append({"role": "user", "content": user_message})
+
+    payload = {
+        "model": OLLAMA_MODEL,
+        "messages": messages,
+        "stream": False,
+        "think": False,  # 关闭 qwen3.5 思考模式，直接返回 content
+        "options": {
+            "temperature": 0.7,
+            "num_predict": 400,
+        }
+    }
+
+    try:
+        async with httpx.AsyncClient(timeout=OLLAMA_TIMEOUT, trust_env=False) as client:
+            resp = await client.post(OLLAMA_URL, json=payload)
+            resp.raise_for_status()
+            data = resp.json()
+            content = data.get("message", {}).get("content", "").strip()
+            if content:
+                return content
+            logger.warning("Ollama 返回空 content，降级到本地匹配")
+            return get_ai_reply(user_message)
+    except Exception as e:
+        logger.warning(f"Ollama 调用失败：{e}，降级到本地匹配")
+        return get_ai_reply(user_message)

@@ -18,6 +18,6 @@
         <text wx:if="{{status === 'current'}}" class="status-badge current">进行中</text>
       </view>
     </view>
-    <text class="step-desc">{{step.desc}}</text>
+    <text class="step-desc">{{step.desc || step.description}}</text>
   </view>
 </view>

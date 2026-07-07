@@ -59,18 +59,23 @@
 .info-header {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 16rpx;
   margin-bottom: 20rpx;
 }
 
 .dish-name {
+  flex: 1;
+  min-width: 0;
   font-size: 48rpx;
   font-weight: 800;
   color: #2a1735;
   line-height: 1.2;
+  word-break: break-all;
 }
 
 .category-tag {
+  flex-shrink: 0;
   padding: 8rpx 20rpx;
   background: linear-gradient(135deg, #ff3d6e 0%, #ff7a1a 100%);
   color: #FFFFFF;
@@ -109,6 +114,23 @@
   font-size: 28rpx;
   color: var(--color-text-secondary, #7A6258);
   line-height: 1.7;
+  word-break: break-all;
+}
+
+.dish-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 14rpx;
+}
+
+.dish-tag {
+  font-size: 20rpx;
+  font-weight: 700;
+  color: #ff6b1a;
+  background: rgba(255, 107, 26, 0.08);
+  padding: 4rpx 14rpx;
+  border-radius: 999rpx;
 }
 
 /* 食材卡 */
@@ -116,7 +138,7 @@
   margin: 28rpx 32rpx 0;
   opacity: 0;
   animation: fadeInUp 0.6s ease 0.25s forwards;
-  padding: 24rpx;
+  padding: 28rpx 24rpx;
 }
 
 .card-label-wrap,
@@ -124,7 +146,7 @@
   display: flex;
   align-items: center;
   gap: 8rpx;
-  margin-bottom: 18rpx;
+  margin-bottom: 20rpx;
 }
 
 .label-img {
@@ -136,59 +158,183 @@
   font-size: 26rpx;
   color: var(--color-text-tertiary, #A89288);
   font-weight: 600;
+  flex: 1;
 }
 
+.ingredient-count {
+  font-size: 22rpx;
+  color: #ff6b1a;
+  font-weight: 700;
+  background: rgba(255, 107, 26, 0.08);
+  padding: 4rpx 14rpx;
+  border-radius: 999rpx;
+}
+
+/* 食材组合 - 2 列水平卡片 */
 .ingredient-tags {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12rpx;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14rpx;
 }
 
 .ingredient-tag {
   min-width: 0;
-  height: 96rpx;
-  margin: 0;
-  padding: 10rpx 6rpx;
+  min-height: 118rpx;
+  padding: 16rpx 18rpx;
   box-sizing: border-box;
-  border-radius: 20rpx;
-  gap: 6rpx;
+  border-radius: 18rpx;
   display: flex;
   align-items: center;
-  flex-direction: column;
-  justify-content: center;
+  gap: 14rpx;
   background: linear-gradient(180deg, #fffaf6 0%, #ffffff 100%);
   border: 2rpx solid #ffd7c2;
   box-shadow: inset 0 -4rpx 0 rgba(255, 107, 26, 0.06);
-  font-size: 21rpx;
-  font-weight: 800;
-  color: #2a1735;
-  text-align: center;
+  opacity: 0;
+  animation: popIn 0.35s ease forwards;
 }
 
 .ingredient-icon {
-  width: 44rpx;
-  height: 44rpx;
+  width: 48rpx;
+  height: 48rpx;
   flex-shrink: 0;
   filter: drop-shadow(0 6rpx 10rpx rgba(91,43,111,0.10));
 }
 
-.ingredient-tag text {
-  display: block;
-  max-width: 100%;
-  min-height: 38rpx;
-  line-height: 1.12;
-  white-space: normal;
+.ingredient-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.ingredient-name {
+  font-size: 26rpx;
+  font-weight: 800;
+  color: #2a1735;
+  line-height: 1.25;
   overflow: hidden;
-  text-align: center;
-  word-break: keep-all;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  word-break: break-all;
 }
 
-.ingredient-tags .tag {
-  opacity: 0;
-  animation: popIn 0.35s ease forwards;
+.ingredient-amount {
+  font-size: 21rpx;
+  font-weight: 600;
+  color: #ff6b1a;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 可替换食材面板 */
+.substitute-panel {
+  margin-top: 24rpx;
+  padding-top: 22rpx;
+  border-top: 1rpx dashed rgba(255, 215, 194, 0.8);
+}
+
+.substitute-head {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  color: #6d536c;
+  font-size: 24rpx;
+  font-weight: 850;
+  margin-bottom: 16rpx;
+}
+
+.substitute-list {
+  display: flex;
+  gap: 14rpx;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 6rpx;
+}
+
+.substitute-group {
+  width: 232rpx;
+  min-height: 170rpx;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12rpx;
+  padding: 16rpx;
+  border-radius: 16rpx;
+  background: #fffaf6;
+  border: 1rpx solid #ffe0cd;
+}
+
+.substitute-source-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  min-width: 0;
+}
+
+.substitute-source-icon {
+  width: 32rpx;
+  height: 32rpx;
+  flex-shrink: 0;
+}
+
+.substitute-source {
+  min-width: 0;
+  font-size: 24rpx;
+  font-weight: 800;
+  color: #2a1735;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.substitute-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  white-space: normal;
+}
+
+.substitute-chip {
+  max-width: 94rpx;
+  display: inline-flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 6rpx 14rpx;
+  border-radius: 999rpx;
+  background: #ffffff;
+  border: 1rpx solid #ffd7c2;
+  color: #5b2b6f;
+  font-size: 22rpx;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.substitute-chip text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.substitute-icon {
+  width: 26rpx;
+  height: 26rpx;
+  flex-shrink: 0;
+}
+
+.substitute-empty {
+  font-size: 22rpx;
+  color: #b8a8a0;
+  font-style: italic;
+  white-space: normal;
+  line-height: 1.35;
 }
 
 @keyframes popIn {
@@ -269,11 +415,11 @@
 }
 
 .alternative-item {
-  width: 220rpx;
+  width: 204rpx;
   background: var(--color-surface, #FFFFFF);
   border: 1rpx solid var(--color-border, #F0DCC8);
   border-radius: 20rpx;
-  padding: 24rpx 20rpx;
+  padding: 22rpx 18rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -293,11 +439,21 @@
   font-weight: 700;
   color: var(--color-text, #3D2B1F);
   text-align: center;
+  max-width: 100%;
+  line-height: 1.25;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .alt-meta {
   font-size: 20rpx;
   color: var(--color-text-tertiary, #A89288);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* 操作按钮 */
@@ -312,16 +468,40 @@
 }
 
 .action-buttons .btn-primary,
-.action-buttons .btn-outline {
-  width: 360rpx;
-  min-height: 92rpx;
+.action-buttons .btn-outline,
+.action-buttons .btn-secondary {
+  width: 520rpx;
+  max-width: 82vw;
+  min-height: 96rpx;
   line-height: 1.2;
-  padding: 0 28rpx;
+  padding: 18rpx 30rpx;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   white-space: normal;
+  word-break: keep-all;
+  text-align: center;
+}
+
+.btn-secondary {
+  border: none;
+  border-radius: 999rpx;
+  background: #fffaf6;
+  color: #5b2b6f;
+  font-size: 28rpx;
+  font-weight: 850;
+  box-shadow: 0 12rpx 32rpx rgba(91,43,111,0.08);
+}
+
+.btn-secondary::after {
+  border: none;
+}
+
+.btn-icon {
+  width: 42rpx;
+  height: 42rpx;
+  margin-right: 10rpx;
 }
 
 .btn-glow {
@@ -344,11 +524,20 @@
 .link-text {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8rpx;
   font-size: 26rpx;
   color: var(--color-primary, #F28C38);
   margin-top: 8rpx;
   font-weight: 500;
+  max-width: 88vw;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.link-text text {
+  min-width: 0;
+  word-break: keep-all;
 }
 
 .link-icon-img {

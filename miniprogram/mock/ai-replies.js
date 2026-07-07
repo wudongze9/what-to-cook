@@ -68,7 +68,7 @@ function getAIReply(userMessage) {
   if (dish) {
     let stepsText = `【${dish.name}】的做法：\n\n`
     dish.steps.forEach((step, i) => {
-      stepsText += `${i + 1}. ${step.title}（${step.time}分钟）\n   ${step.desc}\n\n`
+      stepsText += `${i + 1}. ${step.title}（${step.time}分钟）\n   ${step.desc || step.description || ''}\n\n`
     })
     stepsText += `💡 小贴士：${dish.tips}`
     return { text: stepsText, delay: 1000 }

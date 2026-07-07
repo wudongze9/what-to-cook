@@ -1,0 +1,131 @@
+<view class="page-login">
+  <view class="login-bg">
+    <image class="float-food food-tomato" src="/images/icons/tomato.svg" mode="aspectFit" />
+    <image class="float-food food-lemon" src="/images/icons/lemon.svg" mode="aspectFit" />
+    <image class="float-food food-leaf" src="/images/icons/leaf.svg" mode="aspectFit" />
+    <image class="float-food food-garlic" src="/images/icons/garlic.svg" mode="aspectFit" />
+    <image class="float-food food-lobster" src="/images/icons/lobster.svg" mode="aspectFit" />
+    <view class="bg-ring ring-main"></view>
+    <view class="bg-ring ring-soft"></view>
+    <view class="bg-plate"></view>
+    <view class="bg-orbit orbit-a"></view>
+    <view class="bg-orbit orbit-b"></view>
+    <view class="light-dot dot-one"></view>
+    <view class="light-dot dot-two"></view>
+    <view class="light-dot dot-three"></view>
+  </view>
+
+  <view class="login-hero">
+    <view class="brand-badge">
+      <image class="brand-icon" src="/images/icons/chef.svg" mode="aspectFit" />
+    </view>
+    <text class="app-title">今天吃什么</text>
+    <text class="app-subtitle">登录后同步收藏、历史和你的专属口味</text>
+    <view class="benefit-row">
+      <view class="benefit-chip">
+        <image src="/images/icons/spark.svg" mode="aspectFit" />
+        <text>智能推荐</text>
+      </view>
+      <view class="benefit-chip">
+        <image src="/images/icons/cart.svg" mode="aspectFit" />
+        <text>采购清单</text>
+      </view>
+      <view class="benefit-chip">
+        <image src="/images/icons/timer.svg" mode="aspectFit" />
+        <text>步骤计时</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="auth-card">
+    <view class="tab-bar">
+      <view class="tab {{mode === 'login' ? 'active' : ''}}" bindtap="onSwitchMode" data-mode="login">登录</view>
+      <view class="tab {{mode === 'register' ? 'active' : ''}}" bindtap="onSwitchMode" data-mode="register">注册</view>
+    </view>
+
+    <view class="form-card">
+      <view class="form-item">
+        <text class="form-label">用户名</text>
+        <view class="input-wrap">
+          <image class="input-icon" src="/images/icons/user.svg" mode="aspectFit" />
+          <input
+            class="form-input"
+            placeholder="请输入用户名"
+            placeholder-class="input-placeholder"
+            value="{{username}}"
+            data-field="username"
+            bindinput="onInput"
+            maxlength="20"
+          />
+        </view>
+      </view>
+
+      <view wx:if="{{mode === 'register'}}" class="form-item">
+        <text class="form-label">昵称</text>
+        <view class="input-wrap">
+          <image class="input-icon" src="/images/icons/chef.svg" mode="aspectFit" />
+          <input
+            class="form-input"
+            placeholder="给自己起个昵称"
+            placeholder-class="input-placeholder"
+            value="{{nickname}}"
+            data-field="nickname"
+            bindinput="onInput"
+            maxlength="20"
+          />
+        </view>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">密码</text>
+        <view class="input-wrap">
+          <image class="input-icon" src="/images/icons/check.svg" mode="aspectFit" />
+          <input
+            class="form-input"
+            placeholder="至少6位密码"
+            placeholder-class="input-placeholder"
+            password="{{true}}"
+            value="{{password}}"
+            data-field="password"
+            bindinput="onInput"
+            maxlength="32"
+          />
+          <image class="eye-icon" src="/images/icons/eye.svg" mode="aspectFit" />
+        </view>
+      </view>
+
+      <button
+        class="submit-btn"
+        bindtap="onSubmit"
+        loading="{{loading}}"
+        disabled="{{loading}}"
+      >
+        <text>{{mode === 'login' ? '登录并开饭' : '注册并开饭'}}</text>
+        <text class="submit-curl">↝</text>
+      </button>
+    </view>
+
+    <view class="divider">
+      <view class="divider-line"></view>
+      <text class="divider-text">其他方式</text>
+      <view class="divider-line"></view>
+    </view>
+
+    <button class="wx-login-btn" bindtap="onWxLogin" disabled="{{loading}}">
+      <view class="wechat-mark">
+        <view class="wechat-dot dot-a"></view>
+        <view class="wechat-dot dot-b"></view>
+      </view>
+      <text>微信一键登录</text>
+    </button>
+
+    <view wx:if="{{mode === 'register'}}" class="tip-text">
+      首个注册用户将自动成为管理员
+    </view>
+  </view>
+
+  <view class="agreement-row">
+    <image class="agree-icon" src="/images/icons/check.svg" mode="aspectFit" />
+    <text>首次使用即已同意《用户协议》和《隐私政策》</text>
+  </view>
+</view>

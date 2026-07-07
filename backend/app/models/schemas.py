@@ -60,3 +60,63 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     reply: str
+
+
+class ShuffleRequest(BaseModel):
+    """摇一摇请求 - 携带摇杆机摇出的食材"""
+    selected_ingredients: list[str] = []
+    category: Optional[str] = None
+    spice_level: Optional[str] = None
+
+
+# ==================== 用户认证相关 ====================
+
+class RegisterRequest(BaseModel):
+    """注册请求"""
+    username: str
+    password: str
+    nickname: str = ""
+
+
+class LoginRequest(BaseModel):
+    """登录请求"""
+    username: str
+    password: str
+
+
+class WxLoginRequest(BaseModel):
+    """微信登录请求"""
+    code: str
+    nickname: str = ""
+    avatar: str = ""
+
+
+class UpdateProfileRequest(BaseModel):
+    """更新用户资料请求"""
+    nickname: Optional[str] = None
+    avatar: Optional[str] = None
+    signature: Optional[str] = None
+
+
+class ChangePasswordRequest(BaseModel):
+    """修改密码请求"""
+    old_password: str
+    new_password: str
+
+
+class UserResponse(BaseModel):
+    """用户信息响应"""
+    id: int
+    username: str
+    nickname: str
+    avatar: str
+    signature: str
+    is_admin: bool = False
+    is_active: bool = True
+    created_at: str = ""
+    last_login: str = ""
+
+
+class FavoriteRequest(BaseModel):
+    """收藏请求"""
+    dish_id: int

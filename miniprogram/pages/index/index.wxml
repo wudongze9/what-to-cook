@@ -3,6 +3,19 @@
     <view class="hero-orbit orbit-one"></view>
     <view class="hero-orbit orbit-two"></view>
     <view class="hero-grid"></view>
+    <image class="hero-float hero-pot" src="/images/icons/pot.svg" mode="aspectFit" />
+    <image class="hero-float hero-leaf" src="/images/icons/leaf.svg" mode="aspectFit" />
+    <image class="hero-float hero-tomato" src="/images/icons/tomato.svg" mode="aspectFit" />
+  </view>
+
+  <!-- 未登录时显示登录引导 -->
+  <view wx:if="{{!isLoggedIn}}" class="login-banner" bindtap="onGoLogin">
+    <image class="login-banner-icon" src="/images/icons/user.svg" mode="aspectFit" />
+    <view class="login-banner-text">
+      <text class="login-banner-title">登录后享受更多功能</text>
+      <text class="login-banner-desc">收藏和历史云端同步</text>
+    </view>
+    <text class="login-banner-arrow">去登录 ›</text>
   </view>
 
   <view class="header">
@@ -113,6 +126,8 @@
     id="slotMachine"
     slotCount="{{activeCount}}"
     ingredientType="{{activeIngredientType}}"
+    cuisine="{{activeCuisine}}"
+    spiceLevel="{{activeSpiceLevel}}"
     bind:spinend="onSpinEnd"
   />
 
@@ -140,8 +155,11 @@
         bindtap="onHistoryTap"
         data-dish="{{item}}"
       >
-        <text class="history-name">{{item.name}}</text>
-        <text class="history-category">{{item.category}}</text>
+        <image class="history-cover" src="{{item.cover || '/images/dish-default.svg'}}" mode="aspectFill" />
+        <view class="history-info">
+          <text class="history-name">{{item.name}}</text>
+          <text class="history-category">{{item.category}}</text>
+        </view>
       </view>
     </scroll-view>
   </view>

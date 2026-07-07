@@ -1,0 +1,99 @@
+{
+  "_说明": "菜品数据收集模板 - 按此格式添加新菜品，填写后导入数据库",
+  "_字段说明": {
+    "name": "菜品名称",
+    "category": "菜系（参考 _标准.category）",
+    "categoryTag": "场景标签（参考 _标准.categoryTag）",
+    "spiceLevel": "辣度（参考 _标准.spiceLevel）",
+    "difficulty": "难度（参考 _标准.difficulty）",
+    "description": "一句话描述菜品特色",
+    "time": "预计烹饪时间（分钟）",
+    "calories": "预估热量（千卡/份）",
+    "ingredients": "所需食材名称数组，必须与 ingredients 表中的 name 对应",
+    "steps": "步骤数组，每步含 title/desc/time(分钟)",
+    "tips": "烹饪小贴士",
+    "videoId": "关联视频ID，无视频填 null"
+  },
+  "_标准": {
+    "category": ["家常菜", "川菜", "粤菜", "湘菜", "鲁菜", "苏菜", "浙菜", "闽菜", "徽菜", "东北菜", "西北菜", "海鲜", "汤煲", "主食", "甜品", "西餐", "日料"],
+    "categoryTag": ["快手菜", "经典菜", "健康菜", "宴客菜", "下饭菜", "减脂菜"],
+    "spiceLevel": ["不辣", "微辣", "中辣", "重辣"],
+    "difficulty": ["简单", "中等", "较难"]
+  },
+  "dishes": [
+    {
+      "name": "示例：番茄炒蛋",
+      "category": "家常菜",
+      "categoryTag": "快手菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "经典中式家常菜，酸甜可口，营养丰富，十分钟搞定",
+      "time": 10,
+      "calories": 180,
+      "ingredients": ["番茄", "鸡蛋", "葱", "盐", "糖"],
+      "steps": [
+        { "title": "准备食材", "desc": "番茄切块，鸡蛋打散加少许盐搅匀，葱切葱花", "time": 2 },
+        { "title": "炒鸡蛋", "desc": "热锅倒油，油温七成热时倒入蛋液，快速翻炒至凝固盛出", "time": 2 },
+        { "title": "炒番茄", "desc": "锅中再加少许油，放入番茄块翻炒出汁", "time": 3 },
+        { "title": "合炒调味", "desc": "倒回鸡蛋，加盐和少许糖翻炒均匀", "time": 2 },
+        { "title": "出锅装盘", "desc": "撒上葱花，翻炒几下即可出锅", "time": 1 }
+      ],
+      "tips": "番茄要选熟透的才甜，鸡蛋不要炒太老",
+      "videoId": null
+    },
+    {
+      "name": "示例：麻婆豆腐",
+      "category": "川菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "中辣",
+      "difficulty": "简单",
+      "description": "麻辣鲜香，豆腐嫩滑，正宗川味下饭神菜",
+      "time": 15,
+      "calories": 200,
+      "ingredients": ["嫩豆腐", "牛肉末", "豆瓣酱", "花椒", "蒜", "葱", "生抽", "淀粉"],
+      "steps": [
+        { "title": "处理豆腐", "desc": "豆腐切2cm方块，淡盐水浸泡5分钟去豆腥", "time": 5 },
+        { "title": "炒肉末", "desc": "热锅凉油，下牛肉末煸炒至变色酥香", "time": 2 },
+        { "title": "炒酱出红油", "desc": "加豆瓣酱小火炒出红油，加蒜末爆香", "time": 1 },
+        { "title": "加水煮豆腐", "desc": "加适量水，放入豆腐，加生抽调味，中火煮3分钟入味", "time": 3 },
+        { "title": "勾芡出锅", "desc": "水淀粉勾芡，撒花椒粉和葱花，翻炒出锅", "time": 2 }
+      ],
+      "tips": "豆腐先泡盐水不容易碎；勾芡分两次更均匀",
+      "videoId": null
+    },
+    {
+      "name": "示例：清蒸鲈鱼",
+      "category": "粤菜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "鲜嫩无比，原汁原味，宴客必备硬菜",
+      "time": 25,
+      "calories": 150,
+      "ingredients": ["鲈鱼", "葱", "姜", "蒸鱼豉油", "料酒", "红椒"],
+      "steps": [
+        { "title": "处理鲈鱼", "desc": "鲈鱼去鳞去内脏洗净，鱼身两面划三刀，抹料酒腌制10分钟", "time": 10 },
+        { "title": "摆盘上锅", "desc": "鱼身放姜丝，水开后上锅大火蒸8分钟", "time": 8 },
+        { "title": "去腥提味", "desc": "倒掉蒸鱼水，铺上葱丝、姜丝、红椒丝，淋上蒸鱼豉油", "time": 2 },
+        { "title": "浇热油", "desc": "锅中烧热油，浇在鱼身的葱姜丝上，滋啦一声即可", "time": 1 }
+      ],
+      "tips": "蒸鱼时间不要太长，8-10分钟刚好；一定要水开后再放鱼",
+      "videoId": null
+    }
+  ],
+  "ingredients_to_add": [
+    {
+      "_说明": "如果菜品用到了食材库中没有的新食材，在此登记",
+      "name": "嫩豆腐",
+      "emoji": "🧈",
+      "type": "egg",
+      "icon": "tofu"
+    },
+    {
+      "name": "牛肉末",
+      "emoji": "🥩",
+      "type": "meat",
+      "icon": "meat"
+    }
+  ]
+}

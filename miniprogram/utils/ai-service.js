@@ -1,76 +1,159 @@
 /**
  * AI 服务接口
- * 当前使用本地 Mock 匹配，后续可替换为真实 AI API
- *
- * 替换方式：将 callAI 函数改为调用真实 API 即可
- * 示例：
- *   const res = await wx.request({
- *     url: 'https://your-ai-api.com/chat',
- *     method: 'POST',
- *     data: { messages: [...], query: userMessage }
- *   })
- *   return res.data.reply
+ * 1. callAI - 调用后端 Ollama 对话
+ * 2. startVoiceRecording / stopVoiceRecording - 长按录音（暂未接入 ASR，保留架构）
+ * 3. playTTS - 文本转语音播报（调用后端 edge-tts）
  */
 
 const { getAIReply } = require('../mock/ai-replies')
 
+const BASE_URL = 'http://localhost:8001/api'
+
 /**
- * 调用 AI 获取回复
- * @param {string} userMessage - 用户问题
- * @param {Array} context - 上下文消息历史
- * @returns {Promise<{text: string, delay: number}>}
+ * 调用 AI 获取回复（通过后端 Ollama）
  */
 async function callAI(userMessage, context = []) {
-  // TODO: 替换为真实 AI API 调用
-  // 当前使用 Mock 匹配
-  return getAIReply(userMessage)
+  try {
+    const res = await new Promise((resolve, reject) => {
+      wx.request({
+        url: BASE_URL + '/chat',
+        method: 'POST',
+        data: { message: userMessage, context },
+        header: { 'Content-Type': 'application/json' },
+        timeout: 120000,
+        success: (r) => {
+          if (r.statusCode === 200 && r.data && r.data.reply) {
+            resolve(r.data.reply)
+          } else {
+            reject(r)
+          }
+        },
+        fail: reject
+      })
+    })
+    return { text: res, delay: 200 }
+  } catch (err) {
+    console.warn('[callAI] 后端调用失败，降级到本地 mock', err)
+    return getAIReply(userMessage)
+  }
+}
+
+// ==================== 语音录音（长按模式）====================
+
+let _recorderManager = null
+let _isRecording = false
+
+function _getRecorder() {
+  if (!_recorderManager) {
+    _recorderManager = wx.getRecorderManager()
+    _recorderManager.onError((err) => {
+      console.error('录音错误', err)
+      _isRecording = false
+    })
+  }
+  return _recorderManager
 }
 
 /**
- * 语音识别（使用微信同声传译插件或云开发能力）
- * 当前使用 wx.getRecorderManager 录制，后续可对接语音识别 API
+ * 开始录音（长按触发）
  */
-function startVoiceRecognition() {
-  return new Promise((resolve, reject) => {
-    const recorderManager = wx.getRecorderManager()
+function startVoiceRecording(onStop) {
+  const recorder = _getRecorder()
+  _isRecording = true
 
-    recorderManager.onStart(() => {
-      console.log('开始录音')
-    })
-
-    recorderManager.onStop((res) => {
-      const { tempFilePath } = res
-      if (!tempFilePath) {
-        reject(new Error('录音失败'))
-        return
-      }
-      // TODO: 将 tempFilePath 上传到语音识别服务
-      // 示例：wx.uploadFile({ url: 'asr-api', filePath: tempFilePath })
-      // 当前返回提示
-      resolve('语音识别功能需要对接语音识别 API（如腾讯云 ASR）')
-    })
-
-    recorderManager.onError((err) => {
-      reject(err)
-    })
-
-    // 开始录音
-    recorderManager.start({
-      duration: 60000, // 最长 60 秒
-      sampleRate: 16000,
-      numberOfChannels: 1,
-      encodeBitRate: 48000,
-      format: 'mp3'
-    })
-
-    // 2 秒后自动停止（演示用，实际应改为长按结束）
-    setTimeout(() => {
-      recorderManager.stop()
-    }, 2000)
+  recorder.onStop((res) => {
+    _isRecording = false
+    if (onStop && typeof onStop === 'function') {
+      onStop(res)
+    }
   })
+
+  recorder.start({
+    duration: 60000,
+    sampleRate: 16000,
+    numberOfChannels: 1,
+    encodeBitRate: 48000,
+    format: 'mp3'
+  })
+}
+
+/**
+ * 停止录音（松开触发）
+ */
+function stopVoiceRecording() {
+  if (_isRecording && _recorderManager) {
+    _recorderManager.stop()
+  }
+}
+
+function isRecording() {
+  return _isRecording
+}
+
+// ==================== TTS 语音播报 ====================
+
+let _ttsAudio = null
+
+/**
+ * 播报文本（TTS）
+ * @param {string} text - 要播报的文本
+ * @param {object} callbacks - { onPlay, onEnded, onError }
+ */
+function playTTS(text, callbacks = {}) {
+  if (!text || !text.trim()) return
+
+  // 停止上一次播放
+  stopTTS()
+
+  // 先请求后端合成
+  wx.request({
+    url: BASE_URL + '/chat/tts',
+    method: 'POST',
+    data: { text },
+    header: { 'Content-Type': 'application/json' },
+    timeout: 60000,
+    success: (res) => {
+      if (res.statusCode === 200 && res.data && res.data.success) {
+        const url = BASE_URL + res.data.url
+        _ttsAudio = wx.createInnerAudioContext()
+        _ttsAudio.src = url
+        _ttsAudio.autoplay = true
+        if (callbacks.onPlay) _ttsAudio.onPlay(callbacks.onPlay)
+        if (callbacks.onEnded) _ttsAudio.onEnded(callbacks.onEnded)
+        if (callbacks.onError) _ttsAudio.onError(callbacks.onError)
+      } else {
+        console.warn('[TTS] 合成失败', res.data)
+        if (callbacks.onError) callbacks.onError(res.data)
+      }
+    },
+    fail: (err) => {
+      console.warn('[TTS] 请求失败', err)
+      if (callbacks.onError) callbacks.onError(err)
+    }
+  })
+}
+
+/**
+ * 停止 TTS 播报
+ */
+function stopTTS() {
+  if (_ttsAudio) {
+    _ttsAudio.stop()
+    _ttsAudio.destroy()
+    _ttsAudio = null
+  }
+}
+
+function isTTSPlaying() {
+  return _ttsAudio !== null
 }
 
 module.exports = {
   callAI,
-  startVoiceRecognition
+  startVoiceRecording,
+  stopVoiceRecording,
+  isRecording,
+  playTTS,
+  stopTTS,
+  isTTSPlaying
 }

@@ -1,0 +1,196 @@
+{
+  "_说明": "菜品数据收集示例 - 可直接复制使用",
+  "_填写规则": {
+    "1_菜品名": "用日常叫法，如'番茄炒蛋'而非'西红柿炒鸡蛋'",
+    "2_食材名": "必须与食材库中的 name 完全一致，新食材需在 ingredients_to_add 中登记",
+    "3_步骤": "3-6步为宜，每步都要有 title/desc/time",
+    "4_辣度": "不辣/微辣/中辣/重辣 四档",
+    "5_难度": "简单/中等/较难 三档"
+  },
+  "_标准枚举": {
+    "category": ["家常菜", "川菜", "粤菜", "湘菜", "鲁菜", "苏菜", "浙菜", "闽菜", "徽菜", "东北菜", "西北菜", "海鲜", "汤煲", "主食", "甜品", "西餐", "日料"],
+    "categoryTag": ["快手菜", "经典菜", "健康菜", "宴客菜", "下饭菜", "减脂菜"],
+    "spiceLevel": ["不辣", "微辣", "中辣", "重辣"],
+    "difficulty": ["简单", "中等", "较难"],
+    "ingredient_type": ["vegetable", "meat", "seafood", "egg", "staple", "seasoning"]
+  },
+
+  "dishes": [
+    {
+      "name": "麻婆豆腐",
+      "category": "川菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "中辣",
+      "difficulty": "简单",
+      "description": "麻辣鲜香，豆腐嫩滑，正宗川味下饭神菜",
+      "time": 15,
+      "calories": 200,
+      "ingredients": ["嫩豆腐", "牛肉末", "豆瓣酱", "花椒", "蒜", "葱", "生抽", "淀粉"],
+      "steps": [
+        { "title": "处理豆腐", "desc": "豆腐切2cm方块，淡盐水浸泡5分钟去豆腥", "time": 5 },
+        { "title": "炒肉末", "desc": "热锅凉油，下牛肉末煸炒至变色酥香", "time": 2 },
+        { "title": "炒酱出红油", "desc": "加豆瓣酱小火炒出红油，加蒜末爆香", "time": 1 },
+        { "title": "加水煮豆腐", "desc": "加适量水，放入豆腐，加生抽调味，中火煮3分钟入味", "time": 3 },
+        { "title": "勾芡出锅", "desc": "水淀粉勾芡，撒花椒粉和葱花，翻炒出锅", "time": 2 }
+      ],
+      "tips": "豆腐先泡盐水不容易碎；勾芡分两次更均匀",
+      "videoId": null
+    },
+    {
+      "name": "水煮牛肉",
+      "category": "川菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "重辣",
+      "difficulty": "中等",
+      "description": "麻辣鲜烫，肉片滑嫩，川菜馆必点硬菜",
+      "time": 30,
+      "calories": 350,
+      "ingredients": ["牛肉", "豆芽", "芹菜", "豆瓣酱", "干辣椒", "花椒", "蒜", "葱", "生抽", "淀粉", "蛋清"],
+      "steps": [
+        { "title": "腌制牛肉", "desc": "牛肉逆纹切薄片，加生抽、淀粉、蛋清抓匀腌制15分钟", "time": 15 },
+        { "title": "炒底菜", "desc": "豆芽、芹菜焯水铺碗底", "time": 3 },
+        { "title": "炒酱出味", "desc": "热锅下油，加豆瓣酱、干辣椒、花椒炒出红油，加水烧开", "time": 3 },
+        { "title": "煮牛肉", "desc": "下牛肉片拨散，煮1分钟至变色即连汤倒入碗中", "time": 2 },
+        { "title": "浇热油", "desc": "牛肉上撒蒜末、葱花、干辣椒、花椒，烧冒烟的热油浇上去", "time": 1 }
+      ],
+      "tips": "牛肉要逆纹切，腌制加蛋清更嫩；煮牛肉时间不要长，变色即捞",
+      "videoId": null
+    },
+    {
+      "name": "白切鸡",
+      "category": "粤菜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "皮爽肉滑，原汁原味，粤菜经典冷盘",
+      "time": 40,
+      "calories": 220,
+      "ingredients": ["三黄鸡", "姜", "葱", "香油", "生抽", "冰水"],
+      "steps": [
+        { "title": "处理鸡", "desc": "整鸡洗净，去除内脏和鸡油", "time": 5 },
+        { "title": "浸煮", "desc": "锅中水加姜片葱段烧开，提鸡腿将鸡身浸入水中3秒提起，重复3次", "time": 3 },
+        { "title": "小火浸熟", "desc": "将整鸡放入水中，小火保持微沸25分钟，关火焖10分钟", "time": 25 },
+        { "title": "冰水激冷", "desc": "捞出立即放入冰水中浸泡5分钟，皮脆肉紧", "time": 5 },
+        { "title": "斩件蘸料", "desc": "斩块装盘，姜葱蓉加少许盐淋上热油做蘸料", "time": 2 }
+      ],
+      "tips": "三提三浸让鸡腔内外温度一致，肉质更嫩；冰水激冷是皮脆的关键",
+      "videoId": null
+    },
+    {
+      "name": "地三鲜",
+      "category": "东北菜",
+      "categoryTag": "家常菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "东北经典素菜，三种蔬菜完美搭配，下饭神器",
+      "time": 20,
+      "calories": 180,
+      "ingredients": ["茄子", "土豆", "青椒", "蒜", "生抽", "老抽", "糖", "淀粉", "盐"],
+      "steps": [
+        { "title": "切食材", "desc": "茄子切滚刀块，土豆切块，青椒掰小块，蒜切末", "time": 3 },
+        { "title": "炸土豆", "desc": "油温六成热，下土豆块炸至金黄捞出", "time": 4 },
+        { "title": "炸茄子", "desc": " same 油温下茄子炸至表皮微皱捞出", "time": 3 },
+        { "title": "调酱汁", "desc": "生抽2勺、老抽半勺、糖1勺、淀粉1勺、水半碗调匀", "time": 1 },
+        { "title": "合炒收汁", "desc": "锅留底油爆香蒜末，倒入酱汁烧开，下土豆茄子青椒翻炒收汁", "time": 3 }
+      ],
+      "tips": "茄子炸之前可以先拌一层干淀粉，吸油少；青椒最后放保持脆嫩",
+      "videoId": null
+    },
+    {
+      "name": "可乐鸡翅",
+      "category": "家常菜",
+      "categoryTag": "快手菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "甜香入味，零失败入门菜，小朋友最爱",
+      "time": 25,
+      "calories": 280,
+      "ingredients": ["鸡翅", "可乐", "生抽", "老抽", "姜", "料酒"],
+      "steps": [
+        { "title": "处理鸡翅", "desc": "鸡翅两面划两刀方便入味，冷水下锅加料酒焯水", "time": 5 },
+        { "title": "煎鸡翅", "desc": "热锅少许油，鸡翅擦干水分，两面煎至金黄", "time": 5 },
+        { "title": "加调料", "desc": "加生抽2勺、老抽半勺翻炒上色", "time": 1 },
+        { "title": "加可乐炖煮", "desc": "倒入可乐没过鸡翅，大火烧开转中火炖15分钟", "time": 15 },
+        { "title": "大火收汁", "desc": "大火收汁至浓稠包裹鸡翅即可", "time": 3 }
+      ],
+      "tips": "可乐要用含糖的普通可乐，零度无糖上色差；收汁时注意翻动防粘锅",
+      "videoId": null
+    }
+  ],
+
+  "ingredients_to_add": [
+    {
+      "_说明": "以下是上述菜品用到、但食材库中还没有的新食材",
+      "name": "嫩豆腐",
+      "emoji": "🧈",
+      "type": "egg",
+      "icon": "tofu"
+    },
+    {
+      "name": "牛肉末",
+      "emoji": "🥩",
+      "type": "meat",
+      "icon": "meat"
+    },
+    {
+      "name": "牛肉",
+      "emoji": "🥩",
+      "type": "meat",
+      "icon": "meat"
+    },
+    {
+      "name": "豆芽",
+      "emoji": "🌱",
+      "type": "vegetable",
+      "icon": "sprout"
+    },
+    {
+      "name": "芹菜",
+      "emoji": "🥬",
+      "type": "vegetable",
+      "icon": "celery"
+    },
+    {
+      "name": "干辣椒",
+      "emoji": "🌶️",
+      "type": "seasoning",
+      "icon": "pepper"
+    },
+    {
+      "name": "蛋清",
+      "emoji": "🥚",
+      "type": "egg",
+      "icon": "egg"
+    },
+    {
+      "name": "三黄鸡",
+      "emoji": "🐔",
+      "type": "meat",
+      "icon": "chicken"
+    },
+    {
+      "name": "冰水",
+      "emoji": "🧊",
+      "type": "seasoning",
+      "icon": "ice"
+    },
+    {
+      "name": "茄子",
+      "emoji": "🍆",
+      "type": "vegetable",
+      "icon": "eggplant"
+    },
+    {
+      "name": "可乐",
+      "emoji": "🥤",
+      "type": "seasoning",
+      "icon": "coke"
+    },
+    {
+      "name": "鸡翅",
+      "emoji": "🍗",
+      "type": "meat",
+      "icon": "chicken"
+    }
+  ]
+}

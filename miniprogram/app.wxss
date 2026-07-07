@@ -4,25 +4,29 @@
 
 /* 品牌色彩变量通过 page CSS 变量定义 */
 page {
-  --color-primary: #FF6B1A;
-  --color-primary-dark: #D84A05;
-  --color-primary-light: #FFB06E;
+  --color-primary: #9A3412;
+  --color-primary-dark: #7C2D12;
+  --color-primary-light: #FB923C;
   --color-primary-lightest: #FFF1E8;
-  --color-accent: #FF3D6E;
-  --color-accent-dark: #C81E4A;
+  --color-accent: #FF5A1F;
+  --color-accent-dark: #C2410C;
+  --color-cta: #FF3D6E;
   --color-ink: #2A1735;
   --color-purple: #5B2B6F;
   --color-green: #2FB875;
   --color-gold: #FFB703;
-  --color-bg: #FFF7F0;
-  --color-bg-secondary: #FFEFE5;
+  --color-bg: #FFFBEB;
+  --color-bg-secondary: #FFF7ED;
   --color-surface: #FFFFFF;
   --color-text: #2A1735;
   --color-text-secondary: #6D536C;
   --color-text-tertiary: #A78A96;
-  --color-border: #FFD7C2;
-  --shadow-card: 0 18rpx 48rpx rgba(91, 43, 111, 0.10);
-  --shadow-pop: 0 18rpx 42rpx rgba(255, 107, 26, 0.28);
+  --color-border: #FED7AA;
+  --radius-card: 30rpx;
+  --radius-panel: 38rpx;
+  --shadow-card: 0 18rpx 48rpx rgba(91, 43, 111, 0.10), inset 0 -4rpx 0 rgba(154,52,18,0.04);
+  --shadow-pop: 0 18rpx 42rpx rgba(255, 90, 31, 0.28);
+  --shadow-clay: 0 18rpx 48rpx rgba(91,43,111,0.14), inset 0 -5rpx 0 rgba(91,43,111,0.06);
 
   background-color: var(--color-bg);
   color: var(--color-text);
@@ -42,7 +46,7 @@ page {
 /* 通用卡片 */
 .card {
   background: var(--color-surface);
-  border-radius: 28rpx;
+  border-radius: var(--radius-card);
   padding: 32rpx;
   margin-bottom: 24rpx;
   border: 2rpx solid rgba(255, 215, 194, 0.85);
@@ -54,7 +58,7 @@ page {
   width: 100%;
   height: 96rpx;
   line-height: 96rpx;
-  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary) 100%);
+  background: linear-gradient(135deg, var(--color-cta) 0%, var(--color-accent) 100%);
   color: #FFFFFF;
   font-size: 32rpx;
   font-weight: 600;

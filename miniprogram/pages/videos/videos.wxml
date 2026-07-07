@@ -1,5 +1,7 @@
 <view class="page-videos">
   <view class="video-hero">
+    <image class="hero-decoration hero-pot" src="/images/icons/pot.svg" mode="aspectFit" />
+    <image class="hero-decoration hero-leaf" src="/images/icons/leaf.svg" mode="aspectFit" />
     <view class="hero-copy">
       <text class="hero-kicker">Chef Studio</text>
       <text class="page-title">视频教学</text>

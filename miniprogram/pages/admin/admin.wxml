@@ -1,0 +1,81 @@
+<view class="page-admin">
+  <view class="search-bar">
+    <input
+      class="search-input"
+      placeholder="搜索用户名或昵称"
+      value="{{keyword}}"
+      bindinput="onSearchInput"
+      bindconfirm="onSearch"
+    />
+    <view class="search-btn" bindtap="onSearch">搜索</view>
+  </view>
+
+  <view class="stats-row">
+    <text class="stats-text">共 {{total}} 位用户，第 {{page}} 页</text>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+
+  <view wx:elif="{{users.length === 0}}" class="empty-tip">
+    <text>暂无用户数据</text>
+  </view>
+
+  <view wx:else class="user-list">
+    <view wx:for="{{users}}" wx:key="id" class="user-card">
+      <view class="user-header">
+        <view class="user-name-wrap">
+          <text class="user-name">{{item.nickname || item.username}}</text>
+          <text class="user-username">@{{item.username}}</text>
+        </view>
+        <view class="user-badges">
+          <text wx:if="{{item.is_admin}}" class="badge admin">管理员</text>
+          <text wx:if="{{!item.is_active}}" class="badge disabled">已禁用</text>
+          <text wx:if="{{item.id === currentUserId}}" class="badge self">我</text>
+        </view>
+      </view>
+
+      <view class="user-meta">
+        <text class="meta-item">注册：{{item.created_at || '未知'}}</text>
+        <text wx:if="{{item.last_login}}" class="meta-item">登录：{{item.last_login}}</text>
+      </view>
+
+      <view class="user-actions">
+        <view
+          wx:if="{{item.id !== currentUserId}}"
+          class="action-btn {{item.is_active ? 'btn-warn' : 'btn-success'}}"
+          bindtap="onToggleActive"
+          data-id="{{item.id}}"
+        >{{item.is_active ? '禁用' : '启用'}}</view>
+
+        <view
+          wx:if="{{item.id !== currentUserId}}"
+          class="action-btn btn-default"
+          bindtap="onToggleAdmin"
+          data-id="{{item.id}}"
+          data-admin="{{item.is_admin}}"
+        >{{item.is_admin ? '取消管理' : '设为管理'}}</view>
+
+        <view
+          class="action-btn btn-default"
+          bindtap="onResetPassword"
+          data-id="{{item.id}}"
+          data-username="{{item.username}}"
+        >重置密码</view>
+
+        <view
+          wx:if="{{item.id !== currentUserId}}"
+          class="action-btn btn-danger"
+          bindtap="onDeleteUser"
+          data-id="{{item.id}}"
+          data-username="{{item.username}}"
+        >删除</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{total > pageSize}}" class="pagination">
+    <view class="page-btn {{page <= 1 ? 'disabled' : ''}}" bindtap="onPrevPage">上一页</view>
+    <text class="page-info">{{page}} / {{maxPage}}</text>
+    <view class="page-btn {{page >= maxPage ? 'disabled' : ''}}" bindtap="onNextPage">下一页</view>
+  </view>
+</view>

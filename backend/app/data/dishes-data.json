@@ -1,0 +1,8932 @@
+{
+  "_填写指南": {
+    "step1": "复制一个菜品的完整 {} 块",
+    "step2": "修改 name/category/ingredients/steps 等字段",
+    "step3": "食材名必须与食材库中一致，新食材在 ingredients_pool 中登记",
+    "step4": "辣度四选一：不辣/微辣/中辣/重辣",
+    "step5": "难度三选一：简单/中等/较难",
+    "step6": "菜系从 _枚举值.category 中选"
+  },
+  "_枚举值": {
+    "category": [
+      "家常菜",
+      "川菜",
+      "粤菜",
+      "湘菜",
+      "鲁菜",
+      "苏菜",
+      "浙菜",
+      "闽菜",
+      "徽菜",
+      "东北菜",
+      "西北菜",
+      "海鲜",
+      "汤煲",
+      "主食",
+      "甜品",
+      "西餐",
+      "日料"
+    ],
+    "categoryTag": [
+      "快手菜",
+      "经典菜",
+      "健康菜",
+      "宴客菜",
+      "下饭菜",
+      "减脂菜"
+    ],
+    "spiceLevel": [
+      "不辣",
+      "微辣",
+      "中辣",
+      "重辣"
+    ],
+    "difficulty": [
+      "简单",
+      "中等",
+      "较难"
+    ],
+    "ingredient_type": [
+      "vegetable",
+      "meat",
+      "seafood",
+      "egg",
+      "staple",
+      "seasoning"
+    ]
+  },
+  "ingredients_pool": [
+    {
+      "name": "盐",
+      "emoji": "🧂",
+      "type": "seasoning",
+      "icon": "seasoning"
+    },
+    {
+      "name": "糖",
+      "emoji": "🍬",
+      "type": "seasoning",
+      "icon": "sugar-cube"
+    },
+    {
+      "name": "蒜",
+      "emoji": "🧄",
+      "type": "seasoning",
+      "icon": "garlic"
+    },
+    {
+      "name": "姜",
+      "emoji": "🫚",
+      "type": "seasoning",
+      "icon": "ginger"
+    },
+    {
+      "name": "葱",
+      "emoji": "🧅",
+      "type": "seasoning",
+      "icon": "scallion"
+    },
+    {
+      "name": "生抽",
+      "emoji": "🍶",
+      "type": "seasoning",
+      "icon": "sauce"
+    },
+    {
+      "name": "老抽",
+      "emoji": "🍶",
+      "type": "seasoning",
+      "icon": "sauce"
+    },
+    {
+      "name": "料酒",
+      "emoji": "🍶",
+      "type": "seasoning",
+      "icon": "wine"
+    },
+    {
+      "name": "淀粉",
+      "emoji": "⚪",
+      "type": "seasoning",
+      "icon": "starch"
+    },
+    {
+      "name": "食用油",
+      "emoji": "🫗",
+      "type": "seasoning",
+      "icon": "oil"
+    },
+    {
+      "name": "蚝油",
+      "emoji": "🦪",
+      "type": "seasoning",
+      "icon": "sauce"
+    },
+    {
+      "name": "醋",
+      "emoji": "🍶",
+      "type": "seasoning",
+      "icon": "sauce"
+    },
+    {
+      "name": "豆瓣酱",
+      "emoji": "🫘",
+      "type": "seasoning",
+      "icon": "sauce"
+    },
+    {
+      "name": "花椒",
+      "emoji": "🫛",
+      "type": "seasoning",
+      "icon": "pepper"
+    },
+    {
+      "name": "干辣椒",
+      "emoji": "🌶️",
+      "type": "seasoning",
+      "icon": "pepper"
+    },
+    {
+      "name": "八角",
+      "emoji": "⭐",
+      "type": "seasoning",
+      "icon": "star-anise"
+    },
+    {
+      "name": "桂皮",
+      "emoji": "🟤",
+      "type": "seasoning",
+      "icon": "cinnamon"
+    },
+    {
+      "name": "冰糖",
+      "emoji": "🧊",
+      "type": "seasoning",
+      "icon": "sugar-cube"
+    },
+    {
+      "name": "可乐",
+      "emoji": "🥤",
+      "type": "seasoning",
+      "icon": "coke"
+    },
+    {
+      "name": "蜂蜜",
+      "emoji": "🍯",
+      "type": "seasoning",
+      "icon": "honey"
+    },
+    {
+      "name": "芝麻",
+      "emoji": "⚪",
+      "type": "seasoning",
+      "icon": "sesame"
+    },
+    {
+      "name": "花生油",
+      "emoji": "🫗",
+      "type": "seasoning",
+      "icon": "oil"
+    },
+    {
+      "name": "香油",
+      "emoji": "🫗",
+      "type": "seasoning",
+      "icon": "oil"
+    },
+    {
+      "name": "蒸鱼豉油",
+      "emoji": "🍶",
+      "type": "seasoning",
+      "icon": "sauce"
+    },
+    {
+      "name": "胡椒粉",
+      "emoji": "🧂",
+      "type": "seasoning",
+      "icon": "pepper"
+    },
+    {
+      "name": "五香粉",
+      "emoji": "🧂",
+      "type": "seasoning",
+      "icon": "seasoning"
+    },
+    {
+      "name": "番茄酱",
+      "emoji": "🍅",
+      "type": "seasoning",
+      "icon": "sauce"
+    },
+    {
+      "name": "甜面酱",
+      "emoji": "🫘",
+      "type": "seasoning",
+      "icon": "sauce"
+    },
+    {
+      "name": "黄豆酱",
+      "emoji": "🫘",
+      "type": "seasoning",
+      "icon": "sauce"
+    },
+    {
+      "name": "芝麻酱",
+      "emoji": "🥜",
+      "type": "seasoning",
+      "icon": "sauce"
+    },
+    {
+      "name": "咖喱粉",
+      "emoji": "🟡",
+      "type": "seasoning",
+      "icon": "seasoning"
+    },
+    {
+      "name": "黑胡椒",
+      "emoji": "🌶️",
+      "type": "seasoning",
+      "icon": "pepper"
+    },
+    {
+      "name": "白胡椒",
+      "emoji": "🧂",
+      "type": "seasoning",
+      "icon": "pepper"
+    },
+    {
+      "name": "椒盐",
+      "emoji": "🧂",
+      "type": "seasoning",
+      "icon": "seasoning"
+    },
+    {
+      "name": "孜然",
+      "emoji": "🌿",
+      "type": "seasoning",
+      "icon": "seasoning"
+    },
+    {
+      "name": "十三香",
+      "emoji": "🧂",
+      "type": "seasoning",
+      "icon": "seasoning"
+    },
+    {
+      "name": "陈皮",
+      "emoji": "🟤",
+      "type": "seasoning",
+      "icon": "seasoning"
+    },
+    {
+      "name": "香叶",
+      "emoji": "🍃",
+      "type": "seasoning",
+      "icon": "leaf"
+    },
+    {
+      "name": "剁椒",
+      "emoji": "🌶️",
+      "type": "seasoning",
+      "icon": "pepper"
+    },
+    {
+      "name": "泡椒",
+      "emoji": "🌶️",
+      "type": "seasoning",
+      "icon": "pepper"
+    },
+    {
+      "name": "芥末",
+      "emoji": "🟢",
+      "type": "seasoning",
+      "icon": "seasoning"
+    },
+    {
+      "name": "炼乳",
+      "emoji": "🥛",
+      "type": "seasoning",
+      "icon": "milk"
+    },
+    {
+      "name": "猪肉",
+      "emoji": "🥩",
+      "type": "meat",
+      "icon": "meat"
+    },
+    {
+      "name": "五花肉",
+      "emoji": "🥓",
+      "type": "meat",
+      "icon": "bacon"
+    },
+    {
+      "name": "排骨",
+      "emoji": "🍖",
+      "type": "meat",
+      "icon": "meat"
+    },
+    {
+      "name": "猪蹄",
+      "emoji": "🍖",
+      "type": "meat",
+      "icon": "meat"
+    },
+    {
+      "name": "猪肝",
+      "emoji": "🍖",
+      "type": "meat",
+      "icon": "meat"
+    },
+    {
+      "name": "猪大肠",
+      "emoji": "🍖",
+      "type": "meat",
+      "icon": "meat"
+    },
+    {
+      "name": "牛肉",
+      "emoji": "🥩",
+      "type": "meat",
+      "icon": "meat"
+    },
+    {
+      "name": "牛肉末",
+      "emoji": "🥩",
+      "type": "meat",
+      "icon": "meat"
+    },
+    {
+      "name": "牛腩",
+      "emoji": "🥩",
+      "type": "meat",
+      "icon": "meat"
+    },
+    {
+      "name": "牛排",
+      "emoji": "🥩",
+      "type": "meat",
+      "icon": "steak"
+    },
+    {
+      "name": "鸡肉",
+      "emoji": "🍗",
+      "type": "meat",
+      "icon": "chicken"
+    },
+    {
+      "name": "鸡翅",
+      "emoji": "🍗",
+      "type": "meat",
+      "icon": "chicken"
+    },
+    {
+      "name": "鸡腿",
+      "emoji": "🍗",
+      "type": "meat",
+      "icon": "chicken"
+    },
+    {
+      "name": "鸡胸肉",
+      "emoji": "🍗",
+      "type": "meat",
+      "icon": "chicken"
+    },
+    {
+      "name": "三黄鸡",
+      "emoji": "🐔",
+      "type": "meat",
+      "icon": "chicken"
+    },
+    {
+      "name": "鸭肉",
+      "emoji": "🦆",
+      "type": "meat",
+      "icon": "duck"
+    },
+    {
+      "name": "羊肉",
+      "emoji": "🍖",
+      "type": "meat",
+      "icon": "lamb"
+    },
+    {
+      "name": "培根",
+      "emoji": "🥓",
+      "type": "meat",
+      "icon": "bacon"
+    },
+    {
+      "name": "火腿",
+      "emoji": "🍖",
+      "type": "meat",
+      "icon": "ham"
+    },
+    {
+      "name": "腊肉",
+      "emoji": "🍖",
+      "type": "meat",
+      "icon": "meat"
+    },
+    {
+      "name": "香肠",
+      "emoji": "🌭",
+      "type": "meat",
+      "icon": "sausage"
+    },
+    {
+      "name": "虾",
+      "emoji": "🦐",
+      "type": "seafood",
+      "icon": "seafood"
+    },
+    {
+      "name": "鱼",
+      "emoji": "🐟",
+      "type": "seafood",
+      "icon": "fish"
+    },
+    {
+      "name": "鲈鱼",
+      "emoji": "🐟",
+      "type": "seafood",
+      "icon": "fish"
+    },
+    {
+      "name": "三文鱼",
+      "emoji": "🐟",
+      "type": "seafood",
+      "icon": "salmon"
+    },
+    {
+      "name": "螃蟹",
+      "emoji": "🦀",
+      "type": "seafood",
+      "icon": "crab"
+    },
+    {
+      "name": "鱿鱼",
+      "emoji": "🦑",
+      "type": "seafood",
+      "icon": "squid"
+    },
+    {
+      "name": "龙虾",
+      "emoji": "🦞",
+      "type": "seafood",
+      "icon": "lobster"
+    },
+    {
+      "name": "蛤蜊",
+      "emoji": "🐚",
+      "type": "seafood",
+      "icon": "clam"
+    },
+    {
+      "name": "扇贝",
+      "emoji": "🐚",
+      "type": "seafood",
+      "icon": "shellfish"
+    },
+    {
+      "name": "生蚝",
+      "emoji": "🦪",
+      "type": "seafood",
+      "icon": "oyster"
+    },
+    {
+      "name": "海带",
+      "emoji": "🟢",
+      "type": "seafood",
+      "icon": "seaweed"
+    },
+    {
+      "name": "带鱼",
+      "emoji": "🐟",
+      "type": "seafood",
+      "icon": "fish"
+    },
+    {
+      "name": "黄鱼",
+      "emoji": "🐟",
+      "type": "seafood",
+      "icon": "fish"
+    },
+    {
+      "name": "海参",
+      "emoji": "🥢",
+      "type": "seafood",
+      "icon": "seafood"
+    },
+    {
+      "name": "紫菜",
+      "emoji": "🟢",
+      "type": "seafood",
+      "icon": "seaweed"
+    },
+    {
+      "name": "虾皮",
+      "emoji": "🦐",
+      "type": "seafood",
+      "icon": "seafood"
+    },
+    {
+      "name": "豆腐",
+      "emoji": "🧈",
+      "type": "egg",
+      "icon": "tofu"
+    },
+    {
+      "name": "嫩豆腐",
+      "emoji": "🧈",
+      "type": "egg",
+      "icon": "tofu"
+    },
+    {
+      "name": "鸡蛋",
+      "emoji": "🥚",
+      "type": "egg",
+      "icon": "egg"
+    },
+    {
+      "name": "蛋清",
+      "emoji": "🥚",
+      "type": "egg",
+      "icon": "egg"
+    },
+    {
+      "name": "花生米",
+      "emoji": "🥜",
+      "type": "egg",
+      "icon": "peanut"
+    },
+    {
+      "name": "腐竹",
+      "emoji": "🟫",
+      "type": "egg",
+      "icon": "soy-skin"
+    },
+    {
+      "name": "豌豆",
+      "emoji": "🫛",
+      "type": "egg",
+      "icon": "beans"
+    },
+    {
+      "name": "牛奶",
+      "emoji": "🥛",
+      "type": "egg",
+      "icon": "milk"
+    },
+    {
+      "name": "奶油",
+      "emoji": "🥛",
+      "type": "egg",
+      "icon": "cream"
+    },
+    {
+      "name": "芝士",
+      "emoji": "🧀",
+      "type": "egg",
+      "icon": "cheese"
+    },
+    {
+      "name": "黄油",
+      "emoji": "🧈",
+      "type": "egg",
+      "icon": "butter"
+    },
+    {
+      "name": "酸奶",
+      "emoji": "🥛",
+      "type": "egg",
+      "icon": "milk"
+    },
+    {
+      "name": "豆皮",
+      "emoji": "🟫",
+      "type": "egg",
+      "icon": "soy-skin"
+    },
+    {
+      "name": "豆干",
+      "emoji": "🟫",
+      "type": "egg",
+      "icon": "tofu"
+    },
+    {
+      "name": "番茄",
+      "emoji": "🍅",
+      "type": "vegetable",
+      "icon": "tomato"
+    },
+    {
+      "name": "西兰花",
+      "emoji": "🥦",
+      "type": "vegetable",
+      "icon": "broccoli"
+    },
+    {
+      "name": "洋葱",
+      "emoji": "🧅",
+      "type": "vegetable",
+      "icon": "onion"
+    },
+    {
+      "name": "土豆",
+      "emoji": "🥔",
+      "type": "vegetable",
+      "icon": "potato"
+    },
+    {
+      "name": "青椒",
+      "emoji": "🫑",
+      "type": "vegetable",
+      "icon": "pepper"
+    },
+    {
+      "name": "茄子",
+      "emoji": "🍆",
+      "type": "vegetable",
+      "icon": "eggplant"
+    },
+    {
+      "name": "黄瓜",
+      "emoji": "🥒",
+      "type": "vegetable",
+      "icon": "cucumber"
+    },
+    {
+      "name": "胡萝卜",
+      "emoji": "🥕",
+      "type": "vegetable",
+      "icon": "carrot"
+    },
+    {
+      "name": "白菜",
+      "emoji": "🥬",
+      "type": "vegetable",
+      "icon": "cabbage"
+    },
+    {
+      "name": "芹菜",
+      "emoji": "🥬",
+      "type": "vegetable",
+      "icon": "celery"
+    },
+    {
+      "name": "豆芽",
+      "emoji": "🌱",
+      "type": "vegetable",
+      "icon": "sprout"
+    },
+    {
+      "name": "蘑菇",
+      "emoji": "🍄",
+      "type": "vegetable",
+      "icon": "mushroom"
+    },
+    {
+      "name": "香菇",
+      "emoji": "🍄",
+      "type": "vegetable",
+      "icon": "mushroom"
+    },
+    {
+      "name": "木耳",
+      "emoji": "🟤",
+      "type": "vegetable",
+      "icon": "wood-ear"
+    },
+    {
+      "name": "竹笋",
+      "emoji": "🎋",
+      "type": "vegetable",
+      "icon": "bamboo-shoot"
+    },
+    {
+      "name": "莲藕",
+      "emoji": "🪷",
+      "type": "vegetable",
+      "icon": "lotus"
+    },
+    {
+      "name": "玉米",
+      "emoji": "🌽",
+      "type": "vegetable",
+      "icon": "corn"
+    },
+    {
+      "name": "南瓜",
+      "emoji": "🎃",
+      "type": "vegetable",
+      "icon": "pumpkin"
+    },
+    {
+      "name": "红椒",
+      "emoji": "🫑",
+      "type": "vegetable",
+      "icon": "pepper"
+    },
+    {
+      "name": "花菜",
+      "emoji": "🥦",
+      "type": "vegetable",
+      "icon": "cabbage"
+    },
+    {
+      "name": "豆角",
+      "emoji": "🫛",
+      "type": "vegetable",
+      "icon": "beans"
+    },
+    {
+      "name": "四季豆",
+      "emoji": "🫛",
+      "type": "vegetable",
+      "icon": "beans"
+    },
+    {
+      "name": "蒜薹",
+      "emoji": "🌿",
+      "type": "vegetable",
+      "icon": "garlic-shoot"
+    },
+    {
+      "name": "韭菜",
+      "emoji": "🥬",
+      "type": "vegetable",
+      "icon": "leek"
+    },
+    {
+      "name": "生菜",
+      "emoji": "🥬",
+      "type": "vegetable",
+      "icon": "lettuce"
+    },
+    {
+      "name": "菠菜",
+      "emoji": "🥬",
+      "type": "vegetable",
+      "icon": "spinach"
+    },
+    {
+      "name": "莴笋",
+      "emoji": "🥬",
+      "type": "vegetable",
+      "icon": "celery"
+    },
+    {
+      "name": "冬瓜",
+      "emoji": "🥒",
+      "type": "vegetable",
+      "icon": "melon"
+    },
+    {
+      "name": "丝瓜",
+      "emoji": "🥒",
+      "type": "vegetable",
+      "icon": "melon"
+    },
+    {
+      "name": "苦瓜",
+      "emoji": "🥒",
+      "type": "vegetable",
+      "icon": "melon"
+    },
+    {
+      "name": "荷兰豆",
+      "emoji": "🫛",
+      "type": "vegetable",
+      "icon": "beans"
+    },
+    {
+      "name": "山药",
+      "emoji": "🥔",
+      "type": "vegetable",
+      "icon": "yam"
+    },
+    {
+      "name": "红薯",
+      "emoji": "🍠",
+      "type": "vegetable",
+      "icon": "sweet-potato"
+    },
+    {
+      "name": "白萝卜",
+      "emoji": "🥬",
+      "type": "vegetable",
+      "icon": "radish"
+    },
+    {
+      "name": "芒果",
+      "emoji": "🥭",
+      "type": "vegetable",
+      "icon": "mango"
+    },
+    {
+      "name": "米饭",
+      "emoji": "🍚",
+      "type": "staple",
+      "icon": "rice"
+    },
+    {
+      "name": "隔夜米饭",
+      "emoji": "🍚",
+      "type": "staple",
+      "icon": "rice"
+    },
+    {
+      "name": "面条",
+      "emoji": "🍜",
+      "type": "staple",
+      "icon": "noodle"
+    },
+    {
+      "name": "粉丝",
+      "emoji": "🍝",
+      "type": "staple",
+      "icon": "vermicelli"
+    },
+    {
+      "name": "年糕",
+      "emoji": "🍡",
+      "type": "staple",
+      "icon": "rice-cake"
+    },
+    {
+      "name": "饺子皮",
+      "emoji": "🥟",
+      "type": "staple",
+      "icon": "dumpling"
+    },
+    {
+      "name": "糯米",
+      "emoji": "🍚",
+      "type": "staple",
+      "icon": "sticky-rice"
+    },
+    {
+      "name": "面粉",
+      "emoji": "🌾",
+      "type": "staple",
+      "icon": "flour"
+    },
+    {
+      "name": "面包糠",
+      "emoji": "🍞",
+      "type": "staple",
+      "icon": "breadcrumb"
+    },
+    {
+      "name": "意面",
+      "emoji": "🍝",
+      "type": "staple",
+      "icon": "pasta"
+    },
+    {
+      "name": "馒头",
+      "emoji": "🍞",
+      "type": "staple",
+      "icon": "steamed-bun"
+    },
+    {
+      "name": "西米",
+      "emoji": "⚪",
+      "type": "staple",
+      "icon": "sago"
+    },
+    {
+      "name": "红豆",
+      "emoji": "🫘",
+      "type": "staple",
+      "icon": "bean"
+    },
+    {
+      "name": "黄花菜",
+      "emoji": "🌼",
+      "type": "vegetable",
+      "icon": "lily"
+    },
+    {
+      "name": "板栗",
+      "emoji": "🌰",
+      "type": "vegetable",
+      "icon": "chestnut"
+    },
+    {
+      "name": "酸菜",
+      "emoji": "🥬",
+      "type": "vegetable",
+      "icon": "cabbage"
+    },
+    {
+      "name": "荸荠",
+      "emoji": "🟤",
+      "type": "vegetable",
+      "icon": "water-chestnut"
+    },
+    {
+      "name": "梅干菜",
+      "emoji": "🟫",
+      "type": "vegetable",
+      "icon": "vegetable"
+    },
+    {
+      "name": "酸萝卜",
+      "emoji": "🥬",
+      "type": "vegetable",
+      "icon": "radish"
+    },
+    {
+      "name": "菠萝",
+      "emoji": "🍍",
+      "type": "vegetable",
+      "icon": "pineapple"
+    },
+    {
+      "name": "鸭血",
+      "emoji": "🩸",
+      "type": "meat",
+      "icon": "meat"
+    },
+    {
+      "name": "鸡杂",
+      "emoji": "🍗",
+      "type": "meat",
+      "icon": "meat"
+    },
+    {
+      "name": "鲍鱼",
+      "emoji": "🐚",
+      "type": "seafood",
+      "icon": "shellfish"
+    },
+    {
+      "name": "海苔",
+      "emoji": "🟢",
+      "type": "seafood",
+      "icon": "seaweed"
+    },
+    {
+      "name": "香干",
+      "emoji": "🟫",
+      "type": "egg",
+      "icon": "tofu"
+    },
+    {
+      "name": "澄粉",
+      "emoji": "⚪",
+      "type": "staple",
+      "icon": "flour"
+    },
+    {
+      "name": "粘米粉",
+      "emoji": "⚪",
+      "type": "staple",
+      "icon": "flour"
+    },
+    {
+      "name": "糯米粉",
+      "emoji": "⚪",
+      "type": "staple",
+      "icon": "flour"
+    },
+    {
+      "name": "寿司米",
+      "emoji": "🍚",
+      "type": "staple",
+      "icon": "rice"
+    },
+    {
+      "name": "辣椒油",
+      "emoji": "🌶️",
+      "type": "seasoning",
+      "icon": "oil"
+    },
+    {
+      "name": "茶叶",
+      "emoji": "🍃",
+      "type": "seasoning",
+      "icon": "leaf"
+    },
+    {
+      "name": "味噌",
+      "emoji": "🟤",
+      "type": "seasoning",
+      "icon": "sauce"
+    }
+  ],
+  "dishes": [
+    {
+      "name": "番茄炒蛋",
+      "category": "家常菜",
+      "categoryTag": "快手菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "经典中式家常菜，酸甜可口，营养丰富，十分钟搞定",
+      "time": 10,
+      "calories": 180,
+      "ingredients": [
+        {
+          "name": "番茄",
+          "amount": "2个"
+        },
+        {
+          "name": "鸡蛋",
+          "amount": "适量"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "准备食材",
+          "desc": "番茄切块，鸡蛋打散加少许盐搅匀，葱切葱花",
+          "time": 2
+        },
+        {
+          "title": "炒鸡蛋",
+          "desc": "热锅倒油，油温七成热时倒入蛋液，快速翻炒至凝固盛出",
+          "time": 2
+        },
+        {
+          "title": "炒番茄",
+          "desc": "锅中再加少许油，放入番茄块翻炒出汁",
+          "time": 3
+        },
+        {
+          "title": "合炒调味",
+          "desc": "倒回鸡蛋，加盐和少许糖翻炒均匀",
+          "time": 2
+        },
+        {
+          "title": "出锅装盘",
+          "desc": "撒上葱花，翻炒几下即可出锅",
+          "time": 1
+        }
+      ],
+      "tips": "番茄要选熟透的才甜，鸡蛋不要炒太老",
+      "videoId": "v001",
+      "cuisine": "home",
+      "tags": [
+        "快手",
+        "新手友好",
+        "高蛋白",
+        "一人食",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/番茄炒蛋.svg",
+      "protein": 8,
+      "fat": 5,
+      "carbs": 15,
+      "servings": 1
+    },
+    {
+      "name": "青椒肉丝",
+      "category": "家常菜",
+      "categoryTag": "快手菜",
+      "spiceLevel": "微辣",
+      "difficulty": "简单",
+      "description": "下饭神菜，肉丝嫩滑，青椒爽脆，米饭杀手",
+      "time": 15,
+      "calories": 220,
+      "ingredients": [
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "青椒",
+          "amount": "2个"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "腌制肉丝",
+          "desc": "猪肉切丝，加生抽、料酒、淀粉腌制15分钟",
+          "time": 15
+        },
+        {
+          "title": "准备配菜",
+          "desc": "青椒去籽切丝，蒜切片",
+          "time": 2
+        },
+        {
+          "title": "滑炒肉丝",
+          "desc": "热锅凉油，下肉丝滑炒至变色盛出",
+          "time": 2
+        },
+        {
+          "title": "炒青椒",
+          "desc": "锅中留底油，下蒜片爆香，放入青椒丝翻炒",
+          "time": 2
+        },
+        {
+          "title": "合炒调味",
+          "desc": "倒回肉丝，加生抽、盐调味，翻炒均匀出锅",
+          "time": 1
+        }
+      ],
+      "tips": "肉丝顺着纹理切更嫩，腌制时加淀粉锁住水分",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "快手",
+        "新手友好",
+        "高蛋白",
+        "一人食"
+      ],
+      "cover": "/images/dishes/青椒肉丝.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "红烧肉",
+      "category": "家常菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "肥而不腻，入口即化的经典红烧肉，家的味道",
+      "time": 60,
+      "calories": 450,
+      "ingredients": [
+        {
+          "name": "五花肉",
+          "amount": "300g"
+        },
+        {
+          "name": "冰糖",
+          "amount": "30g"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "老抽",
+          "amount": "1勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "八角",
+          "amount": "2个"
+        },
+        {
+          "name": "桂皮",
+          "amount": "1小块"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理五花肉",
+          "desc": "五花肉切3cm方块，冷水下锅焯水去腥，捞出洗净",
+          "time": 10
+        },
+        {
+          "title": "炒糖色",
+          "desc": "锅中放少许油，加入冰糖小火慢炒至枣红色",
+          "time": 5
+        },
+        {
+          "title": "煸炒上色",
+          "desc": "放入五花肉翻炒上色，加料酒去腥",
+          "time": 3
+        },
+        {
+          "title": "炖煮入味",
+          "desc": "加入开水没过肉块，放生抽、老抽、八角、桂皮、姜片，大火烧开转小火炖40分钟",
+          "time": 40
+        },
+        {
+          "title": "收汁装盘",
+          "desc": "大火收汁至浓稠，汤汁包裹肉块即可",
+          "time": 5
+        }
+      ],
+      "tips": "炖煮时一定要加热水，冷水会让肉质发紧；冰糖比白糖上色更好看",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "经典",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/红烧肉.svg",
+      "protein": 20,
+      "fat": 15,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "蒜蓉西兰花",
+      "category": "家常菜",
+      "categoryTag": "健康菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "清淡爽口，营养满分，减脂期也能放心吃",
+      "time": 8,
+      "calories": 85,
+      "ingredients": [
+        {
+          "name": "西兰花",
+          "amount": "1颗"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        },
+        {
+          "name": "蚝油",
+          "amount": "1勺"
+        },
+        {
+          "name": "食用油",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理西兰花",
+          "desc": "西兰花掰成小朵，清水浸泡10分钟后洗净",
+          "time": 10
+        },
+        {
+          "title": "焯水",
+          "desc": "烧开水加少许盐和油，放入西兰花焯水1分钟捞出",
+          "time": 2
+        },
+        {
+          "title": "炒蒜末",
+          "desc": "锅中放油，小火煸香蒜末",
+          "time": 1
+        },
+        {
+          "title": "翻炒调味",
+          "desc": "放入西兰花，加蚝油和少许盐翻炒均匀即可",
+          "time": 1
+        }
+      ],
+      "tips": "焯水时间不要太长，保持脆嫩口感",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "健康",
+        "新手友好",
+        "低卡",
+        "一人食",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/蒜蓉西兰花.svg",
+      "protein": 0,
+      "fat": 10,
+      "carbs": 0,
+      "servings": 1
+    },
+    {
+      "name": "酸辣土豆丝",
+      "category": "家常菜",
+      "categoryTag": "快手菜",
+      "spiceLevel": "微辣",
+      "difficulty": "简单",
+      "description": "酸辣爽脆，开胃下饭，十分钟搞定一道菜",
+      "time": 12,
+      "calories": 120,
+      "ingredients": [
+        {
+          "name": "土豆",
+          "amount": "2个"
+        },
+        {
+          "name": "干辣椒",
+          "amount": "5个"
+        },
+        {
+          "name": "花椒",
+          "amount": "1小把"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        }
+      ],
+      "steps": [
+        {
+          "title": "切丝泡水",
+          "desc": "土豆去皮切细丝，泡入清水中去淀粉，沥干备用",
+          "time": 5
+        },
+        {
+          "title": "爆香辅料",
+          "desc": "热锅倒油，放入花椒、干辣椒、蒜片爆香",
+          "time": 1
+        },
+        {
+          "title": "翻炒土豆丝",
+          "desc": "放入土豆丝大火快炒，加醋翻炒",
+          "time": 3
+        },
+        {
+          "title": "调味出锅",
+          "desc": "加盐调味，撒葱花出锅",
+          "time": 1
+        }
+      ],
+      "tips": "土豆丝切好后一定要泡水去淀粉，这样炒出来才脆",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "快手",
+        "新手友好",
+        "低卡",
+        "一人食"
+      ],
+      "cover": "/images/dishes/酸辣土豆丝.svg",
+      "protein": 0,
+      "fat": 0,
+      "carbs": 15,
+      "servings": 1
+    },
+    {
+      "name": "可乐鸡翅",
+      "category": "家常菜",
+      "categoryTag": "快手菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "甜香入味，零失败入门菜，小朋友最爱",
+      "time": 25,
+      "calories": 280,
+      "ingredients": [
+        {
+          "name": "鸡翅",
+          "amount": "8个"
+        },
+        {
+          "name": "可乐",
+          "amount": "1罐"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "老抽",
+          "amount": "1勺"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理鸡翅",
+          "desc": "鸡翅两面划两刀方便入味，冷水下锅加料酒焯水",
+          "time": 5
+        },
+        {
+          "title": "煎鸡翅",
+          "desc": "热锅少许油，鸡翅擦干水分，两面煎至金黄",
+          "time": 5
+        },
+        {
+          "title": "加调料",
+          "desc": "加生抽2勺、老抽半勺翻炒上色",
+          "time": 1
+        },
+        {
+          "title": "加可乐炖煮",
+          "desc": "倒入可乐没过鸡翅，大火烧开转中火炖15分钟",
+          "time": 15
+        },
+        {
+          "title": "大火收汁",
+          "desc": "大火收汁至浓稠包裹鸡翅即可",
+          "time": 3
+        }
+      ],
+      "tips": "可乐要用含糖的普通可乐，零度无糖上色差；收汁时注意翻动防粘锅",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "快手",
+        "高蛋白",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/可乐鸡翅.svg",
+      "protein": 20,
+      "fat": 0,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "糖醋排骨",
+      "category": "家常菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "外酥里嫩，酸甜适口，大人小孩都爱吃",
+      "time": 40,
+      "calories": 380,
+      "ingredients": [
+        {
+          "name": "排骨",
+          "amount": "500g"
+        },
+        {
+          "name": "冰糖",
+          "amount": "30g"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "老抽",
+          "amount": "1勺"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "芝麻",
+          "amount": "少许"
+        }
+      ],
+      "steps": [
+        {
+          "title": "焯水排骨",
+          "desc": "排骨冷水下锅，加姜片料酒焯水，捞出洗净",
+          "time": 10
+        },
+        {
+          "title": "炒糖色",
+          "desc": "锅中放油，加冰糖小火炒至枣红色",
+          "time": 3
+        },
+        {
+          "title": "煸炒排骨",
+          "desc": "放入排骨翻炒上色",
+          "time": 3
+        },
+        {
+          "title": "炖煮",
+          "desc": "加热水没过排骨，加生抽、老抽、料酒，大火烧开转小火炖25分钟",
+          "time": 25
+        },
+        {
+          "title": "收汁装盘",
+          "desc": "加醋，大火收汁至浓稠，撒芝麻装盘",
+          "time": 3
+        }
+      ],
+      "tips": "醋要最后加，太早会挥发；收汁时注意翻动防止粘锅",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "经典",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/糖醋排骨.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "鱼香茄子",
+      "category": "家常菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "微辣",
+      "difficulty": "中等",
+      "description": "茄子软糯入味，鱼香味浓，超级下饭",
+      "time": 25,
+      "calories": 260,
+      "ingredients": [
+        {
+          "name": "茄子",
+          "amount": "2根"
+        },
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "豆瓣酱",
+          "amount": "2勺"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理茄子",
+          "desc": "茄子切条，撒盐腌制10分钟出水，挤干水分",
+          "time": 10
+        },
+        {
+          "title": "调鱼香汁",
+          "desc": "生抽2勺、醋2勺、糖1勺、淀粉1勺、水半碗调匀",
+          "time": 2
+        },
+        {
+          "title": "炒肉末",
+          "desc": "热锅凉油，下猪肉末煸炒至变色",
+          "time": 2
+        },
+        {
+          "title": "炒茄子",
+          "desc": "加豆瓣酱、蒜末、姜末炒出红油，下茄子翻炒",
+          "time": 5
+        },
+        {
+          "title": "收汁出锅",
+          "desc": "倒入鱼香汁翻炒收汁，撒葱花出锅",
+          "time": 2
+        }
+      ],
+      "tips": "茄子提前腌制可减少吸油；鱼香汁的糖醋比例是关键",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "下饭",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/鱼香茄子.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "干煸豆角",
+      "category": "家常菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "微辣",
+      "difficulty": "中等",
+      "description": "豆角干香，肉末入味，下饭一绝",
+      "time": 20,
+      "calories": 230,
+      "ingredients": [
+        {
+          "name": "豆角",
+          "amount": "200g"
+        },
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "干辣椒",
+          "amount": "5个"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理豆角",
+          "desc": "豆角掰成段，洗净沥干水分",
+          "time": 3
+        },
+        {
+          "title": "煸炒豆角",
+          "desc": "锅中多放油，下豆角煸至表皮起皱微焦盛出",
+          "time": 8
+        },
+        {
+          "title": "炒肉末",
+          "desc": "锅中留底油，下猪肉末煸炒至出油酥香",
+          "time": 3
+        },
+        {
+          "title": "爆香调料",
+          "desc": "加干辣椒、蒜末、姜末爆香",
+          "time": 1
+        },
+        {
+          "title": "合炒调味",
+          "desc": "倒回豆角，加生抽、盐翻炒均匀出锅",
+          "time": 2
+        }
+      ],
+      "tips": "豆角一定要煸透，生豆角有毒；中小火慢煸更均匀",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "下饭",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/干煸豆角.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "家常豆腐",
+      "category": "家常菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "微辣",
+      "difficulty": "中等",
+      "description": "豆腐外焦里嫩，酱香浓郁，家常下饭首选",
+      "time": 20,
+      "calories": 210,
+      "ingredients": [
+        {
+          "name": "豆腐",
+          "amount": "1块"
+        },
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "豆瓣酱",
+          "amount": "2勺"
+        },
+        {
+          "name": "青椒",
+          "amount": "2个"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理豆腐",
+          "desc": "豆腐切三角块，青椒切块，姜蒜切末",
+          "time": 3
+        },
+        {
+          "title": "煎豆腐",
+          "desc": "锅中放油，下豆腐煎至两面金黄盛出",
+          "time": 6
+        },
+        {
+          "title": "炒肉末",
+          "desc": "锅中留底油，下猪肉末煸炒至变色",
+          "time": 2
+        },
+        {
+          "title": "炒酱出味",
+          "desc": "加豆瓣酱、姜末、蒜末炒出红油",
+          "time": 2
+        },
+        {
+          "title": "合炒出锅",
+          "desc": "倒回豆腐，加生抽、青椒翻炒，撒葱花出锅",
+          "time": 3
+        }
+      ],
+      "tips": "豆腐先煎定型不容易碎；豆瓣酱本身咸，少加盐",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "下饭",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/家常豆腐.svg",
+      "protein": 28,
+      "fat": 8,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "蒸蛋羹",
+      "category": "家常菜",
+      "categoryTag": "快手菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "嫩滑如布丁，老少皆宜，零失败的入门菜",
+      "time": 15,
+      "calories": 120,
+      "ingredients": [
+        {
+          "name": "鸡蛋",
+          "amount": "适量"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "香油",
+          "amount": "少许"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        }
+      ],
+      "steps": [
+        {
+          "title": "打散鸡蛋",
+          "desc": "鸡蛋打散，加1.5倍温水和少许盐搅匀，过筛去泡",
+          "time": 3
+        },
+        {
+          "title": "上锅蒸",
+          "desc": "蛋液盖保鲜膜，水开后上锅中小火蒸10分钟",
+          "time": 10
+        },
+        {
+          "title": "调味出锅",
+          "desc": "取出淋生抽和香油，撒葱花即可",
+          "time": 2
+        }
+      ],
+      "tips": "蛋液过筛更细腻；蒸时盖保鲜膜可防水汽滴入",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "快手",
+        "新手友好",
+        "低卡",
+        "高蛋白",
+        "一人食",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/蒸蛋羹.svg",
+      "protein": 8,
+      "fat": 15,
+      "carbs": 0,
+      "servings": 1
+    },
+    {
+      "name": "番茄牛腩",
+      "category": "家常菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "牛腩软烂，番茄酸甜，汤汁拌饭一绝",
+      "time": 90,
+      "calories": 320,
+      "ingredients": [
+        {
+          "name": "牛腩",
+          "amount": "500g"
+        },
+        {
+          "name": "番茄",
+          "amount": "2个"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "焯水牛腩",
+          "desc": "牛腩切块冷水下锅，加姜片料酒焯水，捞出洗净",
+          "time": 10
+        },
+        {
+          "title": "炒番茄",
+          "desc": "番茄切块，锅中放油下番茄炒出汁",
+          "time": 5
+        },
+        {
+          "title": "炖煮牛腩",
+          "desc": "加入牛腩，加水没过，大火烧开转小火炖60分钟",
+          "time": 60
+        },
+        {
+          "title": "调味收汁",
+          "desc": "加盐和少许糖调味，大火收汁，撒葱花出锅",
+          "time": 5
+        }
+      ],
+      "tips": "牛腩要小火慢炖才软烂；番茄多放汤汁更浓郁",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "经典"
+      ],
+      "cover": "/images/dishes/番茄牛腩.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 15,
+      "servings": 2
+    },
+    {
+      "name": "麻婆豆腐",
+      "category": "川菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "中辣",
+      "difficulty": "简单",
+      "description": "麻辣鲜香，豆腐嫩滑，正宗川味下饭神菜",
+      "time": 15,
+      "calories": 200,
+      "ingredients": [
+        {
+          "name": "嫩豆腐",
+          "amount": "1块"
+        },
+        {
+          "name": "牛肉末",
+          "amount": "150g"
+        },
+        {
+          "name": "豆瓣酱",
+          "amount": "2勺"
+        },
+        {
+          "name": "花椒",
+          "amount": "1小把"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理豆腐",
+          "desc": "豆腐切2cm方块，淡盐水浸泡5分钟去豆腥",
+          "time": 5
+        },
+        {
+          "title": "炒肉末",
+          "desc": "热锅凉油，下牛肉末煸炒至变色酥香",
+          "time": 2
+        },
+        {
+          "title": "炒酱出红油",
+          "desc": "加豆瓣酱小火炒出红油，加蒜末爆香",
+          "time": 1
+        },
+        {
+          "title": "加水煮豆腐",
+          "desc": "加适量水，放入豆腐，加生抽调味，中火煮3分钟入味",
+          "time": 3
+        },
+        {
+          "title": "勾芡出锅",
+          "desc": "水淀粉勾芡，撒花椒粉和葱花，翻炒出锅",
+          "time": 2
+        }
+      ],
+      "tips": "豆腐先泡盐水不容易碎；勾芡分两次更均匀",
+      "videoId": null,
+      "cuisine": "sichuan",
+      "tags": [
+        "下饭",
+        "新手友好",
+        "一人食"
+      ],
+      "cover": "/images/dishes/麻婆豆腐.svg",
+      "protein": 8,
+      "fat": 0,
+      "carbs": 0,
+      "servings": 1
+    },
+    {
+      "name": "水煮牛肉",
+      "category": "川菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "重辣",
+      "difficulty": "中等",
+      "description": "麻辣鲜烫，肉片滑嫩，川菜馆必点硬菜",
+      "time": 30,
+      "calories": 350,
+      "ingredients": [
+        {
+          "name": "牛肉",
+          "amount": "250g"
+        },
+        {
+          "name": "豆芽",
+          "amount": "200g"
+        },
+        {
+          "name": "芹菜",
+          "amount": "2根"
+        },
+        {
+          "name": "豆瓣酱",
+          "amount": "2勺"
+        },
+        {
+          "name": "干辣椒",
+          "amount": "5个"
+        },
+        {
+          "name": "花椒",
+          "amount": "1小把"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "蛋清",
+          "amount": "2个"
+        }
+      ],
+      "steps": [
+        {
+          "title": "腌制牛肉",
+          "desc": "牛肉逆纹切薄片，加生抽、淀粉、蛋清抓匀腌制15分钟",
+          "time": 15
+        },
+        {
+          "title": "炒底菜",
+          "desc": "豆芽、芹菜焯水铺碗底",
+          "time": 3
+        },
+        {
+          "title": "炒酱出味",
+          "desc": "热锅下油，加豆瓣酱、干辣椒、花椒炒出红油，加水烧开",
+          "time": 3
+        },
+        {
+          "title": "煮牛肉",
+          "desc": "下牛肉片拨散，煮1分钟至变色即连汤倒入碗中",
+          "time": 2
+        },
+        {
+          "title": "浇热油",
+          "desc": "牛肉上撒蒜末、葱花、干辣椒、花椒，烧冒烟的热油浇上去",
+          "time": 1
+        }
+      ],
+      "tips": "牛肉要逆纹切，腌制加蛋清更嫩；煮牛肉时间不要长，变色即捞",
+      "videoId": null,
+      "cuisine": "sichuan",
+      "tags": [
+        "下饭",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/水煮牛肉.svg",
+      "protein": 28,
+      "fat": 8,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "回锅肉",
+      "category": "川菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "中辣",
+      "difficulty": "中等",
+      "description": "肥而不腻，酱香浓郁，川菜之首",
+      "time": 30,
+      "calories": 380,
+      "ingredients": [
+        {
+          "name": "五花肉",
+          "amount": "300g"
+        },
+        {
+          "name": "蒜薹",
+          "amount": "200g"
+        },
+        {
+          "name": "豆瓣酱",
+          "amount": "2勺"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        }
+      ],
+      "steps": [
+        {
+          "title": "煮五花肉",
+          "desc": "五花肉冷水下锅，加姜片煮至八成熟捞出",
+          "time": 20
+        },
+        {
+          "title": "切片",
+          "desc": "五花肉晾凉后切薄片，蒜薹切段",
+          "time": 3
+        },
+        {
+          "title": "煸炒肉片",
+          "desc": "热锅少油，下肉片煸至卷曲出油呈灯盏窝",
+          "time": 4
+        },
+        {
+          "title": "炒酱出味",
+          "desc": "加豆瓣酱、姜片、蒜末炒出红油",
+          "time": 2
+        },
+        {
+          "title": "合炒出锅",
+          "desc": "加蒜薹翻炒断生，加生抽调味出锅",
+          "time": 2
+        }
+      ],
+      "tips": "五花肉煮后放凉才好切薄片；煸炒要到位才能肥而不腻",
+      "videoId": null,
+      "cuisine": "sichuan",
+      "tags": [
+        "下饭",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/回锅肉.svg",
+      "protein": 20,
+      "fat": 15,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "宫保鸡丁",
+      "category": "川菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "中辣",
+      "difficulty": "中等",
+      "description": "麻辣鲜香，鸡丁滑嫩，花生酥脆，经典川菜代表作",
+      "time": 20,
+      "calories": 280,
+      "ingredients": [
+        {
+          "name": "鸡胸肉",
+          "amount": "200g"
+        },
+        {
+          "name": "花生米",
+          "amount": "50g"
+        },
+        {
+          "name": "干辣椒",
+          "amount": "5个"
+        },
+        {
+          "name": "花椒",
+          "amount": "1小把"
+        },
+        {
+          "name": "黄瓜",
+          "amount": "1根"
+        },
+        {
+          "name": "胡萝卜",
+          "amount": "1根"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "腌制鸡丁",
+          "desc": "鸡胸肉切丁，加生抽、料酒、淀粉腌制15分钟",
+          "time": 15
+        },
+        {
+          "title": "炸花生米",
+          "desc": "冷油下花生米，小火慢炸至金黄酥脆捞出",
+          "time": 5
+        },
+        {
+          "title": "炒鸡丁",
+          "desc": "热锅宽油，放入鸡丁滑炒至变色盛出",
+          "time": 3
+        },
+        {
+          "title": "爆香辅料",
+          "desc": "锅中留底油，爆香干辣椒、花椒",
+          "time": 1
+        },
+        {
+          "title": "合炒收汁",
+          "desc": "倒回鸡丁，加黄瓜丁、胡萝卜丁，淋入调好的酱汁（生抽+醋+糖+水+淀粉），快速翻炒，最后撒花生米",
+          "time": 3
+        }
+      ],
+      "tips": "花生米最后放，保持酥脆；酱汁要提前调好",
+      "videoId": null,
+      "cuisine": "sichuan",
+      "tags": [
+        "经典",
+        "高蛋白",
+        "下饭"
+      ],
+      "cover": "/images/dishes/宫保鸡丁.svg",
+      "protein": 20,
+      "fat": 5,
+      "carbs": 15,
+      "servings": 2
+    },
+    {
+      "name": "鱼香肉丝",
+      "category": "川菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "微辣",
+      "difficulty": "中等",
+      "description": "鱼香味浓，肉丝滑嫩，没有鱼的鱼香味",
+      "time": 20,
+      "calories": 250,
+      "ingredients": [
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "木耳",
+          "amount": "50g"
+        },
+        {
+          "name": "胡萝卜",
+          "amount": "1根"
+        },
+        {
+          "name": "青椒",
+          "amount": "2个"
+        },
+        {
+          "name": "豆瓣酱",
+          "amount": "2勺"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        }
+      ],
+      "steps": [
+        {
+          "title": "腌制肉丝",
+          "desc": "猪肉切丝，加生抽、淀粉腌制10分钟",
+          "time": 10
+        },
+        {
+          "title": "准备配菜",
+          "desc": "木耳、胡萝卜、青椒切丝，葱姜蒜切末",
+          "time": 3
+        },
+        {
+          "title": "调鱼香汁",
+          "desc": "生抽2勺、醋2勺、糖1勺半、淀粉1勺、水半碗调匀",
+          "time": 2
+        },
+        {
+          "title": "炒肉丝",
+          "desc": "热锅凉油，下肉丝滑炒至变色盛出",
+          "time": 2
+        },
+        {
+          "title": "合炒出锅",
+          "desc": "爆香姜蒜末和豆瓣酱，下配菜翻炒，倒回肉丝，淋入鱼香汁翻炒均匀，撒葱花出锅",
+          "time": 3
+        }
+      ],
+      "tips": "鱼香汁的糖醋比例是灵魂；配菜切丝要均匀",
+      "videoId": null,
+      "cuisine": "sichuan",
+      "tags": [
+        "下饭",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/鱼香肉丝.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 15,
+      "servings": 2
+    },
+    {
+      "name": "夫妻肺片",
+      "category": "川菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "中辣",
+      "difficulty": "较难",
+      "description": "麻辣鲜香，片薄入味，川菜经典凉菜",
+      "time": 40,
+      "calories": 260,
+      "ingredients": [
+        {
+          "name": "牛肉",
+          "amount": "250g"
+        },
+        {
+          "name": "花生米",
+          "amount": "50g"
+        },
+        {
+          "name": "花椒",
+          "amount": "1小把"
+        },
+        {
+          "name": "干辣椒",
+          "amount": "5个"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "芝麻",
+          "amount": "少许"
+        }
+      ],
+      "steps": [
+        {
+          "title": "煮牛肉",
+          "desc": "牛肉冷水下锅，加姜片葱段煮至熟透，捞出晾凉",
+          "time": 30
+        },
+        {
+          "title": "切片",
+          "desc": "牛肉切薄片，铺在盘中",
+          "time": 3
+        },
+        {
+          "title": "炒花椒油",
+          "desc": "锅中放油，下花椒、干辣椒小火炒香，捞出花椒粒",
+          "time": 2
+        },
+        {
+          "title": "调味拌料",
+          "desc": "生抽、醋、蒜末调匀，淋在牛肉上",
+          "time": 2
+        },
+        {
+          "title": "浇油装盘",
+          "desc": "将花椒辣椒油浇在牛肉上，撒花生碎、葱花、芝麻即可",
+          "time": 1
+        }
+      ],
+      "tips": "牛肉煮后放凉才好切薄片；花椒油要小火慢熬才香",
+      "videoId": null,
+      "cuisine": "sichuan",
+      "tags": [
+        "经典",
+        "高蛋白",
+        "下饭"
+      ],
+      "cover": "/images/dishes/夫妻肺片.svg",
+      "protein": 20,
+      "fat": 13,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "辣子鸡",
+      "category": "川菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "重辣",
+      "difficulty": "中等",
+      "description": "麻辣干香，鸡块酥脆，在辣椒堆里找肉的乐趣",
+      "time": 30,
+      "calories": 320,
+      "ingredients": [
+        {
+          "name": "鸡肉",
+          "amount": "200g"
+        },
+        {
+          "name": "干辣椒",
+          "amount": "5个"
+        },
+        {
+          "name": "花椒",
+          "amount": "1小把"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "芝麻",
+          "amount": "少许"
+        }
+      ],
+      "steps": [
+        {
+          "title": "腌制鸡块",
+          "desc": "鸡肉剁小块，加生抽、料酒、淀粉腌制15分钟",
+          "time": 15
+        },
+        {
+          "title": "炸鸡块",
+          "desc": "油温六成热，下鸡块炸至金黄酥脆捞出",
+          "time": 6
+        },
+        {
+          "title": "爆香辅料",
+          "desc": "锅中留底油，下大量干辣椒、花椒小火煸香",
+          "time": 2
+        },
+        {
+          "title": "合炒出锅",
+          "desc": "倒回鸡块，加葱段、姜片、蒜末翻炒，撒芝麻出锅",
+          "time": 3
+        }
+      ],
+      "tips": "干辣椒要选干的才香；鸡块要炸透才酥脆",
+      "videoId": null,
+      "cuisine": "sichuan",
+      "tags": [
+        "经典",
+        "高蛋白",
+        "下饭"
+      ],
+      "cover": "/images/dishes/辣子鸡.svg",
+      "protein": 20,
+      "fat": 0,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "水煮鱼",
+      "category": "川菜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "重辣",
+      "difficulty": "较难",
+      "description": "鱼片滑嫩，麻辣鲜香，川菜硬菜代表",
+      "time": 35,
+      "calories": 280,
+      "ingredients": [
+        {
+          "name": "鱼",
+          "amount": "1条"
+        },
+        {
+          "name": "豆芽",
+          "amount": "200g"
+        },
+        {
+          "name": "芹菜",
+          "amount": "2根"
+        },
+        {
+          "name": "豆瓣酱",
+          "amount": "2勺"
+        },
+        {
+          "name": "干辣椒",
+          "amount": "5个"
+        },
+        {
+          "name": "花椒",
+          "amount": "1小把"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "蛋清",
+          "amount": "2个"
+        }
+      ],
+      "steps": [
+        {
+          "title": "片鱼片",
+          "desc": "鱼去骨片薄片，加蛋清、淀粉、盐腌制10分钟",
+          "time": 15
+        },
+        {
+          "title": "炒底菜",
+          "desc": "豆芽、芹菜焯水铺碗底",
+          "time": 3
+        },
+        {
+          "title": "炒酱出味",
+          "desc": "热锅下油，加豆瓣酱、干辣椒、花椒炒出红油，加水烧开",
+          "time": 3
+        },
+        {
+          "title": "煮鱼片",
+          "desc": "下鱼片拨散，煮30秒至变色即连汤倒入碗中",
+          "time": 2
+        },
+        {
+          "title": "浇热油",
+          "desc": "鱼片上撒蒜末、葱花、干辣椒、花椒，烧冒烟的热油浇上去",
+          "time": 2
+        }
+      ],
+      "tips": "鱼片要顺纹切才不散；煮的时间要短，变色即捞",
+      "videoId": null,
+      "cuisine": "sichuan",
+      "tags": [
+        "宴客",
+        "下饭"
+      ],
+      "cover": "/images/dishes/水煮鱼.svg",
+      "protein": 8,
+      "fat": 0,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "毛血旺",
+      "category": "川菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "重辣",
+      "difficulty": "中等",
+      "description": "麻辣鲜烫，料多味浓，川菜江湖菜代表",
+      "time": 30,
+      "calories": 360,
+      "ingredients": [
+        {
+          "name": "豆芽",
+          "amount": "200g"
+        },
+        {
+          "name": "豆腐",
+          "amount": "1块"
+        },
+        {
+          "name": "火腿",
+          "amount": "50g"
+        },
+        {
+          "name": "豆瓣酱",
+          "amount": "2勺"
+        },
+        {
+          "name": "干辣椒",
+          "amount": "5个"
+        },
+        {
+          "name": "花椒",
+          "amount": "1小把"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        }
+      ],
+      "steps": [
+        {
+          "title": "准备食材",
+          "desc": "豆腐切块，火腿切片，豆芽洗净",
+          "time": 5
+        },
+        {
+          "title": "炒底菜",
+          "desc": "豆芽焯水铺碗底",
+          "time": 3
+        },
+        {
+          "title": "炒酱出味",
+          "desc": "热锅下油，加豆瓣酱、干辣椒、花椒、姜末炒出红油，加水烧开",
+          "time": 3
+        },
+        {
+          "title": "煮食材",
+          "desc": "下豆腐、火腿煮3分钟入味，连汤倒入碗中",
+          "time": 5
+        },
+        {
+          "title": "浇热油",
+          "desc": "表面撒蒜末、葱花、干辣椒、花椒，浇热油即可",
+          "time": 2
+        }
+      ],
+      "tips": "豆瓣酱要炒出红油才香；浇热油要浇在辣椒花椒上",
+      "videoId": null,
+      "cuisine": "sichuan",
+      "tags": [
+        "下饭"
+      ],
+      "cover": "/images/dishes/毛血旺.svg",
+      "protein": 8,
+      "fat": 0,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "干煸四季豆",
+      "category": "川菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "微辣",
+      "difficulty": "中等",
+      "description": "四季豆干香，肉末入味，川菜经典素菜",
+      "time": 20,
+      "calories": 220,
+      "ingredients": [
+        {
+          "name": "四季豆",
+          "amount": "200g"
+        },
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "干辣椒",
+          "amount": "5个"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理四季豆",
+          "desc": "四季豆掰段，洗净沥干",
+          "time": 3
+        },
+        {
+          "title": "煸四季豆",
+          "desc": "锅中多放油，下四季豆煸至表皮起皱微焦盛出",
+          "time": 8
+        },
+        {
+          "title": "炒肉末",
+          "desc": "锅中留底油，下猪肉末煸炒至出油酥香",
+          "time": 3
+        },
+        {
+          "title": "爆香调料",
+          "desc": "加干辣椒、蒜末、姜末爆香",
+          "time": 1
+        },
+        {
+          "title": "合炒调味",
+          "desc": "倒回四季豆，加生抽、盐翻炒均匀出锅",
+          "time": 2
+        }
+      ],
+      "tips": "四季豆一定要煸透，生四季豆有毒",
+      "videoId": null,
+      "cuisine": "sichuan",
+      "tags": [
+        "下饭",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/干煸四季豆.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "白切鸡",
+      "category": "粤菜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "皮爽肉滑，原汁原味，粤菜经典冷盘",
+      "time": 40,
+      "calories": 220,
+      "ingredients": [
+        {
+          "name": "三黄鸡",
+          "amount": "1只"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "香油",
+          "amount": "少许"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理鸡",
+          "desc": "整鸡洗净，去除内脏和鸡油",
+          "time": 5
+        },
+        {
+          "title": "浸煮",
+          "desc": "锅中水加姜片葱段烧开，提鸡腿将鸡身浸入水中3秒提起，重复3次",
+          "time": 3
+        },
+        {
+          "title": "小火浸熟",
+          "desc": "将整鸡放入水中，小火保持微沸25分钟，关火焖10分钟",
+          "time": 25
+        },
+        {
+          "title": "冰水激冷",
+          "desc": "捞出立即放入冰水中浸泡5分钟，皮脆肉紧",
+          "time": 5
+        },
+        {
+          "title": "斩件蘸料",
+          "desc": "斩块装盘，姜葱蓉加少许盐淋上热油做蘸料",
+          "time": 2
+        }
+      ],
+      "tips": "三提三浸让鸡腔内外温度一致，肉质更嫩；冰水激冷是皮脆的关键",
+      "videoId": null,
+      "cuisine": "cantonese",
+      "tags": [
+        "宴客"
+      ],
+      "cover": "/images/dishes/白切鸡.svg",
+      "protein": 0,
+      "fat": 10,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "清蒸鲈鱼",
+      "category": "粤菜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "鲜嫩无比，原汁原味，宴客必备硬菜",
+      "time": 25,
+      "calories": 150,
+      "ingredients": [
+        {
+          "name": "鲈鱼",
+          "amount": "1条"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "红椒",
+          "amount": "1个"
+        },
+        {
+          "name": "蒸鱼豉油",
+          "amount": "2勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理鲈鱼",
+          "desc": "鲈鱼去鳞去内脏洗净，鱼身两面划三刀，抹料酒腌制10分钟",
+          "time": 10
+        },
+        {
+          "title": "摆盘上锅",
+          "desc": "鱼身放姜丝，水开后上锅大火蒸8分钟",
+          "time": 8
+        },
+        {
+          "title": "去腥提味",
+          "desc": "倒掉蒸鱼水，铺上葱丝、姜丝、红椒丝，淋上蒸鱼豉油",
+          "time": 2
+        },
+        {
+          "title": "浇热油",
+          "desc": "锅中烧热油，浇在鱼身的葱姜丝上，滋啦一声即可",
+          "time": 1
+        }
+      ],
+      "tips": "蒸鱼时间不要太长，8-10分钟刚好；一定要水开后再放鱼",
+      "videoId": null,
+      "cuisine": "cantonese",
+      "tags": [
+        "宴客",
+        "低卡"
+      ],
+      "cover": "/images/dishes/清蒸鲈鱼.svg",
+      "protein": 20,
+      "fat": 0,
+      "carbs": 0,
+      "servings": 1
+    },
+    {
+      "name": "白灼虾",
+      "category": "粤菜",
+      "categoryTag": "健康菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "原汁原味，鲜甜弹牙，粤菜最简做法",
+      "time": 10,
+      "calories": 100,
+      "ingredients": [
+        {
+          "name": "虾",
+          "amount": "300g"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "香油",
+          "amount": "少许"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理虾",
+          "desc": "虾剪去须脚，挑出虾线洗净",
+          "time": 3
+        },
+        {
+          "title": "烧水",
+          "desc": "锅中加水，放姜片葱段烧开",
+          "time": 3
+        },
+        {
+          "title": "灼虾",
+          "desc": "下虾煮2分钟至变红卷曲捞出",
+          "time": 2
+        },
+        {
+          "title": "调蘸料",
+          "desc": "生抽加少许香油调匀做蘸料",
+          "time": 1
+        }
+      ],
+      "tips": "虾不要煮太久，变色即捞才弹牙；煮时加料酒去腥",
+      "videoId": null,
+      "cuisine": "cantonese",
+      "tags": [
+        "健康",
+        "新手友好",
+        "低卡",
+        "高蛋白",
+        "一人食",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/白灼虾.svg",
+      "protein": 20,
+      "fat": 10,
+      "carbs": 0,
+      "servings": 1
+    },
+    {
+      "name": "煲仔饭",
+      "category": "粤菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "锅巴焦香，腊味浓郁，一锅满足的广式经典",
+      "time": 45,
+      "calories": 480,
+      "ingredients": [
+        {
+          "name": "米饭",
+          "amount": "1碗"
+        },
+        {
+          "name": "腊肉",
+          "amount": "100g"
+        },
+        {
+          "name": "香肠",
+          "amount": "2根"
+        },
+        {
+          "name": "生菜",
+          "amount": "1颗"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "蚝油",
+          "amount": "1勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理食材",
+          "desc": "腊肉、香肠切片，生菜洗净",
+          "time": 3
+        },
+        {
+          "title": "煲米饭",
+          "desc": "砂锅刷油，放米加水，大火烧开后转小火焖10分钟",
+          "time": 10
+        },
+        {
+          "title": "铺腊味",
+          "desc": "米饭表面铺上腊肉、香肠片，盖盖小火焖15分钟",
+          "time": 15
+        },
+        {
+          "title": "煎锅巴",
+          "desc": "沿锅边淋少许油，继续小火焖5分钟形成锅巴",
+          "time": 5
+        },
+        {
+          "title": "调味出锅",
+          "desc": "生菜焯水铺面，淋上调好的生抽蚝油糖汁即可",
+          "time": 2
+        }
+      ],
+      "tips": "砂锅刷油才有锅巴；焖饭时不要频繁开盖",
+      "videoId": null,
+      "cuisine": "cantonese",
+      "tags": [
+        "经典"
+      ],
+      "cover": "/images/dishes/煲仔饭.svg",
+      "protein": 0,
+      "fat": 15,
+      "carbs": 50,
+      "servings": 2
+    },
+    {
+      "name": "叉烧",
+      "category": "粤菜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "色泽红亮，甜香多汁，广式烧腊代表",
+      "time": 60,
+      "calories": 320,
+      "ingredients": [
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "蜂蜜",
+          "amount": "1勺"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "蚝油",
+          "amount": "1勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "腌制猪肉",
+          "desc": "猪肉切长条，加生抽、蚝油、料酒、糖腌制4小时",
+          "time": 10
+        },
+        {
+          "title": "烤制",
+          "desc": "烤箱预热200度，猪肉放烤架上烤20分钟",
+          "time": 20
+        },
+        {
+          "title": "刷蜜糖",
+          "desc": "取出刷蜂蜜，翻面再烤15分钟",
+          "time": 15
+        },
+        {
+          "title": "切片装盘",
+          "desc": "取出晾凉切片，淋烤盘汁水即可",
+          "time": 5
+        }
+      ],
+      "tips": "腌制时间越长越入味；最后刷蜂蜜增色增香",
+      "videoId": null,
+      "cuisine": "cantonese",
+      "tags": [
+        "宴客",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/叉烧.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 20,
+      "servings": 2
+    },
+    {
+      "name": "蚝油生菜",
+      "category": "粤菜",
+      "categoryTag": "快手菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "翠绿爽脆，鲜香清淡，三分钟搞定",
+      "time": 5,
+      "calories": 60,
+      "ingredients": [
+        {
+          "name": "生菜",
+          "amount": "1颗"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "蚝油",
+          "amount": "1勺"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理生菜",
+          "desc": "生菜洗净掰开，蒜切末",
+          "time": 2
+        },
+        {
+          "title": "焯水",
+          "desc": "烧开水加少许盐油，下生菜焯30秒捞出摆盘",
+          "time": 1
+        },
+        {
+          "title": "炒蒜蓉",
+          "desc": "锅中放油，下蒜末爆香",
+          "time": 1
+        },
+        {
+          "title": "调汁淋菜",
+          "desc": "加蚝油、生抽、糖和少许水烧开，淋在生菜上即可",
+          "time": 1
+        }
+      ],
+      "tips": "生菜焯水时间要短，保持脆嫩和翠绿",
+      "videoId": null,
+      "cuisine": "cantonese",
+      "tags": [
+        "快手",
+        "新手友好",
+        "低卡",
+        "一人食",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/蚝油生菜.svg",
+      "protein": 0,
+      "fat": 0,
+      "carbs": 10,
+      "servings": 1
+    },
+    {
+      "name": "剁椒鱼头",
+      "category": "湘菜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "中辣",
+      "difficulty": "中等",
+      "description": "鲜辣过瘾，鱼头嫩滑，湘菜头牌",
+      "time": 30,
+      "calories": 220,
+      "ingredients": [
+        {
+          "name": "鱼",
+          "amount": "1条"
+        },
+        {
+          "name": "剁椒",
+          "amount": "2勺"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理鱼头",
+          "desc": "鱼头劈开洗净，抹料酒和盐腌制10分钟",
+          "time": 10
+        },
+        {
+          "title": "铺剁椒",
+          "desc": "鱼头摆盘，铺满剁椒，撒姜末蒜末",
+          "time": 3
+        },
+        {
+          "title": "上锅蒸",
+          "desc": "水开后上锅大火蒸12分钟",
+          "time": 12
+        },
+        {
+          "title": "浇热油",
+          "desc": "取出撒葱花，烧热油浇上去即可",
+          "time": 2
+        }
+      ],
+      "tips": "鱼头要新鲜才不腥；剁椒本身咸，少加盐",
+      "videoId": null,
+      "cuisine": "hunan",
+      "tags": [
+        "宴客",
+        "下饭"
+      ],
+      "cover": "/images/dishes/剁椒鱼头.svg",
+      "protein": 0,
+      "fat": 0,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "小炒黄牛肉",
+      "category": "湘菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "中辣",
+      "difficulty": "中等",
+      "description": "牛肉滑嫩，辣香四溢，湘菜下饭神菜",
+      "time": 20,
+      "calories": 260,
+      "ingredients": [
+        {
+          "name": "牛肉",
+          "amount": "250g"
+        },
+        {
+          "name": "青椒",
+          "amount": "2个"
+        },
+        {
+          "name": "红椒",
+          "amount": "1个"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "腌制牛肉",
+          "desc": "牛肉切薄片，加生抽、料酒、淀粉腌制10分钟",
+          "time": 10
+        },
+        {
+          "title": "切配菜",
+          "desc": "青椒、红椒切段，姜蒜切末",
+          "time": 2
+        },
+        {
+          "title": "炒牛肉",
+          "desc": "热锅宽油，下牛肉滑炒至变色盛出",
+          "time": 2
+        },
+        {
+          "title": "爆香配菜",
+          "desc": "锅中留底油，下姜蒜末、青椒红椒翻炒",
+          "time": 2
+        },
+        {
+          "title": "合炒出锅",
+          "desc": "倒回牛肉，加生抽调味翻炒均匀出锅",
+          "time": 2
+        }
+      ],
+      "tips": "牛肉要逆纹切，大火快炒才嫩",
+      "videoId": null,
+      "cuisine": "hunan",
+      "tags": [
+        "下饭",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/小炒黄牛肉.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "干锅花菜",
+      "category": "湘菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "微辣",
+      "difficulty": "简单",
+      "description": "花菜干香入味，下饭停不下来",
+      "time": 20,
+      "calories": 180,
+      "ingredients": [
+        {
+          "name": "花菜",
+          "amount": "1颗"
+        },
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "干辣椒",
+          "amount": "5个"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理花菜",
+          "desc": "花菜掰小朵洗净，沥干水分",
+          "time": 3
+        },
+        {
+          "title": "煸炒花菜",
+          "desc": "锅中放油，下花菜煸至微焦盛出",
+          "time": 6
+        },
+        {
+          "title": "炒肉末",
+          "desc": "锅中留底油，下猪肉末煸炒至出油",
+          "time": 3
+        },
+        {
+          "title": "爆香调料",
+          "desc": "加干辣椒、姜末、蒜末爆香",
+          "time": 1
+        },
+        {
+          "title": "合炒出锅",
+          "desc": "倒回花菜，加生抽翻炒均匀出锅",
+          "time": 2
+        }
+      ],
+      "tips": "花菜要先煸干水分才入味；不要加水煮",
+      "videoId": null,
+      "cuisine": "hunan",
+      "tags": [
+        "下饭",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/干锅花菜.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 0,
+      "servings": 1
+    },
+    {
+      "name": "辣椒炒肉",
+      "category": "湘菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "中辣",
+      "difficulty": "简单",
+      "description": "湖南人餐桌的灵魂菜，辣得过瘾",
+      "time": 15,
+      "calories": 240,
+      "ingredients": [
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "青椒",
+          "amount": "2个"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "切食材",
+          "desc": "猪肉切薄片，青椒切斜段，蒜切片",
+          "time": 3
+        },
+        {
+          "title": "煸炒肉片",
+          "desc": "热锅少油，下肉片煸炒至出油卷曲",
+          "time": 4
+        },
+        {
+          "title": "炒青椒",
+          "desc": "下青椒段、蒜片翻炒至青椒表皮起皱",
+          "time": 4
+        },
+        {
+          "title": "调味出锅",
+          "desc": "加生抽、料酒调味翻炒均匀出锅",
+          "time": 2
+        }
+      ],
+      "tips": "青椒要选螺丝椒更香；肉片要煸出油才好吃",
+      "videoId": null,
+      "cuisine": "hunan",
+      "tags": [
+        "下饭",
+        "新手友好",
+        "高蛋白",
+        "一人食"
+      ],
+      "cover": "/images/dishes/辣椒炒肉.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "腊味炒蒜薹",
+      "category": "湘菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "微辣",
+      "difficulty": "简单",
+      "description": "腊味醇香，蒜薹脆嫩，下饭好菜",
+      "time": 15,
+      "calories": 230,
+      "ingredients": [
+        {
+          "name": "腊肉",
+          "amount": "100g"
+        },
+        {
+          "name": "蒜薹",
+          "amount": "200g"
+        },
+        {
+          "name": "干辣椒",
+          "amount": "5个"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理腊肉",
+          "desc": "腊肉切薄片，蒜薹切段",
+          "time": 3
+        },
+        {
+          "title": "煸炒腊肉",
+          "desc": "热锅少油，下腊肉煸至透明出油",
+          "time": 4
+        },
+        {
+          "title": "炒蒜薹",
+          "desc": "下蒜薹段、干辣椒翻炒",
+          "time": 5
+        },
+        {
+          "title": "调味出锅",
+          "desc": "加少许生抽调味翻炒均匀出锅",
+          "time": 2
+        }
+      ],
+      "tips": "腊肉本身咸，少加盐；蒜薹不要炒太久保持脆嫩",
+      "videoId": null,
+      "cuisine": "hunan",
+      "tags": [
+        "下饭",
+        "新手友好",
+        "一人食"
+      ],
+      "cover": "/images/dishes/腊味炒蒜薹.svg",
+      "protein": 0,
+      "fat": 15,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "地三鲜",
+      "category": "东北菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "东北经典素菜，三种蔬菜完美搭配，下饭神器",
+      "time": 20,
+      "calories": 180,
+      "ingredients": [
+        {
+          "name": "茄子",
+          "amount": "2根"
+        },
+        {
+          "name": "土豆",
+          "amount": "2个"
+        },
+        {
+          "name": "青椒",
+          "amount": "2个"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "老抽",
+          "amount": "1勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "切食材",
+          "desc": "茄子切滚刀块，土豆切块，青椒掰小块，蒜切末",
+          "time": 3
+        },
+        {
+          "title": "炸土豆",
+          "desc": "油温六成热，下土豆块炸至金黄捞出",
+          "time": 4
+        },
+        {
+          "title": "炸茄子",
+          "desc": "同一油温下茄子炸至表皮微皱捞出",
+          "time": 3
+        },
+        {
+          "title": "调酱汁",
+          "desc": "生抽2勺、老抽半勺、糖1勺、淀粉1勺、水半碗调匀",
+          "time": 1
+        },
+        {
+          "title": "合炒收汁",
+          "desc": "锅留底油爆香蒜末，倒入酱汁烧开，下土豆茄子青椒翻炒收汁",
+          "time": 3
+        }
+      ],
+      "tips": "茄子炸之前可以先拌一层干淀粉，吸油少；青椒最后放保持脆嫩",
+      "videoId": null,
+      "cuisine": "northeast",
+      "tags": [
+        "经典",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/地三鲜.svg",
+      "protein": 0,
+      "fat": 0,
+      "carbs": 25,
+      "servings": 1
+    },
+    {
+      "name": "锅包肉",
+      "category": "东北菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "较难",
+      "description": "外酥里嫩，酸甜可口，东北菜代表",
+      "time": 30,
+      "calories": 380,
+      "ingredients": [
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "胡萝卜",
+          "amount": "1根"
+        }
+      ],
+      "steps": [
+        {
+          "title": "切肉片",
+          "desc": "猪肉切大薄片，加少许盐料酒腌制10分钟",
+          "time": 10
+        },
+        {
+          "title": "挂糊",
+          "desc": "肉片裹满土豆淀粉糊",
+          "time": 3
+        },
+        {
+          "title": "炸肉片",
+          "desc": "油温六成热下肉片炸至定型捞出，复炸至金黄酥脆",
+          "time": 8
+        },
+        {
+          "title": "调糖醋汁",
+          "desc": "生抽、醋、糖、少许水调匀",
+          "time": 1
+        },
+        {
+          "title": "裹汁出锅",
+          "desc": "锅留底油，下姜丝、葱丝、胡萝卜丝翻炒，倒入糖醋汁，下肉片快速翻炒裹汁出锅",
+          "time": 3
+        }
+      ],
+      "tips": "肉片要复炸才酥脆；裹汁要快，保持酥脆口感",
+      "videoId": null,
+      "cuisine": "northeast",
+      "tags": [
+        "经典",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/锅包肉.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 15,
+      "servings": 2
+    },
+    {
+      "name": "小鸡炖蘑菇",
+      "category": "东北菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "鸡肉软烂，蘑菇鲜香，东北名菜",
+      "time": 60,
+      "calories": 280,
+      "ingredients": [
+        {
+          "name": "鸡肉",
+          "amount": "200g"
+        },
+        {
+          "name": "蘑菇",
+          "amount": "200g"
+        },
+        {
+          "name": "粉丝",
+          "amount": "1把"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理食材",
+          "desc": "鸡肉剁块焯水，蘑菇泡发洗净，粉丝泡软",
+          "time": 10
+        },
+        {
+          "title": "煸炒鸡肉",
+          "desc": "热锅放油，下鸡块煸炒至变色，加姜片葱段",
+          "time": 5
+        },
+        {
+          "title": "炖煮",
+          "desc": "加生抽、料酒，加水没过鸡块，大火烧开转小火炖30分钟",
+          "time": 30
+        },
+        {
+          "title": "加蘑菇粉丝",
+          "desc": "下蘑菇继续炖15分钟，加粉丝煮3分钟",
+          "time": 15
+        },
+        {
+          "title": "调味出锅",
+          "desc": "加盐调味出锅",
+          "time": 1
+        }
+      ],
+      "tips": "蘑菇要选东北榛蘑最正宗；粉丝最后放防烂",
+      "videoId": null,
+      "cuisine": "northeast",
+      "tags": [
+        "经典",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/小鸡炖蘑菇.svg",
+      "protein": 20,
+      "fat": 0,
+      "carbs": 40,
+      "servings": 2
+    },
+    {
+      "name": "猪肉炖粉条",
+      "category": "东北菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "肉香浓郁，粉条吸汁，东北冬日暖菜",
+      "time": 60,
+      "calories": 360,
+      "ingredients": [
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "粉丝",
+          "amount": "1把"
+        },
+        {
+          "name": "白菜",
+          "amount": "半颗"
+        },
+        {
+          "name": "豆腐",
+          "amount": "1块"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理食材",
+          "desc": "猪肉切块焯水，白菜切块，豆腐切块，粉丝泡软",
+          "time": 10
+        },
+        {
+          "title": "煸炒猪肉",
+          "desc": "热锅放油，下猪肉煸至出油，加姜片葱段",
+          "time": 5
+        },
+        {
+          "title": "炖煮",
+          "desc": "加生抽、料酒，加水没过肉块，大火烧开转小火炖30分钟",
+          "time": 30
+        },
+        {
+          "title": "加配菜",
+          "desc": "下白菜、豆腐炖10分钟，加粉丝煮5分钟",
+          "time": 15
+        },
+        {
+          "title": "调味出锅",
+          "desc": "加盐调味出锅",
+          "time": 1
+        }
+      ],
+      "tips": "猪肉要选带皮五花肉更香；粉条要最后放防烂",
+      "videoId": null,
+      "cuisine": "northeast",
+      "tags": [
+        "经典",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/猪肉炖粉条.svg",
+      "protein": 28,
+      "fat": 8,
+      "carbs": 40,
+      "servings": 2
+    },
+    {
+      "name": "糖醋鲤鱼",
+      "category": "鲁菜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "较难",
+      "description": "外酥里嫩，酸甜适口，鲁菜经典名菜",
+      "time": 40,
+      "calories": 320,
+      "ingredients": [
+        {
+          "name": "鱼",
+          "amount": "1条"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理鱼",
+          "desc": "鱼去鳞去内脏洗净，鱼身打花刀",
+          "time": 5
+        },
+        {
+          "title": "挂糊",
+          "desc": "鱼身裹满淀粉糊",
+          "time": 3
+        },
+        {
+          "title": "炸鱼",
+          "desc": "油温七成热，提鱼尾下锅炸至金黄酥脆，鱼尾翘起",
+          "time": 10
+        },
+        {
+          "title": "调糖醋汁",
+          "desc": "生抽、醋、糖、水调匀烧开，加水淀粉勾芡",
+          "time": 5
+        },
+        {
+          "title": "浇汁装盘",
+          "desc": "鱼摆盘，将糖醋汁浇在鱼身上即可",
+          "time": 2
+        }
+      ],
+      "tips": "炸鱼时要提鱼尾定型；糖醋汁要浇得均匀",
+      "videoId": null,
+      "cuisine": "shandong",
+      "tags": [
+        "宴客"
+      ],
+      "cover": "/images/dishes/糖醋鲤鱼.svg",
+      "protein": 0,
+      "fat": 0,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "葱烧海参",
+      "category": "鲁菜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "较难",
+      "description": "葱香浓郁，海参软糯，鲁菜硬菜代表",
+      "time": 40,
+      "calories": 200,
+      "ingredients": [
+        {
+          "name": "海参",
+          "amount": "2根"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "老抽",
+          "amount": "1勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "蚝油",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理海参",
+          "desc": "海参泡发洗净，焯水去腥",
+          "time": 10
+        },
+        {
+          "title": "炸葱段",
+          "desc": "锅中放油，下葱段炸至金黄捞出",
+          "time": 5
+        },
+        {
+          "title": "烧海参",
+          "desc": "锅中留底油，加生抽、老抽、料酒、糖、蚝油和水烧开，下海参烧10分钟",
+          "time": 15
+        },
+        {
+          "title": "勾芡收汁",
+          "desc": "加水淀粉勾芡，下炸葱段翻炒均匀",
+          "time": 3
+        },
+        {
+          "title": "出锅装盘",
+          "desc": "装盘即可",
+          "time": 1
+        }
+      ],
+      "tips": "海参要泡发充分；葱要炸出香味才是灵魂",
+      "videoId": null,
+      "cuisine": "shandong",
+      "tags": [
+        "宴客"
+      ],
+      "cover": "/images/dishes/葱烧海参.svg",
+      "protein": 20,
+      "fat": 0,
+      "carbs": 10,
+      "servings": 1
+    },
+    {
+      "name": "九转大肠",
+      "category": "鲁菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "较难",
+      "description": "酸甜苦辣咸五味俱全，鲁菜经典名菜",
+      "time": 60,
+      "calories": 350,
+      "ingredients": [
+        {
+          "name": "猪大肠",
+          "amount": "300g"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "老抽",
+          "amount": "1勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "胡椒粉",
+          "amount": "少许"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理大肠",
+          "desc": "猪大肠翻洗去油，加面粉盐搓洗干净",
+          "time": 15
+        },
+        {
+          "title": "煮大肠",
+          "desc": "冷水下锅，加葱姜料酒煮40分钟至熟，捞出切段",
+          "time": 45
+        },
+        {
+          "title": "炸大肠",
+          "desc": "油温六成热，下大肠段炸至微黄捞出",
+          "time": 5
+        },
+        {
+          "title": "烧制",
+          "desc": "锅留底油，下葱姜蒜末爆香，加生抽、老抽、醋、糖、胡椒粉和水烧开",
+          "time": 3
+        },
+        {
+          "title": "收汁出锅",
+          "desc": "下大肠段翻炒收汁至浓稠即可",
+          "time": 3
+        }
+      ],
+      "tips": "大肠要清洗干净去腥；五味要平衡，缺一不可",
+      "videoId": null,
+      "cuisine": "shandong",
+      "tags": [
+        "经典"
+      ],
+      "cover": "/images/dishes/九转大肠.svg",
+      "protein": 0,
+      "fat": 15,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "东坡肉",
+      "category": "苏菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "色红味醇，酥烂如豆腐，苏菜传世名菜",
+      "time": 90,
+      "calories": 480,
+      "ingredients": [
+        {
+          "name": "五花肉",
+          "amount": "300g"
+        },
+        {
+          "name": "冰糖",
+          "amount": "30g"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "老抽",
+          "amount": "1勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理五花肉",
+          "desc": "五花肉切方块，冷水下锅焯水，捞出洗净",
+          "time": 10
+        },
+        {
+          "title": "铺底料",
+          "desc": "砂锅底铺葱段姜片，五花肉皮朝下码放",
+          "time": 3
+        },
+        {
+          "title": "加调料",
+          "desc": "加冰糖、生抽、老抽、料酒，加开水没过肉块",
+          "time": 2
+        },
+        {
+          "title": "炖煮",
+          "desc": "大火烧开转小火炖60分钟至肉酥烂",
+          "time": 60
+        },
+        {
+          "title": "收汁装盘",
+          "desc": "翻面皮朝上，大火收汁至浓稠即可",
+          "time": 5
+        }
+      ],
+      "tips": "用砂锅炖更入味；小火慢炖才能酥烂",
+      "videoId": null,
+      "cuisine": "jiangsu",
+      "tags": [
+        "经典",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/东坡肉.svg",
+      "protein": 20,
+      "fat": 15,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "松鼠桂鱼",
+      "category": "苏菜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "较难",
+      "description": "形似松鼠，外酥里嫩，酸甜可口，苏菜代表",
+      "time": 40,
+      "calories": 360,
+      "ingredients": [
+        {
+          "name": "鱼",
+          "amount": "1条"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "番茄酱",
+          "amount": "2勺"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "鸡蛋",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理鱼",
+          "desc": "鱼去骨，鱼肉打十字花刀，不切穿鱼皮",
+          "time": 10
+        },
+        {
+          "title": "挂糊",
+          "desc": "鱼身裹蛋液，再裹满干淀粉",
+          "time": 3
+        },
+        {
+          "title": "炸鱼",
+          "desc": "油温七成热，提鱼尾下锅炸至金黄酥脆，鱼肉外翻如松鼠",
+          "time": 10
+        },
+        {
+          "title": "调糖醋汁",
+          "desc": "锅中放油，下番茄酱、糖、醋、生抽、水烧开，加水淀粉勾芡",
+          "time": 5
+        },
+        {
+          "title": "浇汁装盘",
+          "desc": "鱼摆盘，将糖醋汁浇在鱼身上即可",
+          "time": 2
+        }
+      ],
+      "tips": "花刀要均匀才能炸出松鼠形状；浇汁要趁热",
+      "videoId": null,
+      "cuisine": "jiangsu",
+      "tags": [
+        "宴客",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/松鼠桂鱼.svg",
+      "protein": 8,
+      "fat": 5,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "蒜蓉粉丝蒸虾",
+      "category": "海鲜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "蒜香浓郁，虾肉弹牙，粉丝吸汁，宴客硬菜",
+      "time": 20,
+      "calories": 180,
+      "ingredients": [
+        {
+          "name": "虾",
+          "amount": "300g"
+        },
+        {
+          "name": "粉丝",
+          "amount": "1把"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理虾",
+          "desc": "虾开背去虾线，粉丝泡软铺盘底",
+          "time": 5
+        },
+        {
+          "title": "炒蒜蓉",
+          "desc": "锅中放油，下蒜末小火炒至金黄",
+          "time": 3
+        },
+        {
+          "title": "摆盘",
+          "desc": "虾摆在粉丝上，铺蒜蓉，淋生抽料酒",
+          "time": 2
+        },
+        {
+          "title": "上锅蒸",
+          "desc": "水开后上锅大火蒸5分钟",
+          "time": 5
+        },
+        {
+          "title": "浇热油",
+          "desc": "取出撒葱花，烧热油浇上去即可",
+          "time": 1
+        }
+      ],
+      "tips": "蒜蓉要分生熟两部分更香；虾不要蒸太久",
+      "videoId": null,
+      "cuisine": "seafood",
+      "tags": [
+        "宴客",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/蒜蓉粉丝蒸虾.svg",
+      "protein": 20,
+      "fat": 0,
+      "carbs": 40,
+      "servings": 1
+    },
+    {
+      "name": "辣炒花甲",
+      "category": "海鲜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "中辣",
+      "difficulty": "简单",
+      "description": "鲜辣过瘾，花甲鲜嫩，下酒下饭都行",
+      "time": 15,
+      "calories": 120,
+      "ingredients": [
+        {
+          "name": "蛤蜊",
+          "amount": "500g"
+        },
+        {
+          "name": "干辣椒",
+          "amount": "5个"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "吐沙",
+          "desc": "蛤蜊用盐水浸泡2小时吐沙，洗净",
+          "time": 5
+        },
+        {
+          "title": "焯水",
+          "desc": "蛤蜊冷水下锅，开口即捞出",
+          "time": 3
+        },
+        {
+          "title": "爆香调料",
+          "desc": "热锅放油，下干辣椒、姜末、蒜末爆香",
+          "time": 1
+        },
+        {
+          "title": "炒花甲",
+          "desc": "下蛤蜊翻炒，加生抽、料酒",
+          "time": 2
+        },
+        {
+          "title": "出锅",
+          "desc": "撒葱花翻炒均匀出锅",
+          "time": 1
+        }
+      ],
+      "tips": "蛤蜊要吐净沙子；不要炒太久，肉质会老",
+      "videoId": null,
+      "cuisine": "seafood",
+      "tags": [
+        "下饭",
+        "新手友好",
+        "低卡",
+        "一人食"
+      ],
+      "cover": "/images/dishes/辣炒花甲.svg",
+      "protein": 20,
+      "fat": 0,
+      "carbs": 0,
+      "servings": 1
+    },
+    {
+      "name": "清蒸螃蟹",
+      "category": "海鲜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "原汁原味，蟹黄鲜香，秋日美味",
+      "time": 20,
+      "calories": 150,
+      "ingredients": [
+        {
+          "name": "螃蟹",
+          "amount": "2只"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理螃蟹",
+          "desc": "螃蟹刷洗干净，姜切丝，葱切段",
+          "time": 5
+        },
+        {
+          "title": "上锅蒸",
+          "desc": "螃蟹肚皮朝上放盘中，铺姜丝，水开后大火蒸15分钟",
+          "time": 15
+        },
+        {
+          "title": "调蘸料",
+          "desc": "生抽加姜丝、醋调匀做蘸料",
+          "time": 1
+        }
+      ],
+      "tips": "螃蟹要肚皮朝上蒸，防止蟹黄流失；蘸姜醋去寒",
+      "videoId": null,
+      "cuisine": "seafood",
+      "tags": [
+        "宴客",
+        "低卡",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/清蒸螃蟹.svg",
+      "protein": 20,
+      "fat": 0,
+      "carbs": 0,
+      "servings": 1
+    },
+    {
+      "name": "椒盐虾",
+      "category": "海鲜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "微辣",
+      "difficulty": "中等",
+      "description": "外酥里嫩，椒盐香浓，连壳都能吃",
+      "time": 20,
+      "calories": 220,
+      "ingredients": [
+        {
+          "name": "虾",
+          "amount": "300g"
+        },
+        {
+          "name": "椒盐",
+          "amount": "少许"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理虾",
+          "desc": "虾剪去须脚，挑虾线，洗净沥干",
+          "time": 5
+        },
+        {
+          "title": "裹淀粉",
+          "desc": "虾裹薄薄一层干淀粉",
+          "time": 2
+        },
+        {
+          "title": "炸虾",
+          "desc": "油温六成热，下虾炸至金黄酥脆捞出",
+          "time": 5
+        },
+        {
+          "title": "爆香调料",
+          "desc": "锅留底油，下姜末、蒜末、葱花爆香",
+          "time": 1
+        },
+        {
+          "title": "合炒出锅",
+          "desc": "倒回虾，撒椒盐翻炒均匀出锅",
+          "time": 2
+        }
+      ],
+      "tips": "虾要炸透连壳都能吃；椒盐最后撒",
+      "videoId": null,
+      "cuisine": "seafood",
+      "tags": [
+        "下饭",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/椒盐虾.svg",
+      "protein": 20,
+      "fat": 0,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "紫菜蛋花汤",
+      "category": "汤煲",
+      "categoryTag": "快手菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "简单快手的家常汤品，鲜香可口，几分钟搞定",
+      "time": 8,
+      "calories": 60,
+      "ingredients": [
+        {
+          "name": "紫菜",
+          "amount": "10g"
+        },
+        {
+          "name": "鸡蛋",
+          "amount": "适量"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        },
+        {
+          "name": "香油",
+          "amount": "少许"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "虾皮",
+          "amount": "20g"
+        }
+      ],
+      "steps": [
+        {
+          "title": "泡紫菜",
+          "desc": "紫菜撕成小块，用温水泡软",
+          "time": 2
+        },
+        {
+          "title": "烧水",
+          "desc": "锅中烧开水，加入虾皮煮1分钟",
+          "time": 2
+        },
+        {
+          "title": "淋入蛋液",
+          "desc": "鸡蛋打散，沿锅边慢慢淋入蛋液，形成蛋花",
+          "time": 2
+        },
+        {
+          "title": "调味出锅",
+          "desc": "放入紫菜，加盐调味，淋香油，撒葱花",
+          "time": 1
+        }
+      ],
+      "tips": "蛋液要慢慢淋，不要搅动，这样蛋花才漂亮",
+      "videoId": null,
+      "cuisine": "soup",
+      "tags": [
+        "快手",
+        "新手友好",
+        "低卡",
+        "高蛋白",
+        "一人食",
+        "夜宵",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/紫菜蛋花汤.svg",
+      "protein": 8,
+      "fat": 15,
+      "carbs": 0,
+      "servings": 1
+    },
+    {
+      "name": "玉米排骨汤",
+      "category": "汤煲",
+      "categoryTag": "健康菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "清甜可口，营养滋补，全家老少都爱喝",
+      "time": 60,
+      "calories": 180,
+      "ingredients": [
+        {
+          "name": "玉米",
+          "amount": "1根"
+        },
+        {
+          "name": "排骨",
+          "amount": "500g"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "焯水排骨",
+          "desc": "排骨冷水下锅，加姜片料酒焯水，捞出洗净",
+          "time": 10
+        },
+        {
+          "title": "处理玉米",
+          "desc": "玉米切小段",
+          "time": 2
+        },
+        {
+          "title": "炖汤",
+          "desc": "排骨、玉米放入锅中，加水和姜片，大火烧开转小火炖40分钟",
+          "time": 40
+        },
+        {
+          "title": "调味出锅",
+          "desc": "加盐调味，撒葱花出锅",
+          "time": 2
+        }
+      ],
+      "tips": "炖汤要一次加足水；小火慢炖汤才清甜",
+      "videoId": null,
+      "cuisine": "soup",
+      "tags": [
+        "健康",
+        "高蛋白",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/玉米排骨汤.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 15,
+      "servings": 1
+    },
+    {
+      "name": "冬瓜排骨汤",
+      "category": "汤煲",
+      "categoryTag": "健康菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "清淡消暑，利尿消肿，夏日养生汤",
+      "time": 60,
+      "calories": 150,
+      "ingredients": [
+        {
+          "name": "冬瓜",
+          "amount": "300g"
+        },
+        {
+          "name": "排骨",
+          "amount": "500g"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "焯水排骨",
+          "desc": "排骨冷水下锅，加姜片料酒焯水，捞出洗净",
+          "time": 10
+        },
+        {
+          "title": "处理冬瓜",
+          "desc": "冬瓜去皮去瓤切块",
+          "time": 3
+        },
+        {
+          "title": "炖排骨",
+          "desc": "排骨放入锅中，加水和姜片，大火烧开转小火炖40分钟",
+          "time": 40
+        },
+        {
+          "title": "加冬瓜",
+          "desc": "下冬瓜块继续炖10分钟至透明",
+          "time": 10
+        },
+        {
+          "title": "调味出锅",
+          "desc": "加盐调味出锅",
+          "time": 1
+        }
+      ],
+      "tips": "冬瓜不要炖太久，保持形状；汤要清淡不要加太多调料",
+      "videoId": null,
+      "cuisine": "soup",
+      "tags": [
+        "健康",
+        "低卡",
+        "高蛋白",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/冬瓜排骨汤.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 0,
+      "servings": 1
+    },
+    {
+      "name": "番茄蛋汤",
+      "category": "汤煲",
+      "categoryTag": "快手菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "酸甜开胃，简单快手，国民家常汤",
+      "time": 10,
+      "calories": 80,
+      "ingredients": [
+        {
+          "name": "番茄",
+          "amount": "2个"
+        },
+        {
+          "name": "鸡蛋",
+          "amount": "适量"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        },
+        {
+          "name": "香油",
+          "amount": "少许"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理番茄",
+          "desc": "番茄切小块，鸡蛋打散",
+          "time": 2
+        },
+        {
+          "title": "炒番茄",
+          "desc": "锅中放油，下番茄炒出汁",
+          "time": 3
+        },
+        {
+          "title": "煮汤",
+          "desc": "加水烧开煮2分钟",
+          "time": 2
+        },
+        {
+          "title": "淋蛋液",
+          "desc": "沿锅边慢慢淋入蛋液，形成蛋花",
+          "time": 1
+        },
+        {
+          "title": "调味出锅",
+          "desc": "加盐调味，淋香油，撒葱花",
+          "time": 1
+        }
+      ],
+      "tips": "番茄要先炒出汁汤才浓郁；蛋液慢慢淋才漂亮",
+      "videoId": null,
+      "cuisine": "soup",
+      "tags": [
+        "快手",
+        "新手友好",
+        "低卡",
+        "高蛋白",
+        "一人食",
+        "夜宵",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/番茄蛋汤.svg",
+      "protein": 8,
+      "fat": 15,
+      "carbs": 5,
+      "servings": 1
+    },
+    {
+      "name": "蛋炒饭",
+      "category": "主食",
+      "categoryTag": "快手菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "粒粒分明，蛋香四溢，最简单的美味",
+      "time": 10,
+      "calories": 350,
+      "ingredients": [
+        {
+          "name": "隔夜米饭",
+          "amount": "1碗"
+        },
+        {
+          "name": "鸡蛋",
+          "amount": "适量"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        },
+        {
+          "name": "食用油",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "准备米饭",
+          "desc": "隔夜米饭提前用手拨散（或用勺子打散）",
+          "time": 1
+        },
+        {
+          "title": "炒鸡蛋",
+          "desc": "热锅倒油，打入鸡蛋快速炒散",
+          "time": 1
+        },
+        {
+          "title": "炒米饭",
+          "desc": "倒入米饭，大火翻炒，让每粒米都裹上蛋液",
+          "time": 5
+        },
+        {
+          "title": "调味出锅",
+          "desc": "加盐调味，撒葱花翻炒均匀出锅",
+          "time": 1
+        }
+      ],
+      "tips": "一定要用隔夜饭，水分少更容易炒散",
+      "videoId": null,
+      "cuisine": "staple",
+      "tags": [
+        "快手",
+        "新手友好",
+        "高蛋白",
+        "一人食",
+        "夜宵"
+      ],
+      "cover": "/images/dishes/蛋炒饭.svg",
+      "protein": 8,
+      "fat": 15,
+      "carbs": 40,
+      "servings": 2
+    },
+    {
+      "name": "葱油拌面",
+      "category": "主食",
+      "categoryTag": "快手菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "葱香浓郁，面条爽滑，上海经典早餐",
+      "time": 15,
+      "calories": 380,
+      "ingredients": [
+        {
+          "name": "面条",
+          "amount": "200g"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "老抽",
+          "amount": "1勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "食用油",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "炸葱油",
+          "desc": "葱切长段，锅中放油，小火慢炸至焦黄捞出",
+          "time": 8
+        },
+        {
+          "title": "调酱汁",
+          "desc": "葱油中加生抽、老抽、糖烧开成酱汁",
+          "time": 2
+        },
+        {
+          "title": "煮面",
+          "desc": "另起锅煮面条至熟，捞出过水",
+          "time": 5
+        },
+        {
+          "title": "拌面",
+          "desc": "面条装碗，淋酱汁和炸葱段，拌匀即可",
+          "time": 1
+        }
+      ],
+      "tips": "葱段要炸焦才香；酱汁要趁热拌",
+      "videoId": null,
+      "cuisine": "staple",
+      "tags": [
+        "快手",
+        "新手友好",
+        "夜宵"
+      ],
+      "cover": "/images/dishes/葱油拌面.svg",
+      "protein": 0,
+      "fat": 10,
+      "carbs": 50,
+      "servings": 2
+    },
+    {
+      "name": "饺子",
+      "category": "主食",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "皮薄馅大，家常味道，团圆必备",
+      "time": 60,
+      "calories": 320,
+      "ingredients": [
+        {
+          "name": "饺子皮",
+          "amount": "20张"
+        },
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "白菜",
+          "amount": "半颗"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "调馅",
+          "desc": "猪肉剁末，白菜剁碎挤水，加姜末、生抽、料酒、盐搅匀",
+          "time": 20
+        },
+        {
+          "title": "包饺子",
+          "desc": "饺子皮放馅，捏合成饺子",
+          "time": 20
+        },
+        {
+          "title": "煮饺子",
+          "desc": "烧开水下饺子，点三次凉水，煮至饺子浮起",
+          "time": 10
+        },
+        {
+          "title": "出锅",
+          "desc": "捞出装盘，配醋蒜泥食用",
+          "time": 2
+        }
+      ],
+      "tips": "白菜要挤水防饺子破；煮饺子点凉水更筋道",
+      "videoId": null,
+      "cuisine": "staple",
+      "tags": [
+        "经典",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/饺子.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 40,
+      "servings": 2
+    },
+    {
+      "name": "炒面",
+      "category": "主食",
+      "categoryTag": "快手菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "面条筋道，配菜丰富，饱腹又美味",
+      "time": 20,
+      "calories": 400,
+      "ingredients": [
+        {
+          "name": "面条",
+          "amount": "200g"
+        },
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "白菜",
+          "amount": "半颗"
+        },
+        {
+          "name": "胡萝卜",
+          "amount": "1根"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理食材",
+          "desc": "猪肉切丝，白菜、胡萝卜切丝，葱切葱花",
+          "time": 5
+        },
+        {
+          "title": "煮面",
+          "desc": "面条煮至八成熟捞出过水沥干",
+          "time": 5
+        },
+        {
+          "title": "炒配菜",
+          "desc": "热锅放油，下肉丝炒至变色，加白菜丝、胡萝卜丝翻炒",
+          "time": 5
+        },
+        {
+          "title": "炒面",
+          "desc": "下面条，加生抽翻炒均匀",
+          "time": 3
+        },
+        {
+          "title": "出锅",
+          "desc": "撒葱花翻炒均匀出锅",
+          "time": 1
+        }
+      ],
+      "tips": "面条要过水才筋道不粘；炒面大火快炒",
+      "videoId": null,
+      "cuisine": "staple",
+      "tags": [
+        "快手",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/炒面.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 45,
+      "servings": 2
+    },
+    {
+      "name": "牛肉面",
+      "category": "主食",
+      "categoryTag": "经典菜",
+      "spiceLevel": "微辣",
+      "difficulty": "中等",
+      "description": "汤浓肉烂，面条筋道，一碗满足",
+      "time": 90,
+      "calories": 450,
+      "ingredients": [
+        {
+          "name": "面条",
+          "amount": "200g"
+        },
+        {
+          "name": "牛肉",
+          "amount": "250g"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "焯水牛肉",
+          "desc": "牛肉切块冷水下锅，加姜片料酒焯水，捞出洗净",
+          "time": 10
+        },
+        {
+          "title": "炖牛肉",
+          "desc": "牛肉放入锅中，加姜片、葱段、生抽、料酒和水，大火烧开转小火炖60分钟",
+          "time": 60
+        },
+        {
+          "title": "煮面",
+          "desc": "另起锅煮面条至熟，捞出装碗",
+          "time": 5
+        },
+        {
+          "title": "装碗",
+          "desc": "面条上铺牛肉，浇牛肉汤，撒葱花即可",
+          "time": 2
+        }
+      ],
+      "tips": "牛肉要小火慢炖才烂；汤要一次加足水",
+      "videoId": null,
+      "cuisine": "staple",
+      "tags": [
+        "经典",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/牛肉面.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 40,
+      "servings": 2
+    },
+    {
+      "name": "双皮奶",
+      "category": "甜品",
+      "categoryTag": "健康菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "奶香浓郁，嫩滑如丝，广式经典甜品",
+      "time": 30,
+      "calories": 180,
+      "ingredients": [
+        {
+          "name": "牛奶",
+          "amount": "200ml"
+        },
+        {
+          "name": "蛋清",
+          "amount": "2个"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "煮牛奶",
+          "desc": "牛奶加热至微沸，倒入碗中晾凉结奶皮",
+          "time": 10
+        },
+        {
+          "title": "倒牛奶",
+          "desc": "用筷子挑起奶皮一角，将牛奶倒出，留奶皮在碗底",
+          "time": 3
+        },
+        {
+          "title": "调蛋液",
+          "desc": "蛋清加糖打散，与倒出的牛奶搅匀过筛",
+          "time": 3
+        },
+        {
+          "title": "蒸制",
+          "desc": "将蛋奶液沿碗边倒回碗中，奶皮浮起，盖保鲜膜上锅蒸15分钟",
+          "time": 15
+        },
+        {
+          "title": "冷藏",
+          "desc": "取出晾凉，冷藏后食用",
+          "time": 1
+        }
+      ],
+      "tips": "牛奶要选全脂的才结奶皮；蒸时小火保持嫩滑",
+      "videoId": null,
+      "cuisine": "dessert",
+      "tags": [
+        "健康"
+      ],
+      "cover": "/images/dishes/双皮奶.svg",
+      "protein": 11,
+      "fat": 0,
+      "carbs": 10,
+      "servings": 1
+    },
+    {
+      "name": "芒果西米露",
+      "category": "甜品",
+      "categoryTag": "健康菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "芒果香甜，西米Q弹，夏日消暑甜品",
+      "time": 25,
+      "calories": 200,
+      "ingredients": [
+        {
+          "name": "西米",
+          "amount": "适量"
+        },
+        {
+          "name": "芒果",
+          "amount": "适量"
+        },
+        {
+          "name": "牛奶",
+          "amount": "200ml"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "煮西米",
+          "desc": "水开后下西米，大火煮10分钟至中间剩小白点，关火焖5分钟",
+          "time": 15
+        },
+        {
+          "title": "过冷水",
+          "desc": "西米捞出过冷水沥干，晶莹剔透",
+          "time": 3
+        },
+        {
+          "title": "处理芒果",
+          "desc": "芒果切块，部分打成泥",
+          "time": 3
+        },
+        {
+          "title": "装碗",
+          "desc": "西米装碗，加牛奶、糖搅匀，铺芒果块和芒果泥即可",
+          "time": 2
+        }
+      ],
+      "tips": "西米要水开后再下；煮后焖一会儿更透",
+      "videoId": null,
+      "cuisine": "dessert",
+      "tags": [
+        "健康",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/芒果西米露.svg",
+      "protein": 3,
+      "fat": 0,
+      "carbs": 10,
+      "servings": 1
+    },
+    {
+      "name": "红豆沙",
+      "category": "甜品",
+      "categoryTag": "健康菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "绵密香甜，暖胃滋补，广式传统糖水",
+      "time": 90,
+      "calories": 220,
+      "ingredients": [
+        {
+          "name": "红豆",
+          "amount": "适量"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "陈皮",
+          "amount": "1小块"
+        }
+      ],
+      "steps": [
+        {
+          "title": "泡红豆",
+          "desc": "红豆提前浸泡4小时",
+          "time": 5
+        },
+        {
+          "title": "煮红豆",
+          "desc": "红豆加水，加陈皮，大火烧开转小火煮60分钟至软烂",
+          "time": 60
+        },
+        {
+          "title": "压豆沙",
+          "desc": "用勺子将红豆压碎成沙，或用料理机打碎",
+          "time": 5
+        },
+        {
+          "title": "调味",
+          "desc": "加糖搅匀，继续煮5分钟至浓稠",
+          "time": 5
+        }
+      ],
+      "tips": "红豆要提前浸泡才容易煮烂；陈皮不要放太多",
+      "videoId": null,
+      "cuisine": "dessert",
+      "tags": [
+        "健康",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/红豆沙.svg",
+      "protein": 0,
+      "fat": 0,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "意大利肉酱面",
+      "category": "西餐",
+      "categoryTag": "经典菜",
+      "spiceLevel": "微辣",
+      "difficulty": "中等",
+      "description": "肉酱浓郁，面条筋道，西餐入门经典",
+      "time": 30,
+      "calories": 420,
+      "ingredients": [
+        {
+          "name": "意面",
+          "amount": "200g"
+        },
+        {
+          "name": "牛肉末",
+          "amount": "150g"
+        },
+        {
+          "name": "洋葱",
+          "amount": "半个"
+        },
+        {
+          "name": "番茄",
+          "amount": "2个"
+        },
+        {
+          "name": "番茄酱",
+          "amount": "2勺"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "黑胡椒",
+          "amount": "少许"
+        },
+        {
+          "name": "芝士",
+          "amount": "30g"
+        }
+      ],
+      "steps": [
+        {
+          "title": "煮意面",
+          "desc": "水开加盐，下意面煮8分钟至熟，捞出沥干",
+          "time": 10
+        },
+        {
+          "title": "炒肉末",
+          "desc": "热锅放油，下牛肉末煸炒至变色",
+          "time": 3
+        },
+        {
+          "title": "炒蔬菜",
+          "desc": "下洋葱丁、蒜末翻炒，加番茄丁炒出汁",
+          "time": 5
+        },
+        {
+          "title": "炖肉酱",
+          "desc": "加番茄酱、水、黑胡椒，小火炖10分钟",
+          "time": 10
+        },
+        {
+          "title": "拌面装盘",
+          "desc": "意面装盘，浇肉酱，撒芝士粉即可",
+          "time": 2
+        }
+      ],
+      "tips": "煮意面要加盐；肉酱要小火慢炖才入味",
+      "videoId": null,
+      "cuisine": "western",
+      "tags": [
+        "经典"
+      ],
+      "cover": "/images/dishes/意大利肉酱面.svg",
+      "protein": 8,
+      "fat": 15,
+      "carbs": 50,
+      "servings": 2
+    },
+    {
+      "name": "煎牛排",
+      "category": "西餐",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "外焦里嫩，多汁鲜美，西餐硬菜代表",
+      "time": 15,
+      "calories": 380,
+      "ingredients": [
+        {
+          "name": "牛排",
+          "amount": "1块"
+        },
+        {
+          "name": "黑胡椒",
+          "amount": "少许"
+        },
+        {
+          "name": "黄油",
+          "amount": "20g"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "洋葱",
+          "amount": "半个"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理牛排",
+          "desc": "牛排提前30分钟取出回温，撒盐和黑胡椒腌制",
+          "time": 5
+        },
+        {
+          "title": "煎牛排",
+          "desc": "锅烧冒烟，放黄油融化，下牛排煎2分钟",
+          "time": 2
+        },
+        {
+          "title": "翻面",
+          "desc": "翻面再煎2分钟，加蒜瓣和洋葱增香",
+          "time": 2
+        },
+        {
+          "title": "静置",
+          "desc": "取出用锡纸包裹静置5分钟锁汁",
+          "time": 5
+        },
+        {
+          "title": "切片装盘",
+          "desc": "切片装盘，浇锅底汁水即可",
+          "time": 1
+        }
+      ],
+      "tips": "牛排要回温再煎；煎后静置锁住肉汁",
+      "videoId": null,
+      "cuisine": "western",
+      "tags": [
+        "宴客",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/煎牛排.svg",
+      "protein": 20,
+      "fat": 15,
+      "carbs": 5,
+      "servings": 2
+    },
+    {
+      "name": "木须肉",
+      "category": "家常菜",
+      "categoryTag": "快手菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "鸡蛋滑嫩，木耳脆爽，黄瓜清香，经典家常菜",
+      "time": 15,
+      "calories": 220,
+      "ingredients": [
+        {
+          "name": "鸡蛋",
+          "amount": "适量"
+        },
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "木耳",
+          "amount": "50g"
+        },
+        {
+          "name": "黄瓜",
+          "amount": "1根"
+        },
+        {
+          "name": "黄花菜",
+          "amount": "50g"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "准备食材",
+          "desc": "猪肉切片，木耳泡发撕小朵，黄瓜切片，黄花菜泡发，鸡蛋打散",
+          "time": 5
+        },
+        {
+          "title": "炒鸡蛋",
+          "desc": "热锅倒油，倒入蛋液炒至凝固盛出",
+          "time": 2
+        },
+        {
+          "title": "炒肉片",
+          "desc": "锅中再加少许油，下肉片炒至变色，加葱花蒜末爆香",
+          "time": 3
+        },
+        {
+          "title": "炒配菜",
+          "desc": "下木耳、黄花菜翻炒1分钟",
+          "time": 2
+        },
+        {
+          "title": "合炒出锅",
+          "desc": "倒回鸡蛋，下黄瓜片，加生抽调味翻炒均匀出锅",
+          "time": 2
+        }
+      ],
+      "tips": "黄瓜最后放保持脆嫩；鸡蛋不要炒老",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "快手",
+        "新手友好",
+        "高蛋白",
+        "一人食",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/木须肉.svg",
+      "protein": 28,
+      "fat": 13,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "黄焖鸡米饭",
+      "category": "家常菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "微辣",
+      "difficulty": "中等",
+      "description": "鸡肉软烂入味，汤汁拌饭一绝，风靡全国的国民菜",
+      "time": 40,
+      "calories": 420,
+      "ingredients": [
+        {
+          "name": "鸡腿",
+          "amount": "2个"
+        },
+        {
+          "name": "香菇",
+          "amount": "6朵"
+        },
+        {
+          "name": "青椒",
+          "amount": "2个"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "老抽",
+          "amount": "1勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理食材",
+          "desc": "鸡腿剁块焯水，香菇泡发切块，青椒切块",
+          "time": 5
+        },
+        {
+          "title": "煸炒鸡块",
+          "desc": "热锅放油，下鸡块煸炒至变色，加姜片葱段",
+          "time": 5
+        },
+        {
+          "title": "调味上色",
+          "desc": "加生抽、老抽、料酒、糖翻炒上色",
+          "time": 2
+        },
+        {
+          "title": "炖煮",
+          "desc": "加香菇和适量水，大火烧开转小火炖25分钟",
+          "time": 25
+        },
+        {
+          "title": "收汁出锅",
+          "desc": "加青椒块，大火收汁至浓稠即可",
+          "time": 3
+        }
+      ],
+      "tips": "香菇水可以一起加入炖煮更香；汤汁留些拌饭",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "下饭",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/黄焖鸡米饭.svg",
+      "protein": 20,
+      "fat": 0,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "干锅土豆片",
+      "category": "家常菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "微辣",
+      "difficulty": "简单",
+      "description": "土豆片干香焦脆，麻辣入味，下饭神器",
+      "time": 20,
+      "calories": 240,
+      "ingredients": [
+        {
+          "name": "土豆",
+          "amount": "2个"
+        },
+        {
+          "name": "五花肉",
+          "amount": "300g"
+        },
+        {
+          "name": "洋葱",
+          "amount": "半个"
+        },
+        {
+          "name": "干辣椒",
+          "amount": "5个"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "孜然",
+          "amount": "少许"
+        }
+      ],
+      "steps": [
+        {
+          "title": "切食材",
+          "desc": "土豆切薄片泡水去淀粉，五花肉切片，洋葱切块",
+          "time": 5
+        },
+        {
+          "title": "炸土豆片",
+          "desc": "油温六成热，下土豆片炸至金黄微焦捞出",
+          "time": 5
+        },
+        {
+          "title": "煸炒五花肉",
+          "desc": "锅中留底油，下五花肉煸至出油卷曲",
+          "time": 3
+        },
+        {
+          "title": "爆香调料",
+          "desc": "下洋葱块、干辣椒、蒜末爆香",
+          "time": 2
+        },
+        {
+          "title": "合炒出锅",
+          "desc": "倒回土豆片，加生抽、孜然翻炒均匀，撒葱花出锅",
+          "time": 3
+        }
+      ],
+      "tips": "土豆片切薄一些更脆；炸之前一定要沥干水分",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "下饭",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/干锅土豆片.svg",
+      "protein": 20,
+      "fat": 15,
+      "carbs": 20,
+      "servings": 2
+    },
+    {
+      "name": "板栗烧鸡",
+      "category": "家常菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "鸡肉软烂，板栗粉糯，秋日滋补经典菜",
+      "time": 45,
+      "calories": 320,
+      "ingredients": [
+        {
+          "name": "鸡肉",
+          "amount": "200g"
+        },
+        {
+          "name": "板栗",
+          "amount": "100g"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "老抽",
+          "amount": "1勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理食材",
+          "desc": "鸡肉剁块焯水，板栗去壳去皮",
+          "time": 10
+        },
+        {
+          "title": "煸炒鸡块",
+          "desc": "热锅放油，下鸡块煸炒至变色，加姜片葱段",
+          "time": 5
+        },
+        {
+          "title": "调味上色",
+          "desc": "加生抽、老抽、料酒、糖翻炒上色",
+          "time": 2
+        },
+        {
+          "title": "炖煮",
+          "desc": "加板栗和适量水，大火烧开转小火炖25分钟",
+          "time": 25
+        },
+        {
+          "title": "收汁出锅",
+          "desc": "大火收汁至浓稠即可",
+          "time": 3
+        }
+      ],
+      "tips": "板栗去皮可用热水浸泡；炖煮时不要频繁翻动防板栗碎",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "经典",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/板栗烧鸡.svg",
+      "protein": 20,
+      "fat": 0,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "咖喱鸡块",
+      "category": "家常菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "微辣",
+      "difficulty": "简单",
+      "description": "咖喱香浓，鸡肉软嫩，拌饭绝佳的异域风味",
+      "time": 30,
+      "calories": 350,
+      "ingredients": [
+        {
+          "name": "鸡腿",
+          "amount": "2个"
+        },
+        {
+          "name": "土豆",
+          "amount": "2个"
+        },
+        {
+          "name": "胡萝卜",
+          "amount": "1根"
+        },
+        {
+          "name": "洋葱",
+          "amount": "半个"
+        },
+        {
+          "name": "咖喱粉",
+          "amount": "2勺"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理食材",
+          "desc": "鸡腿剁块焯水，土豆、胡萝卜切滚刀块，洋葱切块",
+          "time": 5
+        },
+        {
+          "title": "煸炒鸡块",
+          "desc": "热锅放油，下鸡块煸炒至变色，加姜蒜末",
+          "time": 5
+        },
+        {
+          "title": "炒蔬菜",
+          "desc": "下洋葱块炒软，加土豆块、胡萝卜块翻炒",
+          "time": 3
+        },
+        {
+          "title": "炖煮",
+          "desc": "加水没过食材，大火烧开转小火炖15分钟",
+          "time": 15
+        },
+        {
+          "title": "加咖喱收汁",
+          "desc": "加咖喱粉搅匀，小火煮5分钟至浓稠即可",
+          "time": 5
+        }
+      ],
+      "tips": "咖喱粉最后放更香；土豆不要煮太烂",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "下饭",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/咖喱鸡块.svg",
+      "protein": 20,
+      "fat": 0,
+      "carbs": 25,
+      "servings": 2
+    },
+    {
+      "name": "香干炒肉",
+      "category": "家常菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "微辣",
+      "difficulty": "简单",
+      "description": "香干入味，肉片滑嫩，下饭快手的家常小炒",
+      "time": 15,
+      "calories": 220,
+      "ingredients": [
+        {
+          "name": "香干",
+          "amount": "100g"
+        },
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "青椒",
+          "amount": "2个"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "腌制肉片",
+          "desc": "猪肉切片，加生抽、料酒、淀粉腌制10分钟",
+          "time": 10
+        },
+        {
+          "title": "切配菜",
+          "desc": "香干切薄片，青椒切块，蒜切片",
+          "time": 2
+        },
+        {
+          "title": "炒肉片",
+          "desc": "热锅凉油，下肉片滑炒至变色盛出",
+          "time": 2
+        },
+        {
+          "title": "炒香干",
+          "desc": "锅中留底油，下蒜片爆香，放香干片翻炒",
+          "time": 2
+        },
+        {
+          "title": "合炒出锅",
+          "desc": "倒回肉片，加青椒块翻炒，加生抽调味出锅",
+          "time": 2
+        }
+      ],
+      "tips": "香干先煎一下更香；青椒最后放保持脆嫩",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "下饭",
+        "新手友好",
+        "高蛋白",
+        "一人食"
+      ],
+      "cover": "/images/dishes/香干炒肉.svg",
+      "protein": 28,
+      "fat": 8,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "口水鸡",
+      "category": "川菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "中辣",
+      "difficulty": "中等",
+      "description": "麻辣鲜香，鸡肉嫩滑，让人流口水的川菜凉菜",
+      "time": 40,
+      "calories": 240,
+      "ingredients": [
+        {
+          "name": "三黄鸡",
+          "amount": "1只"
+        },
+        {
+          "name": "花生米",
+          "amount": "50g"
+        },
+        {
+          "name": "芝麻",
+          "amount": "少许"
+        },
+        {
+          "name": "花椒",
+          "amount": "1小把"
+        },
+        {
+          "name": "干辣椒",
+          "amount": "5个"
+        },
+        {
+          "name": "辣椒油",
+          "amount": "1勺"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        }
+      ],
+      "steps": [
+        {
+          "title": "煮鸡",
+          "desc": "整鸡冷水下锅，加姜片葱段煮至熟，捞出过冰水",
+          "time": 25
+        },
+        {
+          "title": "切件",
+          "desc": "鸡晾凉后斩件码盘",
+          "time": 3
+        },
+        {
+          "title": "炒花椒油",
+          "desc": "锅中放油，下花椒、干辣椒小火炒香",
+          "time": 2
+        },
+        {
+          "title": "调酱汁",
+          "desc": "生抽、醋、糖、蒜末、辣椒油、花椒油调匀",
+          "time": 3
+        },
+        {
+          "title": "浇汁装盘",
+          "desc": "酱汁淋在鸡块上，撒花生碎、葱花、芝麻即可",
+          "time": 2
+        }
+      ],
+      "tips": "鸡煮熟后过冰水皮脆肉紧；花椒油要小火慢熬",
+      "videoId": null,
+      "cuisine": "sichuan",
+      "tags": [
+        "经典",
+        "下饭"
+      ],
+      "cover": "/images/dishes/口水鸡.svg",
+      "protein": 0,
+      "fat": 15,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "蒜泥白肉",
+      "category": "川菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "中辣",
+      "difficulty": "中等",
+      "description": "蒜香浓郁，肉片薄如纸，麻辣鲜香的川菜凉菜",
+      "time": 35,
+      "calories": 280,
+      "ingredients": [
+        {
+          "name": "五花肉",
+          "amount": "300g"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "辣椒油",
+          "amount": "1勺"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        }
+      ],
+      "steps": [
+        {
+          "title": "煮五花肉",
+          "desc": "五花肉冷水下锅，加姜片葱段煮至八成熟，关火焖10分钟",
+          "time": 25
+        },
+        {
+          "title": "冰镇",
+          "desc": "捞出过冰水使肉质紧实",
+          "time": 5
+        },
+        {
+          "title": "切薄片",
+          "desc": "晾凉后切大薄片码盘",
+          "time": 3
+        },
+        {
+          "title": "调蒜泥汁",
+          "desc": "蒜捣成泥，加生抽、醋、糖、辣椒油调匀",
+          "time": 2
+        },
+        {
+          "title": "浇汁装盘",
+          "desc": "蒜泥汁淋在白肉上，撒葱花即可",
+          "time": 1
+        }
+      ],
+      "tips": "五花肉煮后过冰水才好切薄片；蒜泥要捣得细",
+      "videoId": null,
+      "cuisine": "sichuan",
+      "tags": [
+        "经典",
+        "高蛋白",
+        "下饭"
+      ],
+      "cover": "/images/dishes/蒜泥白肉.svg",
+      "protein": 20,
+      "fat": 25,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "蚂蚁上树",
+      "category": "川菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "中辣",
+      "difficulty": "简单",
+      "description": "肉末裹粉丝，麻辣鲜香，名菜味道家常做法",
+      "time": 15,
+      "calories": 280,
+      "ingredients": [
+        {
+          "name": "粉丝",
+          "amount": "1把"
+        },
+        {
+          "name": "牛肉末",
+          "amount": "150g"
+        },
+        {
+          "name": "豆瓣酱",
+          "amount": "2勺"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "泡粉丝",
+          "desc": "粉丝用温水泡软，剪成段",
+          "time": 5
+        },
+        {
+          "title": "炒肉末",
+          "desc": "热锅凉油，下牛肉末煸炒至变色酥香",
+          "time": 3
+        },
+        {
+          "title": "炒酱出红油",
+          "desc": "加豆瓣酱、姜末、蒜末小火炒出红油",
+          "time": 2
+        },
+        {
+          "title": "煮粉丝",
+          "desc": "加水、生抽、料酒烧开，下粉丝煮至吸汁",
+          "time": 3
+        },
+        {
+          "title": "收汁出锅",
+          "desc": "大火收汁，撒葱花出锅",
+          "time": 2
+        }
+      ],
+      "tips": "粉丝不要煮太久防烂；收汁要快",
+      "videoId": null,
+      "cuisine": "sichuan",
+      "tags": [
+        "下饭",
+        "新手友好",
+        "一人食"
+      ],
+      "cover": "/images/dishes/蚂蚁上树.svg",
+      "protein": 0,
+      "fat": 0,
+      "carbs": 40,
+      "servings": 2
+    },
+    {
+      "name": "干烧鱼",
+      "category": "川菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "中辣",
+      "difficulty": "中等",
+      "description": "鱼肉鲜嫩，酱香浓郁，干烧入味川菜经典",
+      "time": 30,
+      "calories": 260,
+      "ingredients": [
+        {
+          "name": "鱼",
+          "amount": "1条"
+        },
+        {
+          "name": "豆瓣酱",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理鱼",
+          "desc": "鱼去鳞去内脏洗净，鱼身两面划几刀，抹料酒腌制",
+          "time": 5
+        },
+        {
+          "title": "煎鱼",
+          "desc": "油温七成热，下鱼煎至两面金黄",
+          "time": 6
+        },
+        {
+          "title": "炒酱",
+          "desc": "锅留底油，下豆瓣酱、姜末、蒜末炒出红油",
+          "time": 2
+        },
+        {
+          "title": "烧制",
+          "desc": "加水、生抽、糖、醋烧开，下鱼中火烧至入味",
+          "time": 12
+        },
+        {
+          "title": "收汁装盘",
+          "desc": "大火收汁，撒葱花出锅",
+          "time": 3
+        }
+      ],
+      "tips": "煎鱼前鱼身擦干不粘锅；烧制时不要频繁翻动",
+      "videoId": null,
+      "cuisine": "sichuan",
+      "tags": [
+        "经典",
+        "下饭"
+      ],
+      "cover": "/images/dishes/干烧鱼.svg",
+      "protein": 0,
+      "fat": 0,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "菠萝咕噜肉",
+      "category": "粤菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "外酥里嫩，酸甜开胃，菠萝清香广式名菜",
+      "time": 30,
+      "calories": 360,
+      "ingredients": [
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "菠萝",
+          "amount": "半个"
+        },
+        {
+          "name": "青椒",
+          "amount": "2个"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "番茄酱",
+          "amount": "2勺"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "鸡蛋",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理食材",
+          "desc": "猪肉切小块，菠萝切块，青椒切块",
+          "time": 5
+        },
+        {
+          "title": "腌制挂糊",
+          "desc": "猪肉加盐料酒腌制，裹蛋液再裹淀粉",
+          "time": 5
+        },
+        {
+          "title": "炸肉块",
+          "desc": "油温六成热下肉块炸至金黄，复炸一次更酥脆",
+          "time": 8
+        },
+        {
+          "title": "调糖醋汁",
+          "desc": "锅中放油，下番茄酱、糖、醋、少许水烧开，加水淀粉勾芡",
+          "time": 3
+        },
+        {
+          "title": "裹汁出锅",
+          "desc": "下肉块、菠萝块、青椒块快速翻炒裹汁即可",
+          "time": 2
+        }
+      ],
+      "tips": "肉要复炸才酥脆；裹汁要快保持酥脆",
+      "videoId": null,
+      "cuisine": "cantonese",
+      "tags": [
+        "经典",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/菠萝咕噜肉.svg",
+      "protein": 28,
+      "fat": 13,
+      "carbs": 15,
+      "servings": 2
+    },
+    {
+      "name": "虾饺",
+      "category": "粤菜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "较难",
+      "description": "皮薄馅大，虾肉弹牙，广式早茶经典点心",
+      "time": 50,
+      "calories": 200,
+      "ingredients": [
+        {
+          "name": "虾",
+          "amount": "300g"
+        },
+        {
+          "name": "澄粉",
+          "amount": "100g"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "竹笋",
+          "amount": "100g"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理虾",
+          "desc": "虾去壳去虾线，部分切丁部分整只，加少许盐淀粉抓匀",
+          "time": 10
+        },
+        {
+          "title": "调馅",
+          "desc": "虾丁、猪肉末、竹笋丁加生抽、葱花、姜末搅匀",
+          "time": 5
+        },
+        {
+          "title": "和面",
+          "desc": "澄粉和淀粉混合，用开水烫面揉成团",
+          "time": 5
+        },
+        {
+          "title": "包虾饺",
+          "desc": "面团擀皮，包入虾馅和整只虾，捏出褶子",
+          "time": 15
+        },
+        {
+          "title": "蒸制",
+          "desc": "水开后上锅大火蒸8分钟至皮透明",
+          "time": 8
+        }
+      ],
+      "tips": "澄粉要用开水烫面才透明；馅料不要放太多防破皮",
+      "videoId": null,
+      "cuisine": "cantonese",
+      "tags": [
+        "宴客",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/虾饺.svg",
+      "protein": 40,
+      "fat": 8,
+      "carbs": 40,
+      "servings": 1
+    },
+    {
+      "name": "肠粉",
+      "category": "粤菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "较难",
+      "description": "皮薄滑嫩，馅料鲜香，广式早餐经典",
+      "time": 30,
+      "calories": 250,
+      "ingredients": [
+        {
+          "name": "粘米粉",
+          "amount": "100g"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "鸡蛋",
+          "amount": "适量"
+        },
+        {
+          "name": "虾",
+          "amount": "300g"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "食用油",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "调粉浆",
+          "desc": "粘米粉和淀粉加水调成稀糊，静置15分钟",
+          "time": 15
+        },
+        {
+          "title": "准备馅料",
+          "desc": "虾去壳去虾线，鸡蛋打散，葱切葱花",
+          "time": 5
+        },
+        {
+          "title": "蒸制",
+          "desc": "平盘刷油，倒一层粉浆，铺虾仁和蛋液，大火蒸3分钟",
+          "time": 3
+        },
+        {
+          "title": "卷起",
+          "desc": "用刮板将肠粉卷起装盘",
+          "time": 2
+        },
+        {
+          "title": "调味",
+          "desc": "淋上调好的生抽，撒葱花即可",
+          "time": 2
+        }
+      ],
+      "tips": "粉浆要薄才滑嫩；蒸的时间不要长",
+      "videoId": null,
+      "cuisine": "cantonese",
+      "tags": [
+        "经典",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/肠粉.svg",
+      "protein": 28,
+      "fat": 15,
+      "carbs": 40,
+      "servings": 2
+    },
+    {
+      "name": "血酱鸭",
+      "category": "湘菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "中辣",
+      "difficulty": "较难",
+      "description": "鸭肉紧实，血酱浓郁，湖南传统名菜",
+      "time": 50,
+      "calories": 320,
+      "ingredients": [
+        {
+          "name": "鸭肉",
+          "amount": "半只"
+        },
+        {
+          "name": "鸭血",
+          "amount": "200g"
+        },
+        {
+          "name": "青椒",
+          "amount": "2个"
+        },
+        {
+          "name": "干辣椒",
+          "amount": "5个"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理鸭肉",
+          "desc": "鸭肉剁块，鸭血加醋凝固备用",
+          "time": 10
+        },
+        {
+          "title": "煸炒鸭肉",
+          "desc": "热锅放油，下鸭块大火煸炒至出油变色",
+          "time": 10
+        },
+        {
+          "title": "加调料",
+          "desc": "下姜片、干辣椒、蒜瓣翻炒，加料酒、生抽",
+          "time": 3
+        },
+        {
+          "title": "炖煮",
+          "desc": "加水没过鸭块，大火烧开转小火炖20分钟",
+          "time": 20
+        },
+        {
+          "title": "淋血酱",
+          "desc": "大火收汁，倒入鸭血快速翻炒凝固裹匀即可",
+          "time": 5
+        }
+      ],
+      "tips": "鸭血加醋防凝固；收汁时淋血酱要快炒",
+      "videoId": null,
+      "cuisine": "hunan",
+      "tags": [
+        "经典",
+        "下饭"
+      ],
+      "cover": "/images/dishes/血酱鸭.svg",
+      "protein": 0,
+      "fat": 8,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "酸辣鸡杂",
+      "category": "湘菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "中辣",
+      "difficulty": "简单",
+      "description": "酸辣开胃，鸡杂脆嫩，下饭绝佳的湘菜小炒",
+      "time": 15,
+      "calories": 180,
+      "ingredients": [
+        {
+          "name": "鸡杂",
+          "amount": "200g"
+        },
+        {
+          "name": "泡椒",
+          "amount": "5个"
+        },
+        {
+          "name": "酸萝卜",
+          "amount": "100g"
+        },
+        {
+          "name": "青椒",
+          "amount": "2个"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理鸡杂",
+          "desc": "鸡杂切片，加料酒淀粉抓匀腌制10分钟",
+          "time": 10
+        },
+        {
+          "title": "切配菜",
+          "desc": "酸萝卜、青椒切片，姜蒜切末",
+          "time": 2
+        },
+        {
+          "title": "炒鸡杂",
+          "desc": "热锅宽油，下鸡杂大火快炒至变色盛出",
+          "time": 2
+        },
+        {
+          "title": "爆香配菜",
+          "desc": "锅中留底油，下泡椒、姜末、蒜末、酸萝卜片爆香",
+          "time": 1
+        },
+        {
+          "title": "合炒出锅",
+          "desc": "倒回鸡杂，加青椒片、生抽翻炒出锅",
+          "time": 2
+        }
+      ],
+      "tips": "鸡杂要大火快炒才脆嫩；腌制时加淀粉锁水",
+      "videoId": null,
+      "cuisine": "hunan",
+      "tags": [
+        "下饭",
+        "新手友好",
+        "一人食"
+      ],
+      "cover": "/images/dishes/酸辣鸡杂.svg",
+      "protein": 0,
+      "fat": 0,
+      "carbs": 0,
+      "servings": 1
+    },
+    {
+      "name": "剁椒蒸排骨",
+      "category": "湘菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "中辣",
+      "difficulty": "简单",
+      "description": "排骨嫩滑，剁椒香辣，蒸出来的下饭好菜",
+      "time": 35,
+      "calories": 280,
+      "ingredients": [
+        {
+          "name": "排骨",
+          "amount": "500g"
+        },
+        {
+          "name": "剁椒",
+          "amount": "2勺"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理排骨",
+          "desc": "排骨剁小块，加生抽、料酒、淀粉腌制15分钟",
+          "time": 15
+        },
+        {
+          "title": "调剁椒",
+          "desc": "剁椒加蒜末、姜末、少许油搅匀",
+          "time": 3
+        },
+        {
+          "title": "摆盘",
+          "desc": "排骨码盘，铺满剁椒料",
+          "time": 2
+        },
+        {
+          "title": "上锅蒸",
+          "desc": "水开后上锅大火蒸20分钟",
+          "time": 20
+        },
+        {
+          "title": "出锅",
+          "desc": "撒葱花即可",
+          "time": 1
+        }
+      ],
+      "tips": "排骨腌制才入味；蒸的时间要够才脱骨",
+      "videoId": null,
+      "cuisine": "hunan",
+      "tags": [
+        "下饭",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/剁椒蒸排骨.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "酸菜白肉",
+      "category": "东北菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "酸菜开胃，白肉不腻，东北冬日暖菜",
+      "time": 50,
+      "calories": 340,
+      "ingredients": [
+        {
+          "name": "酸菜",
+          "amount": "200g"
+        },
+        {
+          "name": "五花肉",
+          "amount": "300g"
+        },
+        {
+          "name": "粉丝",
+          "amount": "1把"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理食材",
+          "desc": "五花肉冷水下锅加姜片煮至八成熟，酸菜切丝挤干，粉丝泡软",
+          "time": 25
+        },
+        {
+          "title": "切白肉",
+          "desc": "五花肉晾凉切薄片",
+          "time": 3
+        },
+        {
+          "title": "炒酸菜",
+          "desc": "热锅放油，下酸菜丝翻炒出香",
+          "time": 5
+        },
+        {
+          "title": "炖煮",
+          "desc": "加肉片、粉丝、煮肉汤，大火烧开转小火炖15分钟",
+          "time": 15
+        },
+        {
+          "title": "调味出锅",
+          "desc": "加盐调味，撒葱花出锅",
+          "time": 2
+        }
+      ],
+      "tips": "酸菜要挤干水分；五花肉煮后切薄片不腻",
+      "videoId": null,
+      "cuisine": "northeast",
+      "tags": [
+        "经典",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/酸菜白肉.svg",
+      "protein": 20,
+      "fat": 15,
+      "carbs": 40,
+      "servings": 2
+    },
+    {
+      "name": "溜肉段",
+      "category": "东北菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "外酥里嫩，酱香入味，东北经典家常菜",
+      "time": 25,
+      "calories": 320,
+      "ingredients": [
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "青椒",
+          "amount": "2个"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "切肉腌制",
+          "desc": "猪肉切小块，加盐料酒腌制10分钟",
+          "time": 10
+        },
+        {
+          "title": "挂糊",
+          "desc": "肉片裹满淀粉糊",
+          "time": 3
+        },
+        {
+          "title": "炸肉段",
+          "desc": "油温六成热下肉段炸至定型，复炸至金黄",
+          "time": 6
+        },
+        {
+          "title": "调酱汁",
+          "desc": "生抽、醋、糖、淀粉、水调匀",
+          "time": 1
+        },
+        {
+          "title": "裹汁出锅",
+          "desc": "锅留底油爆香葱花蒜末，下青椒翻炒，倒入酱汁烧开，下肉段裹汁出锅",
+          "time": 3
+        }
+      ],
+      "tips": "肉段要复炸才酥脆；裹汁要快",
+      "videoId": null,
+      "cuisine": "northeast",
+      "tags": [
+        "经典",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/溜肉段.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "油焖大虾",
+      "category": "鲁菜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "色泽红亮，虾肉鲜甜，鲁菜经典硬菜",
+      "time": 20,
+      "calories": 220,
+      "ingredients": [
+        {
+          "name": "虾",
+          "amount": "300g"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "老抽",
+          "amount": "1勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "番茄酱",
+          "amount": "2勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理虾",
+          "desc": "虾剪去须脚，挑虾线，洗净沥干",
+          "time": 5
+        },
+        {
+          "title": "煎虾",
+          "desc": "热锅放油，下虾煎至两面变红",
+          "time": 3
+        },
+        {
+          "title": "加调料",
+          "desc": "下葱段姜片爆香，加料酒、生抽、老抽、糖、番茄酱",
+          "time": 2
+        },
+        {
+          "title": "焖制",
+          "desc": "加少许水，盖盖中火焖5分钟",
+          "time": 5
+        },
+        {
+          "title": "收汁装盘",
+          "desc": "大火收汁至浓稠包裹虾身即可",
+          "time": 3
+        }
+      ],
+      "tips": "虾要煎出虾油才香；汤汁收浓才入味",
+      "videoId": null,
+      "cuisine": "shandong",
+      "tags": [
+        "宴客",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/油焖大虾.svg",
+      "protein": 20,
+      "fat": 0,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "德州扒鸡",
+      "category": "鲁菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "较难",
+      "description": "骨酥肉烂，香透入骨，鲁菜传统名菜",
+      "time": 90,
+      "calories": 280,
+      "ingredients": [
+        {
+          "name": "三黄鸡",
+          "amount": "1只"
+        },
+        {
+          "name": "老抽",
+          "amount": "1勺"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "八角",
+          "amount": "2个"
+        },
+        {
+          "name": "桂皮",
+          "amount": "1小块"
+        },
+        {
+          "name": "香叶",
+          "amount": "2片"
+        },
+        {
+          "name": "五香粉",
+          "amount": "少许"
+        },
+        {
+          "name": "蜂蜜",
+          "amount": "1勺"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理鸡",
+          "desc": "整鸡洗净，抹老抽和蜂蜜上色",
+          "time": 10
+        },
+        {
+          "title": "炸上色",
+          "desc": "油温七成热，下鸡炸至金黄捞出",
+          "time": 8
+        },
+        {
+          "title": "调卤汤",
+          "desc": "锅中加水，放生抽、老抽、八角、桂皮、香叶、五香粉、姜片、葱段烧开",
+          "time": 5
+        },
+        {
+          "title": "炖煮",
+          "desc": "下鸡，大火烧开转小火炖60分钟至骨酥肉烂",
+          "time": 60
+        },
+        {
+          "title": "收汁装盘",
+          "desc": "大火收汁，整鸡装盘浇汤汁即可",
+          "time": 5
+        }
+      ],
+      "tips": "炸鸡前要擦干水分；小火慢炖才骨酥",
+      "videoId": null,
+      "cuisine": "shandong",
+      "tags": [
+        "经典"
+      ],
+      "cover": "/images/dishes/德州扒鸡.svg",
+      "protein": 0,
+      "fat": 0,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "清炖狮子头",
+      "category": "苏菜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "较难",
+      "description": "肉丸松软，汤汁清鲜，苏菜经典名菜",
+      "time": 90,
+      "calories": 320,
+      "ingredients": [
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "荸荠",
+          "amount": "6个"
+        },
+        {
+          "name": "鸡蛋",
+          "amount": "适量"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "白菜",
+          "amount": "半颗"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理肉馅",
+          "desc": "猪肉切石榴粒大小（不要剁），荸荠切碎",
+          "time": 15
+        },
+        {
+          "title": "调馅",
+          "desc": "肉粒加荸荠碎、鸡蛋、淀粉、盐、料酒搅匀，搅打上劲",
+          "time": 5
+        },
+        {
+          "title": "团丸子",
+          "desc": "手上沾水，团成大肉丸",
+          "time": 5
+        },
+        {
+          "title": "炖煮",
+          "desc": "砂锅底铺白菜，放肉丸，加水没过，大火烧开转小火炖60分钟",
+          "time": 60
+        },
+        {
+          "title": "调味出锅",
+          "desc": "加盐调味，撒葱花即可",
+          "time": 5
+        }
+      ],
+      "tips": "肉要切不要剁才有口感；小火慢炖肉丸才松软",
+      "videoId": null,
+      "cuisine": "jiangsu",
+      "tags": [
+        "宴客",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/清炖狮子头.svg",
+      "protein": 28,
+      "fat": 13,
+      "carbs": 5,
+      "servings": 2
+    },
+    {
+      "name": "叫花鸡",
+      "category": "苏菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "较难",
+      "description": "鸡肉酥烂，香气四溢，苏菜传奇名菜",
+      "time": 120,
+      "calories": 300,
+      "ingredients": [
+        {
+          "name": "三黄鸡",
+          "amount": "1只"
+        },
+        {
+          "name": "香菇",
+          "amount": "6朵"
+        },
+        {
+          "name": "火腿",
+          "amount": "50g"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "老抽",
+          "amount": "1勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "五香粉",
+          "amount": "少许"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理鸡",
+          "desc": "整鸡洗净，加生抽、老抽、料酒、五香粉里外抹匀腌制30分钟",
+          "time": 30
+        },
+        {
+          "title": "炒馅料",
+          "desc": "香菇、火腿切丁，加葱花姜末炒香塞入鸡腹",
+          "time": 8
+        },
+        {
+          "title": "包裹",
+          "desc": "鸡用锡纸紧紧包裹，再裹一层锡纸",
+          "time": 5
+        },
+        {
+          "title": "烤制",
+          "desc": "烤箱180度烤90分钟",
+          "time": 90
+        },
+        {
+          "title": "装盘",
+          "desc": "取出剥开，整鸡装盘即可",
+          "time": 2
+        }
+      ],
+      "tips": "腌制时间越长越入味；包裹要紧防漏汁",
+      "videoId": null,
+      "cuisine": "jiangsu",
+      "tags": [
+        "经典"
+      ],
+      "cover": "/images/dishes/叫花鸡.svg",
+      "protein": 0,
+      "fat": 0,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "西湖醋鱼",
+      "category": "浙菜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "较难",
+      "description": "鱼肉嫩滑，酸甜适口，杭州传统名菜",
+      "time": 20,
+      "calories": 220,
+      "ingredients": [
+        {
+          "name": "鱼",
+          "amount": "1条"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理鱼",
+          "desc": "鱼去鳞去内脏洗净，从背部劈开成两半",
+          "time": 5
+        },
+        {
+          "title": "煮鱼",
+          "desc": "锅中水烧开，下鱼煮3分钟至熟，捞出装盘",
+          "time": 5
+        },
+        {
+          "title": "调糖醋汁",
+          "desc": "锅中放少许水，加生抽、醋、糖烧开，加水淀粉勾芡",
+          "time": 5
+        },
+        {
+          "title": "浇汁",
+          "desc": "糖醋汁浇在鱼身上",
+          "time": 1
+        },
+        {
+          "title": "装盘",
+          "desc": "撒姜末点缀即可",
+          "time": 1
+        }
+      ],
+      "tips": "鱼不要煮太久防散；糖醋汁要浓稠挂在鱼身上",
+      "videoId": null,
+      "cuisine": "zhejiang",
+      "tags": [
+        "宴客"
+      ],
+      "cover": "/images/dishes/西湖醋鱼.svg",
+      "protein": 0,
+      "fat": 0,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "龙井虾仁",
+      "category": "浙菜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "虾仁弹牙，茶香清雅，杭州名菜代表",
+      "time": 15,
+      "calories": 150,
+      "ingredients": [
+        {
+          "name": "虾",
+          "amount": "300g"
+        },
+        {
+          "name": "茶叶",
+          "amount": "10g"
+        },
+        {
+          "name": "蛋清",
+          "amount": "2个"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理虾",
+          "desc": "虾去壳去虾线，洗净沥干，加蛋清、淀粉、盐抓匀腌制",
+          "time": 10
+        },
+        {
+          "title": "泡茶",
+          "desc": "茶叶用温水泡开，茶叶和茶汤分开",
+          "time": 2
+        },
+        {
+          "title": "滑炒虾仁",
+          "desc": "热锅宽油，下虾仁滑炒至变色盛出",
+          "time": 2
+        },
+        {
+          "title": "合炒",
+          "desc": "锅留底油，倒回虾仁，加少许茶汤和料酒翻炒",
+          "time": 1
+        },
+        {
+          "title": "出锅装盘",
+          "desc": "撒茶叶、葱花翻炒出锅",
+          "time": 1
+        }
+      ],
+      "tips": "虾仁腌制才嫩滑；茶汤不要加太多",
+      "videoId": null,
+      "cuisine": "zhejiang",
+      "tags": [
+        "宴客",
+        "低卡",
+        "高蛋白",
+        "一人食"
+      ],
+      "cover": "/images/dishes/龙井虾仁.svg",
+      "protein": 28,
+      "fat": 0,
+      "carbs": 0,
+      "servings": 1
+    },
+    {
+      "name": "梅菜扣肉",
+      "category": "浙菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "较难",
+      "description": "肉烂入味，梅菜醇香，肥而不腻的经典菜",
+      "time": 90,
+      "calories": 420,
+      "ingredients": [
+        {
+          "name": "五花肉",
+          "amount": "300g"
+        },
+        {
+          "name": "梅干菜",
+          "amount": "50g"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "老抽",
+          "amount": "1勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "八角",
+          "amount": "2个"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理五花肉",
+          "desc": "五花肉冷水下锅煮至八成熟，捞出抹老抽上色",
+          "time": 25
+        },
+        {
+          "title": "炸肉",
+          "desc": "油温七成热，下五花肉炸至皮起泡金黄捞出，泡冷水",
+          "time": 8
+        },
+        {
+          "title": "处理梅干菜",
+          "desc": "梅干菜泡发洗净切碎，加生抽糖炒入味",
+          "time": 8
+        },
+        {
+          "title": "装碗蒸",
+          "desc": "五花肉切厚片码碗底，铺梅干菜，上锅蒸60分钟",
+          "time": 60
+        },
+        {
+          "title": "倒扣装盘",
+          "desc": "取出倒扣盘中，浇汤汁即可",
+          "time": 3
+        }
+      ],
+      "tips": "肉要炸皮才起虎皮；蒸的时间要够才软烂",
+      "videoId": null,
+      "cuisine": "zhejiang",
+      "tags": [
+        "经典",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/梅菜扣肉.svg",
+      "protein": 20,
+      "fat": 15,
+      "carbs": 10,
+      "servings": 2
+    },
+    {
+      "name": "佛跳墙",
+      "category": "闽菜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "较难",
+      "description": "山珍海味一坛香，闽菜之首，豪华宴客菜",
+      "time": 180,
+      "calories": 380,
+      "ingredients": [
+        {
+          "name": "鸡肉",
+          "amount": "200g"
+        },
+        {
+          "name": "海参",
+          "amount": "2根"
+        },
+        {
+          "name": "鲍鱼",
+          "amount": "4个"
+        },
+        {
+          "name": "鱿鱼",
+          "amount": "1只"
+        },
+        {
+          "name": "火腿",
+          "amount": "50g"
+        },
+        {
+          "name": "香菇",
+          "amount": "6朵"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理食材",
+          "desc": "海参、鲍鱼、鱿鱼处理干净，鸡肉剁块焯水，火腿切片，香菇泡发",
+          "time": 30
+        },
+        {
+          "title": "煸炒鸡块",
+          "desc": "热锅放油，下鸡块煸炒，加姜片葱段、料酒",
+          "time": 5
+        },
+        {
+          "title": "装坛",
+          "desc": "坛底铺姜片葱段，依次放入鸡块、火腿、香菇、海参、鲍鱼、鱿鱼",
+          "time": 10
+        },
+        {
+          "title": "炖煮",
+          "desc": "加水和料酒，盖盖封口，大火烧开转小火炖120分钟",
+          "time": 120
+        },
+        {
+          "title": "调味上桌",
+          "desc": "加盐调味，原坛上桌",
+          "time": 3
+        }
+      ],
+      "tips": "食材可按喜好增减；小火慢炖汤汁才浓",
+      "videoId": null,
+      "cuisine": "fujian",
+      "tags": [
+        "宴客",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/佛跳墙.svg",
+      "protein": 80,
+      "fat": 0,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "荔枝肉",
+      "category": "闽菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "形似荔枝，酸甜可口，福州传统名菜",
+      "time": 25,
+      "calories": 320,
+      "ingredients": [
+        {
+          "name": "猪肉",
+          "amount": "200g"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "番茄酱",
+          "amount": "2勺"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "土豆",
+          "amount": "2个"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理猪肉",
+          "desc": "猪肉切大块，两面打花刀（不切断），切小块",
+          "time": 8
+        },
+        {
+          "title": "挂糊",
+          "desc": "肉块裹满淀粉糊",
+          "time": 3
+        },
+        {
+          "title": "炸肉",
+          "desc": "油温六成热下肉块炸至花刀张开金黄捞出",
+          "time": 5
+        },
+        {
+          "title": "炸土豆",
+          "desc": "土豆切滚刀块，炸至金黄捞出",
+          "time": 3
+        },
+        {
+          "title": "裹汁出锅",
+          "desc": "锅留底油，下番茄酱、糖、醋、生抽烧开勾芡，下肉块和土豆翻炒裹汁",
+          "time": 3
+        }
+      ],
+      "tips": "花刀要均匀才能炸出荔枝形状；裹汁要快",
+      "videoId": null,
+      "cuisine": "fujian",
+      "tags": [
+        "经典",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/荔枝肉.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 25,
+      "servings": 2
+    },
+    {
+      "name": "羊肉泡馍",
+      "category": "西北菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "汤浓肉烂，馍吸汁香，西安传统名吃",
+      "time": 90,
+      "calories": 450,
+      "ingredients": [
+        {
+          "name": "羊肉",
+          "amount": "300g"
+        },
+        {
+          "name": "馒头",
+          "amount": "2个"
+        },
+        {
+          "name": "粉丝",
+          "amount": "1把"
+        },
+        {
+          "name": "木耳",
+          "amount": "50g"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "八角",
+          "amount": "2个"
+        },
+        {
+          "name": "桂皮",
+          "amount": "1小块"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "炖羊肉",
+          "desc": "羊肉冷水下锅焯水，重新加水放姜片、八角、桂皮、料酒炖60分钟",
+          "time": 60
+        },
+        {
+          "title": "掰馍",
+          "desc": "馒头掰成黄豆大小的碎块",
+          "time": 5
+        },
+        {
+          "title": "准备配料",
+          "desc": "粉丝泡软，木耳泡发撕小朵，葱切葱花",
+          "time": 3
+        },
+        {
+          "title": "煮馍",
+          "desc": "羊肉汤烧开，下馍块、粉丝、木耳煮2分钟",
+          "time": 5
+        },
+        {
+          "title": "装碗",
+          "desc": "盛碗，铺羊肉片，撒葱花即可",
+          "time": 2
+        }
+      ],
+      "tips": "馍要掰得小才吸汁；羊肉汤要一次加足水",
+      "videoId": null,
+      "cuisine": "northwest",
+      "tags": [
+        "经典"
+      ],
+      "cover": "/images/dishes/羊肉泡馍.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 80,
+      "servings": 2
+    },
+    {
+      "name": "大盘鸡",
+      "category": "西北菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "中辣",
+      "difficulty": "中等",
+      "description": "鸡肉软烂，土豆粉糯，面条吸汁，西北名菜",
+      "time": 50,
+      "calories": 480,
+      "ingredients": [
+        {
+          "name": "鸡肉",
+          "amount": "200g"
+        },
+        {
+          "name": "土豆",
+          "amount": "2个"
+        },
+        {
+          "name": "青椒",
+          "amount": "2个"
+        },
+        {
+          "name": "洋葱",
+          "amount": "半个"
+        },
+        {
+          "name": "面条",
+          "amount": "200g"
+        },
+        {
+          "name": "干辣椒",
+          "amount": "5个"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "老抽",
+          "amount": "1勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理食材",
+          "desc": "鸡肉剁块焯水，土豆切滚刀块，青椒洋葱切块",
+          "time": 5
+        },
+        {
+          "title": "炒糖色",
+          "desc": "锅中放油，加糖小火炒至枣红色",
+          "time": 3
+        },
+        {
+          "title": "煸炒鸡块",
+          "desc": "下鸡块翻炒上色，加姜片、干辣椒",
+          "time": 5
+        },
+        {
+          "title": "炖煮",
+          "desc": "加生抽、老抽和水，大火烧开转小火炖25分钟，加土豆炖10分钟",
+          "time": 35
+        },
+        {
+          "title": "收汁出锅",
+          "desc": "加青椒洋葱块翻炒，大火收汁，旁配煮好的面条",
+          "time": 5
+        }
+      ],
+      "tips": "土豆后放防煮烂；面条拌汤汁一绝",
+      "videoId": null,
+      "cuisine": "northwest",
+      "tags": [
+        "下饭",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/大盘鸡.svg",
+      "protein": 20,
+      "fat": 0,
+      "carbs": 70,
+      "servings": 2
+    },
+    {
+      "name": "手抓羊肉",
+      "category": "西北菜",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "原汁原味，肉香浓郁，西北传统美食",
+      "time": 70,
+      "calories": 320,
+      "ingredients": [
+        {
+          "name": "羊肉",
+          "amount": "300g"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "八角",
+          "amount": "2个"
+        },
+        {
+          "name": "桂皮",
+          "amount": "1小块"
+        },
+        {
+          "name": "花椒",
+          "amount": "1小把"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        },
+        {
+          "name": "椒盐",
+          "amount": "少许"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理羊肉",
+          "desc": "羊排或羊腿剁块，冷水浸泡去血水",
+          "time": 10
+        },
+        {
+          "title": "焯水",
+          "desc": "冷水下锅焯水，捞出洗净",
+          "time": 5
+        },
+        {
+          "title": "炖煮",
+          "desc": "重新加水，放姜片、葱段、八角、桂皮、花椒，大火烧开转小火炖50分钟",
+          "time": 50
+        },
+        {
+          "title": "捞出装盘",
+          "desc": "捞出羊肉装盘",
+          "time": 2
+        },
+        {
+          "title": "蘸料",
+          "desc": "配椒盐或蒜蓉醋汁食用",
+          "time": 1
+        }
+      ],
+      "tips": "羊肉要冷水浸泡去腥；炖煮时不要加盐保持原味",
+      "videoId": null,
+      "cuisine": "northwest",
+      "tags": [
+        "经典"
+      ],
+      "cover": "/images/dishes/手抓羊肉.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "葱姜炒蟹",
+      "category": "海鲜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "蟹肉鲜甜，葱姜增香，粤式海鲜经典",
+      "time": 20,
+      "calories": 180,
+      "ingredients": [
+        {
+          "name": "螃蟹",
+          "amount": "2只"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理螃蟹",
+          "desc": "螃蟹刷净去腮，剁块，切口蘸淀粉",
+          "time": 5
+        },
+        {
+          "title": "煎蟹块",
+          "desc": "油温六成热，下蟹块煎至变红捞出",
+          "time": 4
+        },
+        {
+          "title": "爆香葱姜",
+          "desc": "锅留底油，下大量葱段姜片爆香",
+          "time": 2
+        },
+        {
+          "title": "炒蟹",
+          "desc": "倒回蟹块，加料酒、生抽翻炒",
+          "time": 3
+        },
+        {
+          "title": "收汁出锅",
+          "desc": "加少许水烧开收汁即可",
+          "time": 2
+        }
+      ],
+      "tips": "蟹块切口蘸淀粉煎封住蟹黄；葱姜要多放才香",
+      "videoId": null,
+      "cuisine": "seafood",
+      "tags": [
+        "宴客"
+      ],
+      "cover": "/images/dishes/葱姜炒蟹.svg",
+      "protein": 20,
+      "fat": 0,
+      "carbs": 0,
+      "servings": 1
+    },
+    {
+      "name": "蒜蓉烤生蚝",
+      "category": "海鲜",
+      "categoryTag": "宴客菜",
+      "spiceLevel": "微辣",
+      "difficulty": "中等",
+      "description": "蒜香浓郁，生蚝鲜嫩，夜宵摊人气王",
+      "time": 20,
+      "calories": 150,
+      "ingredients": [
+        {
+          "name": "生蚝",
+          "amount": "6个"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "粉丝",
+          "amount": "1把"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "红椒",
+          "amount": "1个"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理生蚝",
+          "desc": "生蚝刷净壳，撬开留半壳，冲洗干净",
+          "time": 5
+        },
+        {
+          "title": "炒蒜蓉",
+          "desc": "蒜切末，锅中放油，下蒜末小火炒至金黄",
+          "time": 3
+        },
+        {
+          "title": "铺粉丝",
+          "desc": "粉丝泡软，铺在生蚝上",
+          "time": 2
+        },
+        {
+          "title": "烤制",
+          "desc": "生蚝铺蒜蓉、红椒末，淋生抽料酒，烤箱200度烤8分钟",
+          "time": 8
+        },
+        {
+          "title": "出锅",
+          "desc": "撒葱花即可",
+          "time": 1
+        }
+      ],
+      "tips": "蒜蓉要分生熟两部分更香；烤制时间不要长防肉老",
+      "videoId": null,
+      "cuisine": "seafood",
+      "tags": [
+        "宴客",
+        "低卡"
+      ],
+      "cover": "/images/dishes/蒜蓉烤生蚝.svg",
+      "protein": 20,
+      "fat": 0,
+      "carbs": 40,
+      "servings": 1
+    },
+    {
+      "name": "莲藕排骨汤",
+      "category": "汤煲",
+      "categoryTag": "健康菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "莲藕粉糯，排骨软烂，秋冬滋补靓汤",
+      "time": 70,
+      "calories": 200,
+      "ingredients": [
+        {
+          "name": "莲藕",
+          "amount": "1节"
+        },
+        {
+          "name": "排骨",
+          "amount": "500g"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        }
+      ],
+      "steps": [
+        {
+          "title": "焯水排骨",
+          "desc": "排骨冷水下锅，加姜片料酒焯水，捞出洗净",
+          "time": 10
+        },
+        {
+          "title": "处理莲藕",
+          "desc": "莲藕去皮切大块",
+          "time": 3
+        },
+        {
+          "title": "炖汤",
+          "desc": "排骨、莲藕放入锅中，加水和姜片，大火烧开转小火炖50分钟",
+          "time": 50
+        },
+        {
+          "title": "调味出锅",
+          "desc": "加盐调味，撒葱花出锅",
+          "time": 2
+        }
+      ],
+      "tips": "莲藕选粉藕才糯；炖汤要一次加足水",
+      "videoId": null,
+      "cuisine": "soup",
+      "tags": [
+        "健康",
+        "高蛋白",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/莲藕排骨汤.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 5,
+      "servings": 1
+    },
+    {
+      "name": "酸萝卜老鸭汤",
+      "category": "汤煲",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "酸香开胃，鸭肉软烂，夏日去暑靓汤",
+      "time": 90,
+      "calories": 220,
+      "ingredients": [
+        {
+          "name": "鸭肉",
+          "amount": "半只"
+        },
+        {
+          "name": "酸萝卜",
+          "amount": "100g"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理鸭肉",
+          "desc": "鸭肉剁块，冷水下锅加姜片料酒焯水，捞出洗净",
+          "time": 10
+        },
+        {
+          "title": "处理酸萝卜",
+          "desc": "酸萝卜切条",
+          "time": 2
+        },
+        {
+          "title": "炖煮",
+          "desc": "鸭肉、酸萝卜放入锅中，加水和姜片，大火烧开转小火炖70分钟",
+          "time": 70
+        },
+        {
+          "title": "调味出锅",
+          "desc": "加盐调味，撒葱花出锅",
+          "time": 3
+        }
+      ],
+      "tips": "酸萝卜本身咸，少加盐；鸭肉要炖烂才好吃",
+      "videoId": null,
+      "cuisine": "soup",
+      "tags": [
+        "经典"
+      ],
+      "cover": "/images/dishes/酸萝卜老鸭汤.svg",
+      "protein": 0,
+      "fat": 8,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "葱花鸡蛋饼",
+      "category": "主食",
+      "categoryTag": "快手菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "葱香四溢，外脆里嫩，十分钟早餐",
+      "time": 10,
+      "calories": 250,
+      "ingredients": [
+        {
+          "name": "鸡蛋",
+          "amount": "适量"
+        },
+        {
+          "name": "面粉",
+          "amount": "200g"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        },
+        {
+          "name": "食用油",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "调面糊",
+          "desc": "面粉加鸡蛋、葱花、盐和适量水搅成稀糊",
+          "time": 5
+        },
+        {
+          "title": "摊饼",
+          "desc": "热锅刷油，倒入面糊摊成薄饼",
+          "time": 3
+        },
+        {
+          "title": "翻面",
+          "desc": "底面金黄后翻面，煎至两面金黄",
+          "time": 3
+        },
+        {
+          "title": "出锅",
+          "desc": "取出切块装盘即可",
+          "time": 1
+        }
+      ],
+      "tips": "面糊要稀才摊得薄；小火慢煎才脆",
+      "videoId": null,
+      "cuisine": "staple",
+      "tags": [
+        "快手",
+        "新手友好",
+        "高蛋白",
+        "一人食",
+        "夜宵",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/葱花鸡蛋饼.svg",
+      "protein": 8,
+      "fat": 15,
+      "carbs": 40,
+      "servings": 2
+    },
+    {
+      "name": "汤圆",
+      "category": "主食",
+      "categoryTag": "经典菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "皮糯馅香，甜在心头，元宵节传统美食",
+      "time": 30,
+      "calories": 280,
+      "ingredients": [
+        {
+          "name": "糯米粉",
+          "amount": "100g"
+        },
+        {
+          "name": "芝麻",
+          "amount": "少许"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "黄油",
+          "amount": "20g"
+        }
+      ],
+      "steps": [
+        {
+          "title": "调馅",
+          "desc": "黑芝麻炒香磨碎，加糖和融化的黄油搅匀，冷藏定型",
+          "time": 15
+        },
+        {
+          "title": "和面",
+          "desc": "糯米粉加温水揉成光滑面团",
+          "time": 3
+        },
+        {
+          "title": "包汤圆",
+          "desc": "面团搓圆按扁，包入芝麻馅，搓圆",
+          "time": 8
+        },
+        {
+          "title": "煮汤圆",
+          "desc": "水开下汤圆，浮起后再煮2分钟",
+          "time": 3
+        },
+        {
+          "title": "出锅",
+          "desc": "连汤盛碗即可",
+          "time": 1
+        }
+      ],
+      "tips": "面团要用温水和；煮汤圆浮起即熟",
+      "videoId": null,
+      "cuisine": "staple",
+      "tags": [
+        "经典"
+      ],
+      "cover": "/images/dishes/汤圆.svg",
+      "protein": 0,
+      "fat": 15,
+      "carbs": 50,
+      "servings": 2
+    },
+    {
+      "name": "寿司",
+      "category": "日料",
+      "categoryTag": "快手菜",
+      "spiceLevel": "不辣",
+      "difficulty": "中等",
+      "description": "米饭酸甜，配料丰富，日料经典美食",
+      "time": 30,
+      "calories": 320,
+      "ingredients": [
+        {
+          "name": "寿司米",
+          "amount": "200g"
+        },
+        {
+          "name": "海苔",
+          "amount": "2片"
+        },
+        {
+          "name": "三文鱼",
+          "amount": "200g"
+        },
+        {
+          "name": "黄瓜",
+          "amount": "1根"
+        },
+        {
+          "name": "胡萝卜",
+          "amount": "1根"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "煮寿司米",
+          "desc": "寿司米淘净，加水煮熟，焖10分钟",
+          "time": 20
+        },
+        {
+          "title": "调寿司醋",
+          "desc": "醋加糖和盐搅匀，拌入热米饭中，扇凉",
+          "time": 5
+        },
+        {
+          "title": "准备配料",
+          "desc": "三文鱼、黄瓜、胡萝卜切长条",
+          "time": 3
+        },
+        {
+          "title": "卷寿司",
+          "desc": "竹帘铺海苔，铺米饭，铺配料，卷紧",
+          "time": 5
+        },
+        {
+          "title": "切段装盘",
+          "desc": "刀沾水切段，装盘即可",
+          "time": 2
+        }
+      ],
+      "tips": "米饭要趁热拌醋；切寿司刀要沾水防粘",
+      "videoId": null,
+      "cuisine": "japanese",
+      "tags": [
+        "快手",
+        "高蛋白"
+      ],
+      "cover": "/images/dishes/寿司.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 55,
+      "servings": 2
+    },
+    {
+      "name": "味噌汤",
+      "category": "日料",
+      "categoryTag": "快手菜",
+      "spiceLevel": "不辣",
+      "difficulty": "简单",
+      "description": "鲜香暖胃，简单快手，日料经典汤品",
+      "time": 10,
+      "calories": 80,
+      "ingredients": [
+        {
+          "name": "味噌",
+          "amount": "2勺"
+        },
+        {
+          "name": "嫩豆腐",
+          "amount": "1块"
+        },
+        {
+          "name": "海带",
+          "amount": "100g"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "虾皮",
+          "amount": "20g"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理食材",
+          "desc": "嫩豆腐切小块，海带切条，葱切葱花",
+          "time": 3
+        },
+        {
+          "title": "煮汤",
+          "desc": "锅中加水烧开，放海带和虾皮煮2分钟",
+          "time": 3
+        },
+        {
+          "title": "加豆腐",
+          "desc": "下豆腐块煮1分钟",
+          "time": 1
+        },
+        {
+          "title": "调味",
+          "desc": "关火，将味噌用少许汤化开倒入锅中搅匀",
+          "time": 2
+        },
+        {
+          "title": "出锅",
+          "desc": "撒葱花即可",
+          "time": 1
+        }
+      ],
+      "tips": "味噌不要煮沸防风味流失；海带不要煮太久",
+      "videoId": null,
+      "cuisine": "japanese",
+      "tags": [
+        "快手",
+        "新手友好",
+        "低卡",
+        "一人食",
+        "儿童友好"
+      ],
+      "cover": "/images/dishes/味噌汤.svg",
+      "protein": 8,
+      "fat": 0,
+      "carbs": 0,
+      "servings": 1
+    },
+    {
+      "name": "葱爆羊肉",
+      "category": "西北菜",
+      "categoryTag": "下饭菜",
+      "spiceLevel": "微辣",
+      "difficulty": "简单",
+      "description": "羊肉嫩滑，葱香浓郁，西北经典快手菜",
+      "time": 15,
+      "calories": 260,
+      "ingredients": [
+        {
+          "name": "羊肉",
+          "amount": "300g"
+        },
+        {
+          "name": "葱",
+          "amount": "1根"
+        },
+        {
+          "name": "姜",
+          "amount": "3片"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "料酒",
+          "amount": "1勺"
+        },
+        {
+          "name": "淀粉",
+          "amount": "1勺"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "孜然",
+          "amount": "少许"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理羊肉",
+          "desc": "羊肉切薄片，加生抽、料酒、淀粉腌制10分钟",
+          "time": 10
+        },
+        {
+          "title": "切葱段",
+          "desc": "大葱切斜段，姜切丝",
+          "time": 2
+        },
+        {
+          "title": "炒羊肉",
+          "desc": "热锅宽油，下羊肉片大火快炒至变色盛出",
+          "time": 2
+        },
+        {
+          "title": "炒葱段",
+          "desc": "锅中留底油，下葱段、姜丝炒至葱段变软",
+          "time": 2
+        },
+        {
+          "title": "合炒出锅",
+          "desc": "倒回羊肉，加少许醋、孜然翻炒均匀出锅",
+          "time": 1
+        }
+      ],
+      "tips": "羊肉要大火快炒才嫩；葱要多放才香",
+      "videoId": null,
+      "cuisine": "northwest",
+      "tags": [
+        "下饭",
+        "新手友好",
+        "一人食"
+      ],
+      "cover": "/images/dishes/葱爆羊肉.svg",
+      "protein": 20,
+      "fat": 8,
+      "carbs": 0,
+      "servings": 2
+    },
+    {
+      "name": "凉拌黄瓜",
+      "category": "家常菜",
+      "categoryTag": "快手菜",
+      "spiceLevel": "微辣",
+      "difficulty": "简单",
+      "description": "清脆爽口，开胃解腻，五分钟凉菜",
+      "time": 10,
+      "calories": 60,
+      "ingredients": [
+        {
+          "name": "黄瓜",
+          "amount": "1根"
+        },
+        {
+          "name": "蒜",
+          "amount": "3瓣"
+        },
+        {
+          "name": "醋",
+          "amount": "2勺"
+        },
+        {
+          "name": "生抽",
+          "amount": "2勺"
+        },
+        {
+          "name": "辣椒油",
+          "amount": "1勺"
+        },
+        {
+          "name": "糖",
+          "amount": "1勺"
+        },
+        {
+          "name": "盐",
+          "amount": "适量"
+        }
+      ],
+      "steps": [
+        {
+          "title": "处理黄瓜",
+          "desc": "黄瓜拍碎切小段，蒜切末",
+          "time": 2
+        },
+        {
+          "title": "腌制",
+          "desc": "黄瓜加盐腌制5分钟，倒掉多余水分",
+          "time": 5
+        },
+        {
+          "title": "调酱汁",
+          "desc": "蒜末加生抽、醋、糖、辣椒油调匀",
+          "time": 1
+        },
+        {
+          "title": "拌匀",
+          "desc": "酱汁倒入黄瓜中拌匀即可",
+          "time": 1
+        }
+      ],
+      "tips": "黄瓜拍碎更入味；腌制后倒水更脆",
+      "videoId": null,
+      "cuisine": "home",
+      "tags": [
+        "快手",
+        "新手友好",
+        "低卡",
+        "一人食"
+      ],
+      "cover": "/images/dishes/凉拌黄瓜.svg",
+      "protein": 0,
+      "fat": 10,
+      "carbs": 10,
+      "servings": 1
+    }
+  ]
+}

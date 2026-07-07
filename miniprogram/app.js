@@ -1,3 +1,5 @@
+const { getToken, getUserInfo } = require('./utils/storage')
+
 App({
   onLaunch() {
     // 初始化本地存储
@@ -5,12 +7,22 @@ App({
     const favorites = wx.getStorageSync('favorites') || []
     this.globalData.dishHistory = history
     this.globalData.favorites = favorites
+
+    // 恢复登录态
+    const token = getToken()
+    const userInfo = getUserInfo()
+    if (token && userInfo) {
+      this.globalData.token = token
+      this.globalData.userInfo = userInfo
+    }
   },
 
   globalData: {
     dishHistory: [],
     favorites: [],
     currentDish: null,
+    token: '',
+    userInfo: null,
     // 颜色主题
     theme: {
       primary: '#F28C38',

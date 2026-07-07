@@ -34,3 +34,18 @@ Thumbs.db
 
 # Backup files
 *.bak
+
+# SQLite 数据库（本地数据，不提交到 git）
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# TTS 音频缓存
+backend/static/audio/*.mp3
+
+# 微信开发者工具私有配置（含个人设置）
+project.private.config.json
+
+# 数据采集工作目录
+backend/app/data/raw/

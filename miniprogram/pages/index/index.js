@@ -1,5 +1,5 @@
 const { shuffleDish, getDishDetail } = require('../../utils/api')
-const { addToHistory, getStorage } = require('../../utils/storage')
+const { addToHistory, getStorage, getUserPreferences, setUserPreferences, isLoggedIn } = require('../../utils/storage')
 const { ingredientTypes, cuisineTypes, spiceLevels } = require('../../mock/dishes')
 const { enrichIngredientType, enrichCuisine, enrichSpice } = require('../../utils/icon-map')
 
@@ -7,6 +7,7 @@ Page({
   data: {
     spinning: false,
     history: [],
+    isLoggedIn: false,
     ingredientCounts: [2, 3, 4],
     activeCount: 3,
     ingredientTypes: ingredientTypes.map(enrichIngredientType),
@@ -18,14 +19,26 @@ Page({
   },
 
   onLoad() {
+    const prefs = getUserPreferences()
+    this.setData({
+      activeCount: prefs.ingredientCount || this.data.activeCount,
+      activeIngredientType: prefs.ingredientType || this.data.activeIngredientType,
+      activeCuisine: prefs.cuisine || this.data.activeCuisine,
+      activeSpiceLevel: prefs.spiceLevel || this.data.activeSpiceLevel
+    })
     this._loadHistory()
   },
 
   onShow() {
     this._loadHistory()
+    this.setData({ isLoggedIn: isLoggedIn() })
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({ selected: 0 })
     }
+  },
+
+  onGoLogin() {
+    wx.navigateTo({ url: '/pages/login/login' })
   },
 
   _loadHistory() {
@@ -41,12 +54,18 @@ Page({
     if (machine) machine.startSpin()
   },
 
-  async onSpinEnd() {
+  async onSpinEnd(e) {
+    // 使用摇杆机实际摇出的食材作为匹配依据
+    const selectedIngredients = (e && e.detail && e.detail.selectedIngredients) || []
+    const preferredDishId = e && e.detail && e.detail.preferredDishId
+
     const options = {
       category: this.data.activeCuisine,
       spiceLevel: this.data.activeSpiceLevel,
       ingredientCount: this.data.activeCount,
-      ingredientType: this.data.activeIngredientType
+      ingredientType: this.data.activeIngredientType,
+      selectedIngredients: selectedIngredients.map(i => i.name),
+      preferredDishId
     }
 
     try {
@@ -72,19 +91,36 @@ Page({
   },
 
   onCuisineTap(e) {
-    this.setData({ activeCuisine: e.currentTarget.dataset.cuisine })
+    const activeCuisine = e.currentTarget.dataset.cuisine
+    this.setData({ activeCuisine })
+    this._savePreferences({ cuisine: activeCuisine })
   },
 
   onSpiceTap(e) {
-    this.setData({ activeSpiceLevel: e.currentTarget.dataset.spice })
+    const activeSpiceLevel = e.currentTarget.dataset.spice
+    this.setData({ activeSpiceLevel })
+    this._savePreferences({ spiceLevel: activeSpiceLevel })
   },
 
   onCountTap(e) {
-    this.setData({ activeCount: e.currentTarget.dataset.count })
+    const activeCount = e.currentTarget.dataset.count
+    this.setData({ activeCount })
+    this._savePreferences({ ingredientCount: activeCount })
   },
 
   onTypeTap(e) {
-    this.setData({ activeIngredientType: e.currentTarget.dataset.type.key })
+    const activeIngredientType = e.currentTarget.dataset.type.key
+    this.setData({ activeIngredientType })
+    this._savePreferences({ ingredientType: activeIngredientType })
+  },
+
+  _savePreferences(patch) {
+    setUserPreferences(Object.assign({
+      ingredientCount: this.data.activeCount,
+      ingredientType: this.data.activeIngredientType,
+      cuisine: this.data.activeCuisine,
+      spiceLevel: this.data.activeSpiceLevel
+    }, patch || {}))
   },
 
   async onHistoryTap(e) {

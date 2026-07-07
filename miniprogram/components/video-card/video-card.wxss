@@ -121,6 +121,10 @@
   color: #6d536c;
   font-size: 24rpx;
   line-height: 1.55;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .card-meta {
@@ -138,9 +142,13 @@
 }
 
 .chef-name {
+  min-width: 0;
   color: #6d536c;
   font-size: 22rpx;
   font-weight: 750;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .views {
@@ -148,4 +156,104 @@
   color: #a78a96;
   font-size: 20rpx;
   font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Reference replica polish */
+.video-card {
+  border-radius: 30rpx;
+  border-color: rgba(255, 215, 194, 0.92);
+  background: linear-gradient(180deg, #ffffff 0%, #fffaf6 100%);
+  box-shadow:
+    0 16rpx 34rpx rgba(91, 43, 111, 0.10),
+    inset 0 -4rpx 0 rgba(255, 107, 26, 0.03);
+}
+
+.video-card.featured {
+  border: 0;
+  border-radius: 30rpx;
+  box-shadow: 0 24rpx 58rpx rgba(91, 43, 111, 0.17);
+}
+
+.cover-wrap {
+  padding-top: 68%;
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 107, 26, 0.35), transparent 130rpx),
+    linear-gradient(135deg, #fff1e8 0%, #2a1735 100%);
+}
+
+.featured .cover-wrap {
+  padding-top: 58%;
+}
+
+.cover-img {
+  transform: scale(1.02);
+}
+
+.cover-tint {
+  background:
+    linear-gradient(180deg, rgba(42,23,53,0.00) 36%, rgba(42,23,53,0.56) 100%);
+}
+
+.play-btn {
+  width: 82rpx;
+  height: 82rpx;
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 12rpx 30rpx rgba(42,23,53,0.22);
+}
+
+.featured .play-btn {
+  width: 110rpx;
+  height: 110rpx;
+}
+
+.play-triangle {
+  border-top-width: 16rpx;
+  border-bottom-width: 16rpx;
+  border-left-width: 25rpx;
+}
+
+.duration-badge,
+.category-badge {
+  bottom: 16rpx;
+  font-size: 22rpx;
+  padding: 7rpx 14rpx;
+}
+
+.card-info {
+  padding: 22rpx 22rpx 24rpx;
+}
+
+.featured .card-info {
+  padding: 28rpx 30rpx 32rpx;
+}
+
+.card-title {
+  color: #32163f;
+  font-size: 29rpx;
+  line-height: 1.38;
+}
+
+.featured .card-title {
+  font-size: 36rpx;
+}
+
+.card-desc {
+  color: #735a71;
+  font-size: 26rpx;
+}
+
+.card-meta {
+  margin-top: 18rpx;
+}
+
+.chef-avatar {
+  width: 42rpx;
+  height: 42rpx;
+  border: 1rpx solid rgba(255, 215, 194, 0.9);
+}
+
+.chef-name,
+.views {
+  font-size: 22rpx;
 }

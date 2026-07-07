@@ -17,6 +17,9 @@
         <text>{{isFavorited ? '已收藏' : '收藏'}}</text>
       </view>
       <text class="dish-desc">{{dish.description}}</text>
+      <view wx:if="{{dish.tags && dish.tags.length}}" class="dish-tags">
+        <text wx:for="{{dish.tags}}" wx:key="*this" class="dish-tag">#{{item}}</text>
+      </view>
     </view>
   </view>
 
@@ -25,11 +28,36 @@
     <view class="card-label-wrap">
       <image class="label-img" src="/images/icons/basket.svg" mode="aspectFit" />
       <text class="card-label">食材组合</text>
+      <text class="ingredient-count">{{dish.ingredientItems.length}} 种</text>
     </view>
     <view class="ingredient-tags">
-      <view wx:for="{{dish.ingredientItems}}" wx:key="name" class="tag ingredient-tag" style="animation-delay: {{index * 0.04}}s;">
+      <view wx:for="{{dish.ingredientItems}}" wx:key="name" class="ingredient-tag" style="animation-delay: {{index * 0.04}}s;">
         <image class="ingredient-icon" src="{{item.icon}}" mode="aspectFit" />
-        <text>{{item.name}}</text>
+        <view class="ingredient-info">
+          <text class="ingredient-name">{{item.name}}</text>
+          <text wx:if="{{item.amount}}" class="ingredient-amount">{{item.amount}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="substitute-panel">
+      <view class="substitute-head">
+        <image class="label-img" src="/images/icons/swap.svg" mode="aspectFit" />
+        <text>可替换食材</text>
+      </view>
+      <view class="substitute-list">
+        <view wx:for="{{dish.ingredientItems}}" wx:for-item="ingredient" wx:key="name" class="substitute-group">
+          <view class="substitute-source-wrap">
+            <image class="substitute-source-icon" src="{{ingredient.icon}}" mode="aspectFit" />
+            <text class="substitute-source">{{ingredient.name}}</text>
+          </view>
+          <view wx:if="{{ingredient.substitutes.length}}" class="substitute-options">
+            <view wx:for="{{ingredient.substitutes}}" wx:for-item="sub" wx:key="name" class="substitute-chip">
+              <image class="substitute-icon" src="{{sub.icon}}" mode="aspectFit" />
+              <text>{{sub.name}}</text>
+            </view>
+          </view>
+          <view wx:else class="substitute-empty">暂无可替换食材</view>
+        </view>
       </view>
     </view>
   </view>
@@ -79,6 +107,10 @@
   <!-- CTA 按钮 -->
   <view class="action-buttons">
     <button class="btn-primary btn-glow" bindtap="onStartCooking">开始做菜</button>
+    <button class="btn-secondary" bindtap="onAddShoppingList">
+      <image class="btn-icon" src="/images/icons/cart.svg" mode="aspectFit" />
+      <text>加入采购清单</text>
+    </button>
     <button class="btn-outline" bindtap="onWatchVideo">看教学视频</button>
     <view class="link-text" bindtap="onAskAssistant">
       <image class="link-icon-img" src="/images/icons/chat.svg" mode="aspectFit" />

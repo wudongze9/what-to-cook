@@ -68,6 +68,10 @@
   border-right: 1rpx solid #ffd7c2;
 }
 
+.stat-item:nth-child(2) {
+  border-right: 1rpx solid #ffd7c2;
+}
+
 .stat-num {
   color: #ff6b1a;
   font-size: 42rpx;
@@ -226,4 +230,270 @@
   color: #a78a96;
   font-size: 38rpx;
   font-weight: 300;
+}
+
+.shopping-section {
+  background: linear-gradient(180deg, #ffffff 0%, #fffaf6 100%);
+}
+
+.shopping-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.shopping-group {
+  padding: 18rpx;
+  border-radius: 24rpx;
+  background: #fff7f0;
+}
+
+.shopping-dish {
+  display: block;
+  color: #2a1735;
+  font-size: 25rpx;
+  font-weight: 900;
+  margin-bottom: 14rpx;
+}
+
+.shopping-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.shopping-item {
+  min-height: 54rpx;
+  padding: 7rpx 14rpx 7rpx 8rpx;
+  border-radius: 999rpx;
+  background: #ffffff;
+  border: 1rpx solid rgba(255,215,194,0.9);
+  color: #5b2b6f;
+  font-size: 22rpx;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.shopping-item.checked {
+  color: #a78a96;
+  background: #f8f2f0;
+  text-decoration: line-through;
+}
+
+.shopping-icon {
+  width: 36rpx;
+  height: 36rpx;
+  flex-shrink: 0;
+}
+
+.shopping-amount {
+  font-size: 20rpx;
+  font-weight: 600;
+  color: #ff6b1a;
+}
+
+.admin-badge {
+  padding: 6rpx 16rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.28);
+  color: #fff;
+  font-size: 22rpx;
+  font-weight: 850;
+}
+
+.login-arrow {
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 44rpx;
+}
+
+.login-btn-pill {
+  padding: 10rpx 28rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.28);
+  color: #FFFFFF;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+/* Reference replica polish */
+.page-profile {
+  background:
+    radial-gradient(circle at 84% 8%, rgba(255, 126, 32, 0.14), transparent 260rpx),
+    radial-gradient(circle at 12% 28%, rgba(255, 61, 110, 0.07), transparent 220rpx),
+    linear-gradient(180deg, #fffaf5 0%, #fff6ee 52%, #ffffff 100%);
+  overflow-x: hidden;
+}
+
+.profile-hero {
+  position: relative;
+  margin: 34rpx 24rpx 0;
+  min-height: 270rpx;
+  padding: 48rpx 40rpx 86rpx;
+  border-radius: 40rpx;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 80% 24%, rgba(255,255,255,0.28), transparent 122rpx),
+    radial-gradient(circle at 92% 74%, rgba(255,255,255,0.12), transparent 160rpx),
+    linear-gradient(135deg, #ff7a1a 0%, #ff3d6e 52%, #5b2b6f 100%);
+  box-shadow:
+    0 28rpx 68rpx rgba(91, 43, 111, 0.20),
+    inset 0 -8rpx 0 rgba(42, 23, 53, 0.10);
+}
+
+.profile-hero::after {
+  content: '';
+  position: absolute;
+  right: 72rpx;
+  top: 58rpx;
+  width: 18rpx;
+  height: 18rpx;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.92);
+  box-shadow:
+    70rpx 46rpx 0 rgba(255,255,255,0.72),
+    112rpx -8rpx 0 rgba(255,255,255,0.58);
+}
+
+.avatar {
+  width: 136rpx;
+  height: 136rpx;
+  border-radius: 36rpx;
+  border: 3rpx solid rgba(255,255,255,0.78);
+  box-shadow: 0 18rpx 38rpx rgba(42, 23, 53, 0.14);
+}
+
+.nickname {
+  font-size: 44rpx;
+  line-height: 1.1;
+}
+
+.signature {
+  margin-top: 14rpx;
+  font-size: 28rpx;
+  color: rgba(255,255,255,0.84);
+}
+
+.stats-card {
+  margin: -62rpx 54rpx 28rpx;
+  height: 136rpx;
+  border-radius: 32rpx;
+  background: rgba(255,255,255,0.96);
+  box-shadow:
+    0 22rpx 52rpx rgba(91, 43, 111, 0.13),
+    inset 0 -5rpx 0 rgba(255, 107, 26, 0.04);
+}
+
+.stat-num {
+  font-size: 46rpx;
+  color: #ff5a1f;
+}
+
+.stat-label {
+  font-size: 25rpx;
+  color: #8a7186;
+}
+
+.section {
+  margin: 24rpx 24rpx 0;
+  padding: 30rpx;
+  border-radius: 34rpx;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,250,246,0.96) 100%);
+  border-color: rgba(255, 215, 194, 0.92);
+  box-shadow: 0 16rpx 40rpx rgba(91, 43, 111, 0.08);
+}
+
+.section-header {
+  margin-bottom: 22rpx;
+}
+
+.section-icon {
+  width: 46rpx;
+  height: 46rpx;
+  padding: 8rpx;
+  border-radius: 18rpx;
+  background: #fff7ef;
+  box-sizing: border-box;
+}
+
+.section-title,
+.setting-text {
+  font-size: 34rpx;
+  color: #32163f;
+}
+
+.section-count,
+.clear-btn {
+  font-size: 26rpx;
+}
+
+.empty-tip {
+  min-height: 168rpx;
+  padding: 42rpx 20rpx 36rpx;
+  box-sizing: border-box;
+}
+
+.empty-tip.compact {
+  min-height: 112rpx;
+}
+
+.empty-icon {
+  width: 90rpx;
+  height: 90rpx;
+}
+
+.empty-title {
+  font-size: 30rpx;
+}
+
+.empty-text {
+  font-size: 26rpx;
+}
+
+.dish-item,
+.shopping-group {
+  border-radius: 26rpx;
+  background: rgba(255, 247, 240, 0.94);
+  border: 1rpx solid rgba(255, 225, 207, 0.82);
+}
+
+.dish-item {
+  min-height: 102rpx;
+  padding: 20rpx;
+}
+
+.dish-mark {
+  width: 62rpx;
+  height: 62rpx;
+  border-radius: 20rpx;
+}
+
+.dish-name {
+  font-size: 30rpx;
+}
+
+.dish-meta {
+  font-size: 24rpx;
+}
+
+.shopping-dish {
+  font-size: 27rpx;
+}
+
+.shopping-item {
+  min-height: 60rpx;
+  padding: 8rpx 16rpx 8rpx 10rpx;
+  font-size: 24rpx;
+  box-shadow: 0 6rpx 14rpx rgba(91, 43, 111, 0.04);
+}
+
+.shopping-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.setting-item {
+  min-height: 80rpx;
 }

@@ -121,6 +121,9 @@
   border: 4rpx solid rgba(255,176,110,0.95);
   position: relative;
   transform: translateZ(0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .slot-window::before,
@@ -153,7 +156,7 @@
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  padding: 16rpx 8rpx 12rpx;
+  padding: 14rpx 8rpx 12rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -179,7 +182,7 @@
 
 .reel-name {
   max-width: 100%;
-  min-height: 42rpx;
+  min-height: 40rpx;
   padding: 0 4rpx;
   color: #2a1735;
   font-size: 23rpx;
@@ -192,6 +195,15 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   word-break: keep-all;
+}
+
+.slot-window.settled {
+  border-color: #ffeb7a;
+  box-shadow: inset 0 0 0 3rpx rgba(255,255,255,0.8), 0 0 22rpx rgba(255,235,122,0.34);
+}
+
+.slot-window.settled .reel-icon {
+  transform: scale(1.06);
 }
 
 .slot-count-2 .slot-window {
@@ -214,8 +226,8 @@
 }
 
 .slot-count-4 .reel-item {
-  padding: 12rpx 4rpx 10rpx;
-  gap: 6rpx;
+  padding: 10rpx 4rpx 8rpx;
+  gap: 5rpx;
 }
 
 .slot-count-4 .reel-icon {
@@ -224,7 +236,7 @@
 }
 
 .slot-count-4 .reel-name {
-  min-height: 36rpx;
+  min-height: 34rpx;
   font-size: 19rpx;
   line-height: 1.12;
 }
@@ -323,4 +335,185 @@
   0% { opacity: 0.35; transform: translateY(-18rpx) scale(0.92); }
   70% { opacity: 1; transform: translateY(4rpx) scale(1.04); }
   100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Reference replica polish */
+.slot-machine {
+  margin: 32rpx 24rpx 0;
+  padding: 32rpx 30rpx 28rpx;
+  border-radius: 40rpx;
+  background:
+    radial-gradient(circle at 16% 14%, rgba(255,255,255,0.30), transparent 150rpx),
+    radial-gradient(circle at 72% 56%, rgba(255,255,255,0.12), transparent 220rpx),
+    linear-gradient(135deg, #67336f 0%, #ff3d6e 50%, #ff7a1a 100%);
+  box-shadow:
+    0 28rpx 64rpx rgba(91, 43, 111, 0.26),
+    inset 0 -7rpx 0 rgba(154, 52, 18, 0.18);
+}
+
+.slot-machine::after {
+  inset: 14rpx;
+  border-radius: 32rpx;
+  border-color: rgba(255,255,255,0.25);
+}
+
+.machine-top {
+  margin-bottom: 28rpx;
+}
+
+.machine-icon {
+  width: 58rpx;
+  height: 58rpx;
+  padding: 8rpx;
+  box-sizing: border-box;
+  background: #fffaf6;
+  border: 3rpx solid rgba(255,255,255,0.76);
+  box-shadow: 0 10rpx 22rpx rgba(42, 23, 53, 0.12);
+}
+
+.machine-title {
+  font-size: 38rpx;
+  line-height: 1.15;
+}
+
+.machine-subtitle {
+  font-size: 24rpx;
+}
+
+.machine-lights {
+  gap: 12rpx;
+}
+
+.light {
+  width: 15rpx;
+  height: 15rpx;
+}
+
+.machine-screen {
+  padding: 22rpx 20rpx;
+  border-radius: 34rpx;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.10), transparent 34rpx),
+    #261231;
+  box-shadow:
+    inset 0 10rpx 22rpx rgba(0,0,0,0.45),
+    0 10rpx 24rpx rgba(255,255,255,0.10);
+}
+
+.screen-inner {
+  gap: 12rpx;
+}
+
+.slot-window {
+  height: 188rpx;
+  border-radius: 26rpx;
+  border: 4rpx solid #ffb85e;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255,255,255,0.92), transparent 86rpx),
+    linear-gradient(180deg, #fffdf8 0%, #fff7ef 100%);
+  box-shadow:
+    inset 0 -8rpx 0 rgba(255, 107, 26, 0.06),
+    0 8rpx 18rpx rgba(0,0,0,0.18);
+}
+
+.slot-window.settled {
+  border-color: #ffcc74;
+  box-shadow:
+    inset 0 0 0 3rpx rgba(255,255,255,0.86),
+    0 0 26rpx rgba(255, 235, 122, 0.45),
+    0 12rpx 26rpx rgba(42, 23, 53, 0.22);
+}
+
+.reel-item {
+  gap: 12rpx;
+  padding: 16rpx 10rpx;
+}
+
+.reel-icon {
+  width: 82rpx;
+  height: 82rpx;
+}
+
+.reel-name {
+  min-height: 44rpx;
+  font-size: 26rpx;
+  line-height: 1.18;
+}
+
+.slot-count-2 .slot-window {
+  height: 202rpx;
+}
+
+.slot-count-2 .reel-icon {
+  width: 98rpx;
+  height: 98rpx;
+}
+
+.slot-count-3 .slot-window {
+  height: 188rpx;
+}
+
+.slot-count-4 {
+  gap: 10rpx;
+}
+
+.slot-count-4 .slot-window {
+  height: 168rpx;
+  border-radius: 22rpx;
+  border-width: 3rpx;
+}
+
+.slot-count-4 .reel-item {
+  padding: 12rpx 5rpx 10rpx;
+  gap: 8rpx;
+}
+
+.slot-count-4 .reel-icon {
+  width: 64rpx;
+  height: 64rpx;
+}
+
+.slot-count-4 .reel-name {
+  min-height: 42rpx;
+  font-size: 22rpx;
+  line-height: 1.15;
+}
+
+.machine-footer {
+  margin-top: 30rpx;
+  min-height: 116rpx;
+}
+
+.lever-area {
+  width: 166rpx;
+  height: 122rpx;
+}
+
+.lever-base {
+  left: 18rpx;
+  width: 124rpx;
+  height: 34rpx;
+  background: #291333;
+  box-shadow:
+    inset 0 4rpx 8rpx rgba(255,255,255,0.18),
+    0 8rpx 14rpx rgba(42, 23, 53, 0.30);
+}
+
+.lever-stick {
+  left: 62rpx;
+  height: 112rpx;
+  bottom: 22rpx;
+  width: 18rpx;
+}
+
+.lever-ball {
+  width: 62rpx;
+  height: 62rpx;
+  top: -28rpx;
+}
+
+.machine-tip {
+  font-size: 25rpx;
+  line-height: 1.35;
+  padding-left: 18rpx;
 }

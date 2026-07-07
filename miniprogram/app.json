@@ -6,7 +6,9 @@
     "pages/videos/videos",
     "pages/chat/chat",
     "pages/profile/profile",
-    "pages/video-player/video-player"
+    "pages/video-player/video-player",
+    "pages/login/login",
+    "pages/admin/admin"
   ],
   "window": {
     "navigationBarBackgroundColor": "#FFF9F3",

@@ -6,7 +6,11 @@ const KEYS = {
   DISH_HISTORY: 'dishHistory',
   FAVORITES: 'favorites',
   CHAT_MESSAGES: 'chatMessages',
-  USER_PREFERENCES: 'userPreferences'
+  USER_PREFERENCES: 'userPreferences',
+  SHOPPING_LIST: 'shoppingList',
+  COOKING_PROGRESS: 'cookingProgress',
+  TOKEN: 'auth_token',
+  USER_INFO: 'auth_user_info'
 }
 
 /**
@@ -105,6 +109,122 @@ function getChatHistory() {
   return getStorage(KEYS.CHAT_MESSAGES, [])
 }
 
+function getUserPreferences() {
+  return getStorage(KEYS.USER_PREFERENCES, {})
+}
+
+function setUserPreferences(prefs) {
+  const current = getUserPreferences()
+  const next = Object.assign({}, current, prefs || {}, { updatedAt: Date.now() })
+  setStorage(KEYS.USER_PREFERENCES, next)
+  return next
+}
+
+function addToShoppingList(dish) {
+  const list = getStorage(KEYS.SHOPPING_LIST, [])
+  const ingredients = dish && Array.isArray(dish.ingredients) ? dish.ingredients : []
+  const dishId = dish && dish.id ? String(dish.id) : 'unknown'
+  const dishName = dish && dish.name ? dish.name : '未命名菜品'
+  const next = list.slice()
+
+  ingredients.forEach((ingredient) => {
+    // 兼容旧字符串格式与新对象格式 {name, amount}
+    const name = typeof ingredient === 'string' ? ingredient : (ingredient && ingredient.name) || ''
+    const amount = typeof ingredient === 'string' ? '' : (ingredient && ingredient.amount) || ''
+    if (!name) return
+    const id = dishId + '::' + name
+    const exist = next.find(item => item.id === id)
+    if (exist) {
+      exist.checked = false
+      exist.amount = amount || exist.amount
+      exist.updatedAt = Date.now()
+      return
+    }
+    next.unshift({
+      id,
+      name,
+      amount,
+      dishId,
+      dishName,
+      checked: false,
+      createdAt: Date.now(),
+      updatedAt: Date.now()
+    })
+  })
+
+  setStorage(KEYS.SHOPPING_LIST, next)
+  return next
+}
+
+function getShoppingList() {
+  return getStorage(KEYS.SHOPPING_LIST, [])
+}
+
+function toggleShoppingItem(id) {
+  const list = getShoppingList()
+  const next = list.map(item => {
+    if (item.id !== id) return item
+    return Object.assign({}, item, {
+      checked: !item.checked,
+      updatedAt: Date.now()
+    })
+  })
+  setStorage(KEYS.SHOPPING_LIST, next)
+  return next
+}
+
+function clearCheckedShoppingItems() {
+  const next = getShoppingList().filter(item => !item.checked)
+  setStorage(KEYS.SHOPPING_LIST, next)
+  return next
+}
+
+function saveCookingProgress(dishId, progress) {
+  const all = getStorage(KEYS.COOKING_PROGRESS, {})
+  all[String(dishId)] = Object.assign({}, progress || {}, { updatedAt: Date.now() })
+  setStorage(KEYS.COOKING_PROGRESS, all)
+  return all[String(dishId)]
+}
+
+function getCookingProgress(dishId) {
+  const all = getStorage(KEYS.COOKING_PROGRESS, {})
+  return all[String(dishId)] || null
+}
+
+function clearCookingProgress(dishId) {
+  const all = getStorage(KEYS.COOKING_PROGRESS, {})
+  delete all[String(dishId)]
+  setStorage(KEYS.COOKING_PROGRESS, all)
+  return all
+}
+
+// ==================== 登录态管理 ====================
+
+function getToken() {
+  return getStorage(KEYS.TOKEN, '')
+}
+
+function setToken(token) {
+  setStorage(KEYS.TOKEN, token)
+}
+
+function removeToken() {
+  try { wx.removeStorageSync(KEYS.TOKEN) } catch (e) {}
+  try { wx.removeStorageSync(KEYS.USER_INFO) } catch (e) {}
+}
+
+function getUserInfo() {
+  return getStorage(KEYS.USER_INFO, null)
+}
+
+function setUserInfo(user) {
+  setStorage(KEYS.USER_INFO, user)
+}
+
+function isLoggedIn() {
+  return !!getToken()
+}
+
 module.exports = {
   KEYS,
   setStorage,
@@ -112,5 +232,20 @@ module.exports = {
   addToHistory,
   toggleFavorite,
   saveChatMessage,
-  getChatHistory
+  getChatHistory,
+  getUserPreferences,
+  setUserPreferences,
+  addToShoppingList,
+  getShoppingList,
+  toggleShoppingItem,
+  clearCheckedShoppingItems,
+  saveCookingProgress,
+  getCookingProgress,
+  clearCookingProgress,
+  getToken,
+  setToken,
+  removeToken,
+  getUserInfo,
+  setUserInfo,
+  isLoggedIn
 }

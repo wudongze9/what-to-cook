@@ -8,9 +8,19 @@ function normalizeVideo(video) {
   return result
 }
 
+function isAllCategory(category) {
+  return !category || category === '全部' || category === 'all'
+}
+
+function videoMatchesCategory(video, category) {
+  if (isAllCategory(category)) return true
+  const categories = video.matchCategories || [video.category]
+  return video.category === category || categories.includes(category)
+}
+
 function localVideoData(category) {
-  const result = category && category !== '全部'
-    ? mockVideos.filter(v => v.category === category)
+  const result = !isAllCategory(category)
+    ? mockVideos.filter(v => videoMatchesCategory(v, category))
     : mockVideos
   return {
     featured: result.find(v => v.isFeatured) || result[0] || null,

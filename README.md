@@ -2,7 +2,7 @@
 
 > 今天吃什么 — 拉下摇杆，把冰箱里的可能性变成一道菜。
 
-**WhatToCook** 是一个解决"今天吃什么"世纪难题的微信小程序。通过老虎机式摇杆随机抽取食材组合，智能匹配菜品，并提供完整的做菜步骤、视频教学和 AI 数字人问答，手把手教你完成一道菜。
+**WhatToCook** 是一个解决"今天吃什么"世纪难题的微信小程序。通过老虎机式摇杆随机抽取食材组合，智能匹配菜品，并提供完整的做菜步骤、视频教学、AI 数字人问答和用户系统，手把手教你完成一道菜。
 
 ---
 
@@ -11,11 +11,13 @@
 | 功能 | 说明 |
 |------|------|
 | 🎰 摇杆机选菜 | 老虎机式滚轮动画，随机抽取食材组合，匹配出最佳菜品 |
-| 🎯 四维筛选 | 食材个数（2/3/4）× 食材种类 × 菜系（12 种）× 口味（8 档）任意组合 |
+| 🎯 四维筛选 | 食材个数（2/3/4）× 食材种类 × 菜系（17 种）× 口味（8 档）任意组合 |
 | 📋 做菜步骤 | 时间线式分步指导，支持食材勾选清单和进度追踪 |
 | 🎬 视频教学 | 按菜系分类的教学视频列表 |
-| 🤖 AI 数字人问答 | 做菜问题实时问答，支持上下文理解和快捷问题 |
-| ❤️ 收藏与历史 | 本地持久化收藏夹和推荐历史 |
+| 🤖 AI 数字人问答 | 本地 Ollama qwen3.5 大模型 + 长按语音输入 + TTS 语音播报 + 数字人动效 |
+| 👤 用户系统 | 账号密码注册登录 + 微信一键登录，JWT 鉴权 |
+| 🛡️ 后台用户管理 | 管理员可在小程序内管理用户（列表/搜索/禁用/删除/重置密码） |
+| ❤️ 收藏与历史 | 登录后云端同步，未登录本地存储 |
 | 🎨 自定义视觉 | 80+ SVG 食材图标、渐变动效、自定义 TabBar |
 
 ---
@@ -27,26 +29,34 @@
 ```
 WXML + WXSS + JavaScript (ES6+)
 自定义 Component / 自定义 TabBar
-wx.request 网络请求
+wx.request 网络请求（自动注入 JWT Authorization 头）
 wx.getStorageSync 本地存储
-CSS Variables 设计系统
+wx.getRecorderManager 长按录音
+wx.createInnerAudioContext TTS 音频播放
+CSS Variables 设计系统 + 纯 CSS 数字人动效
 ```
 
 ### 后端（Python FastAPI）
 
 ```
 Python 3.10+
-FastAPI + Uvicorn
+FastAPI + Uvicorn（热重载）
 Pydantic 数据校验
+JWT 认证（PyJWT + bcrypt 密码哈希）
 CORS 跨域支持
+SQLite 数据库（9 张表）
+edge-tts 微软免费语音合成
+Ollama 本地大模型集成（qwen3.5:0.8b）
+httpx 异步 HTTP 客户端（trust_env=False 绕过代理）
 ```
 
 ### 数据
 
 ```
-30 道菜品（涵盖 8 大菜系）
-80+ 种食材（6 大分类）
+100 道菜品（涵盖 17 大菜系）
+160+ 种食材（6 大分类，含用量信息）
 80+ SVG 原创图标
+9 张数据库表（菜品 6 张 + 用户 3 张）
 ```
 
 ---
@@ -56,18 +66,20 @@ CORS 跨域支持
 ```
 what-to-cook/
 ├── miniprogram/                    # 微信小程序前端
-│   ├── app.js                      # 全局入口，初始化本地存储和主题
-│   ├── app.json                    # 页面路由、窗口、TabBar 配置
+│   ├── app.js                      # 全局入口，初始化登录态恢复
+│   ├── app.json                    # 页面路由、窗口、TabBar 配置（9 个页面）
 │   ├── app.wxss                    # 全局样式与设计系统（CSS 变量）
 │   │
-│   ├── pages/                      # 7 个页面
-│   │   ├── index/                  # 首页：摇杆机 + 配置面板
-│   │   ├── result/                 # 结果页：菜品详情 + Top3 备选
+│   ├── pages/                      # 9 个页面
+│   │   ├── index/                  # 首页：摇杆机 + 配置面板 + 登录引导
+│   │   ├── result/                 # 结果页：菜品详情 + 食材组合 + 可替换食材
 │   │   ├── steps/                  # 步骤页：时间线 + 食材清单
 │   │   ├── videos/                 # 视频列表页
 │   │   ├── video-player/           # 视频播放页
-│   │   ├── chat/                   # AI 数字人问答页
-│   │   └── profile/                # 个人中心：收藏 / 历史
+│   │   ├── chat/                   # AI 数字人问答页（数字人动效+录音+TTS）
+│   │   ├── profile/                # 个人中心：登录态展示 + 收藏/历史云同步
+│   │   ├── login/                  # 登录注册页（账号密码 + 微信登录）
+│   │   └── admin/                  # 管理员用户管理页
 │   │
 │   ├── components/                 # 4 个自定义组件
 │   │   ├── food-wheel/             # 摇杆机组件（核心交互）
@@ -77,35 +89,53 @@ what-to-cook/
 │   │
 │   ├── custom-tab-bar/             # 自定义底部导航
 │   ├── utils/                      # 工具层
-│   │   ├── api.js                  # API 服务层（后端/Mock 双通道）
+│   │   ├── api.js                  # API 服务层（后端/Mock 双通道 + JWT 注入）
 │   │   ├── shuffle.js              # 摇一摇算法（本地降级版）
-│   │   ├── storage.js              # 本地存储封装
+│   │   ├── storage.js              # 本地存储封装（含 TOKEN/USER_INFO 登录态）
 │   │   ├── icon-map.js             # 食材 → SVG 图标映射
-│   │   └── ai-service.js           # AI 服务接口
+│   │   ├── ai-service.js           # AI 服务（Ollama 对话 + 录音 + TTS）
+│   │   ├── ingredient-tools.js     # 食材工具函数
+│   │   └── video-match.js          # 视频与菜品匹配规范化
 │   ├── mock/                       # 本地 Mock 数据
-│   │   ├── dishes.js               # 30 道菜品 + 80+ 食材
+│   │   ├── dishes.js               # 100 道菜品 + 160+ 食材
 │   │   ├── videos.js               # 视频数据
-│   │   └── ai-replies.js           # AI 回复规则
+│   │   └── ai-replies.js           # AI 回复规则（降级用）
 │   └── images/icons/               # 80+ SVG 食材图标
 │
 ├── backend/                        # FastAPI 后端
-│   ├── main.py                     # 应用入口，注册路由 + CORS
+│   ├── main.py                     # 应用入口，注册 6 个路由 + 启动建表
 │   ├── requirements.txt            # Python 依赖
+│   ├── migrate.py                  # JSON → SQLite 数据迁移脚本
+│   ├── gen_mock.py                 # 生成前端 mock 数据脚本
+│   ├── upgrade_data.py             # 数据升级脚本
+│   ├── whattocook.db               # SQLite 数据库文件
+│   ├── static/audio/               # TTS 生成的 mp3 缓存
 │   └── app/
+│       ├── database.py             # 数据访问层（菜品 + 用户收藏/历史）
+│       ├── deps.py                 # 认证依赖注入（get_current_user/require_admin）
 │       ├── data/                   # 数据层
-│       │   ├── dishes.py           # 菜品与食材数据
-│       │   └── videos.py           # 视频数据
+│       │   ├── schema.sql          # 9 张表结构（6 菜品 + 3 用户）
+│       │   ├── dishes-data.json    # 100 道菜品完整数据
+│       │   ├── dishes.py           # 菜品数据（Python 模块）
+│       │   ├── videos.py           # 视频数据
+│       │   ├── collection-template.json    # 数据采集模板
+│       │   └── dishes-collection-sample.json  # 采集样本
 │       ├── models/
-│       │   └── schemas.py          # Pydantic 数据模型
-│       ├── routers/                # API 路由
+│       │   └── schemas.py          # Pydantic 数据模型（含用户认证模型）
+│       ├── routers/                # API 路由（6 个模块）
 │       │   ├── dishes.py           # 菜品接口
 │       │   ├── videos.py           # 视频接口
-│       │   └── chat.py             # AI 问答接口
+│       │   ├── chat.py             # AI 问答 + TTS 接口
+│       │   ├── auth.py             # 用户认证（注册/登录/微信登录/资料/密码）
+│       │   ├── admin.py            # 管理员用户管理
+│       │   └── user_data.py        # 用户收藏/历史
 │       └── services/               # 业务服务
 │           ├── shuffle.py          # 随机推荐算法
-│           └── ai_chat.py          # AI 问答服务
+│           ├── ai_chat.py          # Ollama qwen3.5 对话服务
+│           ├── tts_service.py      # edge-tts 语音合成
+│           └── auth_service.py     # 用户认证服务（JWT/bcrypt/微信登录）
 │
-├── project.config.json             # 微信开发者工具配置
+├── project.config.json             # 微信开发者工具配置（urlCheck: false）
 └── sitemap.json                    # 小程序 sitemap
 ```
 
@@ -122,7 +152,7 @@ what-to-cook/
 配置筛选条件
     │  ├── 食材个数：2 / 3 / 4
     │  ├── 食材种类：蔬菜 / 肉禽 / 海鲜 / 蛋豆 / 主食 / 调味
-    │  ├── 目标菜系：家常菜 / 川菜 / 粤菜 / 湘菜 / 东北菜 / 西餐 ...
+    │  ├── 目标菜系：家常菜 / 川菜 / 粤菜 / 湘菜 / 东北菜 ...
     │  └── 口味程度：清淡 / 微辣 / 中辣 / 重辣 / 甜口 / 酸口 / 咸鲜
     │
     ▼
@@ -130,8 +160,8 @@ what-to-cook/
     │
     ▼
 food-wheel 组件启动滚轮动画
-    │  ├── 每个槽位独立 setInterval 快速切换食材（74ms + i*16ms）
-    │  ├── 逐个槽位延迟停止（980ms + i*360ms）
+    │  ├── 每个槽位独立 setInterval 快速切换食材
+    │  ├── 逐个槽位延迟停止
     │  └── 摇杆下压回弹 + 灯光闪烁动画
     │
     ▼
@@ -142,92 +172,118 @@ food-wheel 组件启动滚轮动画
     │
     ▼
 API 层判断 USE_API
-    ├── true  →  请求后端 /api/dishes/random
+    ├── true  →  POST /api/dishes/random（携带 selected_ingredients）
     └── false →  本地 shuffle.js performShuffle()
     │
     ▼
-推荐算法执行
-    │  1. 按食材类型过滤食材池
-    │  2. 随机抽取 N 个不重复食材
-    │  3. 按菜系 + 口味双重过滤候选菜品
-    │  4. 评分：score = 命中食材数 - 额外食材数 × 0.3
-    │  5. 返回 Top 3 匹配菜品
+后端 match_dishes_by_ingredients() 执行 SQL JOIN
+    │  1. JOIN dish_ingredients + ingredients 匹配命中食材
+    │  2. 按菜系 + 口味双重过滤
+    │  3. 评分：score = 命中食材数 - 额外食材数 × 0.3
+    │  4. 返回 Top 3 匹配菜品
     │
     ▼
-写入 globalData.currentDish / matchedDishes
-    │
-    ▼
-跳转结果页
+跳转结果页展示
 ```
 
 **关键代码位置：**
 - 摇杆机组件：[miniprogram/components/food-wheel/food-wheel.js](miniprogram/components/food-wheel/food-wheel.js)
 - 首页逻辑：[miniprogram/pages/index/index.js](miniprogram/pages/index/index.js)
 - 本地算法：[miniprogram/utils/shuffle.js](miniprogram/utils/shuffle.js)
-- 后端算法：[backend/app/services/shuffle.py](backend/app/services/shuffle.py)
+- 后端算法：[backend/app/database.py](backend/app/database.py)（`match_dishes_by_ingredients`）
 
 ---
 
-### 2. 做菜流程
-
-```
-结果页点击"开始做菜"
-    │
-    ▼
-进入 steps 页面
-    │
-    ▼
-展示食材勾选清单
-    │  └── 用户逐一勾选已准备的食材
-    │
-    ▼
-展示时间线式步骤
-    │  ├── 当前步骤高亮
-    │  ├── 已完成步骤打勾
-    │  └── 未完成步骤灰显
-    │
-    ▼
-用户逐步操作
-    │  ├── 上一步 / 下一步切换
-    │  └── 进度条实时更新
-    │
-    ▼
-完成后写入 dishHistory
-    │
-    ▼
-可跳转：看视频 / 问数字人
-```
-
----
-
-### 3. AI 数字人问答流程
+### 2. AI 数字人问答流程
 
 ```
 用户进入 chat 页面
     │
     ▼
-加载本地聊天历史 / 快捷问题
+展示数字人头像（呼吸/眨眼/说话微动 CSS 动效）
     │
-    ▼
-用户输入问题（或点击快捷问题）
+    ├── 文字输入：用户键入问题
+    ├── 快捷问题：点击预设问题
+    └── 语音输入：长按麦克风按钮录音
     │
     ▼
 调用 sendChatMessage(message, context)
-    │  ├── context 携带最近 6 条对话
-    │  └── 支持从结果页带入"XXX怎么做？"的预设问题
+    │  └── context 携带最近 6 条对话
     │
     ▼
 后端 /api/chat 接收请求
     │
     ▼
-AI 服务匹配回复
-    │  1. 关键词匹配（粘锅 / 火候 / 嫩肉 / 调味 ...）
-    │  2. 菜名匹配 → 返回完整做法步骤
-    │  3. 兜底默认回复
+ai_chat.py 调用本地 Ollama qwen3.5:0.8b
+    │  ├── payload: { model, messages, think: false }
+    │  ├── httpx.AsyncClient(trust_env=False) 绕过系统代理
+    │  └── 超时 120s
+    │
+    ├── Ollama 可用  ──→  返回 AI 回复
+    └── Ollama 不可用  ──→  降级到本地关键词匹配
     │
     ▼
-前端展示打字动画 + 写入本地记录
+前端展示回复 + 可选 TTS 播报
+    │  ├── 点击"语音播报"按钮
+    │  ├── POST /api/chat/tts（edge-tts zh-CN-XiaoyiNeural 女声）
+    │  └── wx.createInnerAudioContext 播放 mp3
+    │
+    ▼
+数字人头像切换为"说话"动效
 ```
+
+**关键代码位置：**
+- 数字人 UI：[miniprogram/pages/chat/chat.wxml](miniprogram/pages/chat/chat.wxml) + [chat.wxss](miniprogram/pages/chat/chat.wxss)
+- 录音 + TTS：[miniprogram/utils/ai-service.js](miniprogram/utils/ai-service.js)
+- 后端 AI：[backend/app/services/ai_chat.py](backend/app/services/ai_chat.py)
+- 后端 TTS：[backend/app/services/tts_service.py](backend/app/services/tts_service.py)
+
+---
+
+### 3. 用户认证流程
+
+```
+用户点击"去登录"
+    │
+    ▼
+进入 login 页面
+    │  ├── 登录模式：用户名 + 密码
+    ├── 注册模式：用户名 + 昵称 + 密码
+    └── 微信登录：wx.login() 获取 code
+    │
+    ▼
+调用对应 API
+    ├── POST /api/auth/register   账号密码注册
+    ├── POST /api/auth/login      账号密码登录
+    └── POST /api/auth/wx-login   微信登录
+    │
+    ▼
+后端 auth_service 验证
+    │  ├── 注册：bcrypt 哈希密码，首个用户自动 is_admin=1
+    ├── 登录：bcrypt 验证密码，更新 last_login
+    └── 微信登录：code → openid（开发期降级为 code 哈希）
+    │
+    ▼
+生成 JWT token（72 小时有效）
+    │
+    ▼
+前端 storage.js 保存 token + userInfo
+    │
+    ▼
+后续请求 api.js 自动注入 Authorization: Bearer <token>
+    │
+    ▼
+后端 deps.py 依赖注入校验 token
+    ├── get_current_user          要求登录
+    ├── get_current_user_optional 可选登录
+    └── require_admin             要求管理员
+```
+
+**关键代码位置：**
+- 登录页：[miniprogram/pages/login/login.js](miniprogram/pages/login/login.js)
+- 认证服务：[backend/app/services/auth_service.py](backend/app/services/auth_service.py)
+- 依赖注入：[backend/app/deps.py](backend/app/deps.py)
+- 前端登录态：[miniprogram/utils/storage.js](miniprogram/utils/storage.js)
 
 ---
 
@@ -246,7 +302,7 @@ api.js withFallback(apiFn, fallbackFn)
                                 └── 控制台打印 [api fallback] 警告
 ```
 
-所有接口（菜品 / 视频 / 问答 / 菜系 / 口味）均走此模式，保证后端不可用时小程序仍可完整运行。
+所有接口（菜品 / 视频 / 问答 / 菜系 / 口味）均走此模式，保证后端不可用时小程序仍可完整运行。用户认证相关接口不走降级，未登录时使用本地存储的收藏和历史。
 
 ---
 
@@ -256,14 +312,18 @@ api.js withFallback(apiFn, fallbackFn)
 
 ### 菜品接口
 
-| 方法 | 路径 | 说明 | 参数 |
-|------|------|------|------|
-| GET | `/api/dishes/categories` | 菜系分类列表 | - |
-| GET | `/api/dishes/ingredients` | 所有食材 | - |
-| GET | `/api/dishes` | 菜品列表 | `?category=` |
-| GET | `/api/dishes/random` | 摇一摇推荐 | `?category=&count=2-4&type=` |
-| GET | `/api/dishes/{id}` | 菜品详情 | - |
-| GET | `/api/dishes/{id}/steps` | 菜品步骤 | - |
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/dishes/categories` | 菜系分类列表 |
+| GET | `/api/dishes/cuisines` | 菜系列表（英文 key + 中文名） |
+| GET | `/api/dishes/tags` | 所有标签 |
+| GET | `/api/dishes/ingredients` | 所有食材 |
+| GET | `/api/dishes/spice-levels` | 口味程度列表 |
+| GET | `/api/dishes` | 菜品列表（支持 `?category=`） |
+| GET | `/api/dishes/random` | 摇一摇推荐（GET 兜底） |
+| POST | `/api/dishes/random` | 摇一摇推荐（POST 携带 selected_ingredients） |
+| GET | `/api/dishes/{id}` | 菜品详情 |
+| GET | `/api/dishes/{id}/steps` | 菜品步骤 |
 
 ### 视频接口
 
@@ -277,35 +337,127 @@ api.js withFallback(apiFn, fallbackFn)
 
 | 方法 | 路径 | 说明 |
 |------|------|------|
-| POST | `/api/chat` | 发送问题，返回回复 |
+| POST | `/api/chat` | 发送问题，返回 AI 回复（Ollama qwen3.5） |
 | GET | `/api/chat/quick-questions` | 快捷问题列表 |
+| POST | `/api/chat/tts` | 文本转语音（edge-tts 中文女声） |
+| GET | `/api/chat/tts-file/{filename}` | 获取 TTS 音频文件 |
+
+### 用户认证接口
+
+| 方法 | 路径 | 说明 | 鉴权 |
+|------|------|------|------|
+| POST | `/api/auth/register` | 账号密码注册 | 公开 |
+| POST | `/api/auth/login` | 账号密码登录 | 公开 |
+| POST | `/api/auth/wx-login` | 微信登录 | 公开 |
+| GET | `/api/auth/me` | 获取当前用户信息 | 需登录 |
+| PUT | `/api/auth/profile` | 更新昵称/头像/签名 | 需登录 |
+| PUT | `/api/auth/password` | 修改密码 | 需登录 |
+
+### 用户数据接口（收藏/历史）
+
+| 方法 | 路径 | 说明 | 鉴权 |
+|------|------|------|------|
+| GET | `/api/user/favorites` | 我的收藏列表 | 需登录 |
+| POST | `/api/user/favorites` | 添加收藏 | 需登录 |
+| DELETE | `/api/user/favorites/{dish_id}` | 取消收藏 | 需登录 |
+| GET | `/api/user/favorites/{dish_id}/check` | 检查是否已收藏 | 需登录 |
+| POST | `/api/user/history` | 添加历史 | 需登录 |
+| GET | `/api/user/history` | 历史列表 | 需登录 |
+| DELETE | `/api/user/history` | 清空历史 | 需登录 |
+
+### 管理员接口
+
+| 方法 | 路径 | 说明 | 鉴权 |
+|------|------|------|------|
+| GET | `/api/admin/users` | 用户列表（分页+搜索） | 管理员 |
+| PUT | `/api/admin/users/{id}/toggle` | 启用/禁用用户 | 管理员 |
+| PUT | `/api/admin/users/{id}/admin` | 设置/取消管理员 | 管理员 |
+| PUT | `/api/admin/users/{id}/password` | 重置密码为 123456 | 管理员 |
+| DELETE | `/api/admin/users/{id}` | 删除用户 | 管理员 |
 
 ### 示例：摇一摇请求
 
 ```http
-GET /api/dishes/random?category=川菜&count=3&type=meat
+POST /api/dishes/random
+Content-Type: application/json
+
+{
+  "selected_ingredients": ["番茄", "鸡蛋", "葱"],
+  "category": "家常菜",
+  "spice_level": "不辣"
+}
 ```
 
 ```json
 {
   "selected_ingredients": [
-    { "name": "猪肉", "emoji": "🥩" },
-    { "name": "鸡胸肉", "emoji": "🍗" },
-    { "name": "排骨", "emoji": "🍖" }
+    { "name": "番茄", "emoji": "🍅" },
+    { "name": "鸡蛋", "emoji": "🥚" },
+    { "name": "葱", "emoji": "🧅" }
   ],
   "matched_dish": {
-    "id": 8,
-    "name": "宫保鸡丁",
-    "category": "川菜",
-    "difficulty": "中等",
-    "time": 20,
-    "calories": 280,
-    "ingredients": ["鸡胸肉", "花生米", "干辣椒", "..."],
-    "steps": ["..."]
+    "id": 1,
+    "name": "番茄炒蛋",
+    "category": "家常菜",
+    "difficulty": "简单",
+    "time": 10,
+    "calories": 180,
+    "ingredients": [{"name": "番茄", "amount": "2个"}, ...],
+    "steps": [...]
   },
   "matched_dishes": ["..."]
 }
 ```
+
+### 示例：用户注册
+
+```http
+POST /api/auth/register
+Content-Type: application/json
+
+{
+  "username": "chefwang",
+  "password": "123456",
+  "nickname": "王大厨"
+}
+```
+
+```json
+{
+  "message": "注册成功",
+  "user": {
+    "id": 1,
+    "username": "chefwang",
+    "nickname": "王大厨",
+    "is_admin": true,
+    "..."
+  },
+  "token": "eyJhbGciOiJIUzI1NiIs..."
+}
+```
+
+---
+
+## 🗄 数据库设计
+
+共 9 张表（6 菜品相关 + 3 用户相关）：
+
+```
+菜品相关：
+├── categories          菜系分类
+├── ingredient_types    食材类型
+├── ingredients         食材库
+├── dishes              菜品主表（含 cuisine/tags/cover/营养字段）
+├── dish_ingredients    菜品-食材关联（多对多，含 amount）
+└── dish_steps          菜品步骤
+
+用户相关：
+├── users               用户表（username/password_hash/nickname/wx_openid/is_admin）
+├── user_favorites      用户收藏（user_id + dish_id 唯一约束）
+└── user_history        用户推荐历史
+```
+
+完整表结构见 [backend/app/data/schema.sql](backend/app/data/schema.sql)。
 
 ---
 
@@ -314,14 +466,18 @@ GET /api/dishes/random?category=川菜&count=3&type=meat
 ### 环境要求
 
 - 微信开发者工具（最新稳定版）
-- Python 3.10+
-- Node.js（仅用于语法检查，非必须）
+- Python 3.10+（推荐使用 Conda）
+- Ollama（可选，用于 AI 问答，已下载 qwen3.5:0.8b 模型）
 
 ### 1. 启动后端
 
 ```bash
 cd backend
 pip install -r requirements.txt
+# 额外依赖（auth + ai + tts）
+pip install pyjwt bcrypt httpx edge-tts
+
+# 启动（支持热重载）
 uvicorn main:app --reload --host 0.0.0.0 --port 8001
 ```
 
@@ -334,22 +490,43 @@ curl http://localhost:8001/api/health
 
 交互式文档：`http://localhost:8001/docs`
 
-### 2. 启动小程序
+### 2. 启动 Ollama（可选，AI 问答用）
+
+```bash
+# 安装 Ollama 后下载模型
+ollama pull qwen3.5:0.8b
+
+# 启动 Ollama 服务（默认 127.0.0.1:11434）
+ollama serve
+```
+
+> 未启动 Ollama 时，AI 问答会自动降级到本地关键词匹配。
+
+### 3. 启动小程序
 
 1. 打开微信开发者工具
 2. 导入项目，选择根目录 `what-to-cook`（**不是** `miniprogram/` 目录）
 3. 确认 `project.config.json` 中 `miniprogramRoot` 为 `miniprogram/`
-4. 编译运行
+4. **重要**：在「详情 - 本地设置」中勾选「不校验合法域名、web-view、TLS 版本及 HTTPS 证书」（用于访问 localhost）
+5. 编译运行（Ctrl+B）
 
-### 3. 前后端联调
+### 4. 前后端联调
 
 编辑 [miniprogram/utils/api.js](miniprogram/utils/api.js)：
 
 ```javascript
-const USE_API = true  // 改为 true 启用后端调用
+const USE_API = true  // true 启用后端，false 走本地 Mock
 ```
 
-> 真机调试需将 `BASE_URL` 改为局域网可访问地址或 HTTPS 域名，并在小程序后台配置 request 合法域名。
+> 真机调试需将 `BASE_URL` 改为 HTTPS 域名，并在小程序后台配置 request 合法域名。
+
+### 5. 体验用户系统
+
+1. 进入「我的」页面 → 点击「点击登录」
+2. 切换到「注册」标签 → 填写用户名/昵称/密码 → 注册
+3. **首个注册的用户自动成为管理员**
+4. 登录后可享受云端收藏/历史同步
+5. 管理员在「我的」页面底部可见「用户管理」入口
 
 ---
 
@@ -380,35 +557,46 @@ const USE_API = true  // 改为 true 启用后端调用
 - 灯光呼吸 / 闪烁
 - 按钮扫光效果
 - 卡片渐入、标签弹出
+- 数字人呼吸 / 眨眼 / 说话微动（纯 CSS）
 
 ---
 
 ## 📊 数据概览
 
-### 菜品分布
+### 菜品分布（100 道）
 
 | 菜系 | 数量 | 代表菜 |
 |------|------|--------|
-| 家常菜 | 10 | 番茄炒蛋、红烧肉、可乐鸡翅 |
-| 川菜 | 5 | 宫保鸡丁、麻婆豆腐、水煮牛肉、回锅肉 |
-| 粤菜 | 3 | 清蒸鲈鱼、白切鸡、蚝油生菜 |
-| 湘菜 | 3 | 剁椒鱼头、小炒黄牛肉、干锅花菜 |
-| 东北菜 | 2 | 地三鲜、锅包肉 |
-| 苏菜 | 1 | 东坡肉 |
-| 海鲜 | 2 | 蒜蓉粉丝蒸虾、清蒸鲈鱼 |
-| 西餐 | 1 | 溏心蛋沙拉 |
-| 主食 / 汤煲 | 3 | 蛋炒饭、紫菜蛋花汤 |
+| 家常菜 | 20+ | 番茄炒蛋、红烧肉、可乐鸡翅 |
+| 川菜 | 10+ | 宫保鸡丁、麻婆豆腐、水煮牛肉、回锅肉 |
+| 粤菜 | 8+ | 清蒸鲈鱼、白切鸡、蚝油生菜 |
+| 湘菜 | 6+ | 剁椒鱼头、小炒黄牛肉、干锅花菜 |
+| 东北菜 | 5+ | 地三鲜、锅包肉 |
+| 海鲜 | 8+ | 蒜蓉粉丝蒸虾、清蒸鲈鱼 |
+| 汤煲 | 5+ | 紫菜蛋花汤、冬瓜排骨汤 |
+| 主食 | 8+ | 蛋炒饭、炸酱面、饺子 |
+| 其他 | 30+ | 鲁菜、苏菜、西餐、甜品等 |
 
-### 食材分类
+### 食材分类（160+ 种）
 
 | 类别 | 数量 | 示例 |
 |------|------|------|
-| 蔬菜 | 26 | 番茄、土豆、西兰花、茄子 |
-| 肉禽 | 16 | 猪肉、牛肉、鸡腿、五花肉 |
-| 海鲜 | 11 | 虾、鲈鱼、螃蟹、鱿鱼 |
-| 蛋豆 | 11 | 鸡蛋、豆腐、腐竹、豌豆 |
-| 主食 | 10 | 米饭、面条、年糕、粉丝 |
-| 调味 | 39 | 蒜、葱、生抽、豆瓣酱、花椒 |
+| 蔬菜 | 40+ | 番茄、土豆、西兰花、茄子 |
+| 肉禽 | 25+ | 猪肉、牛肉、鸡腿、五花肉 |
+| 海鲜 | 15+ | 虾、鲈鱼、螃蟹、鱿鱼 |
+| 蛋豆 | 15+ | 鸡蛋、豆腐、腐竹、豌豆 |
+| 主食 | 15+ | 米饭、面条、年糕、粉丝 |
+| 调味 | 50+ | 蒜、葱、生抽、豆瓣酱、花椒 |
+
+---
+
+## 🔒 安全说明
+
+- 密码使用 bcrypt 哈希存储（限制 72 字节）
+- JWT token 有效期 72 小时，签名密钥可通过环境变量 `JWT_SECRET` 配置
+- 微信登录开发期未配置 AppID 时降级为 code 哈希作临时 openid，真机上线需配置 `WX_APPID` / `WX_SECRET`
+- 管理员不能禁用/删除自己，不能修改自己的管理员状态
+- `project.config.json` 中 `urlCheck: false` 仅用于开发环境，上线前需配置合法域名
 
 ---
 
@@ -416,38 +604,37 @@ const USE_API = true  // 改为 true 启用后端调用
 
 ### 短期（功能补全）
 
-- [ ] **后端口味筛选**：`perform_shuffle` 补齐 `spice_level` 参数，与前端对齐
-- [ ] **后端数据同步**：`backend/app/data/dishes.py` 补齐 `cuisine / spiceLevel / type` 字段
-- [ ] **清理残留文件**：删除 `index.wxss.bak`
-- [ ] **profile 页数据源统一**：改为调用 `getDishDetail()` 而非直接读 mock
+- [ ] 接入真实微信 AppID/AppSecret 实现 code2session
+- [ ] 真实视频地址接入视频 CDN
+- [ ] 菜品图片替换为真实照片
+- [ ] 语音识别 ASR 对接（替换当前录音 mock）
 
 ### 中期（体验升级）
 
-- [ ] **接入真实大模型**：替换 `ai_chat.py` 中的 `call_ai_api`，接入 DeepSeek / 通义千问 / OpenAI
-- [ ] **真实视频地址**：接入视频 CDN，替换当前空 `videoUrl`
-- [ ] **菜品图片**：替换 SVG 占位图为真实菜品照片
-- [ ] **语音识别接入**：对接腾讯云 ASR，替换当前录音 mock
-- [ ] **做菜计时器**：步骤页加入倒计时提醒
+- [ ] 做菜计时器：步骤页加入倒计时提醒
+- [ ] 智能推荐：基于用户历史、收藏、季节的个性化推荐
+- [ ] 冰箱食材输入：拍照识别 / 手动输入已有食材
+- [ ] 营养分析：热量、蛋白质、碳水等营养成分计算
 
 ### 长期（产品演进）
 
-- [ ] **数据库迁移**：菜品/视频/用户数据迁移到 PostgreSQL 或云开发数据库
-- [ ] **用户系统**：微信登录 + 云端收藏/历史同步
-- [ ] **智能推荐**：基于用户历史、收藏、季节、时间段的个性化推荐
-- [ ] **冰箱食材输入**：拍照识别 / 手动输入已有食材，精准匹配菜品
-- [ ] **营养分析**：热量、蛋白质、碳水等营养成分计算
-- [ ] **菜谱生成**：基于随机食材组合，AI 生成全新菜谱
-- [ ] **社区分享**：用户上传自己的菜谱和成品图
+- [ ] 数据库迁移到 PostgreSQL 或云开发数据库
+- [ ] 菜谱生成：基于随机食材组合，AI 生成全新菜谱
+- [ ] 社区分享：用户上传自己的菜谱和成品图
+- [ ] 多端支持：H5 / App 版本
 
 ---
 
 ## 📝 开发约定
 
 - 前端文件命名：小写中划线（`food-wheel`、`video-player`）
-- 后端文件命名：小写下划线（`ai_chat.py`、`shuffle.py`）
+- 后端文件命名：小写下划线（`ai_chat.py`、`auth_service.py`）
 - CSS 变量统一通过 `app.wxss` 的 `page` 选择器定义
 - 食材图标统一走 `icon-map.js` 的三层匹配机制
 - API 层所有方法支持 `withFallback` 双通道降级
+- 用户认证接口通过 `Depends(get_current_user)` 鉴权
+- 首个注册用户自动成为管理员
+- 数据库操作统一通过 `database.py` 封装，不直接在路由中写 SQL
 
 ---
 
