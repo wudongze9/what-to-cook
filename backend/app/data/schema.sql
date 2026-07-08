@@ -121,3 +121,26 @@ CREATE INDEX IF NOT EXISTS idx_users_username ON users(username);
 CREATE INDEX IF NOT EXISTS idx_users_openid ON users(wx_openid);
 CREATE INDEX IF NOT EXISTS idx_favorites_user ON user_favorites(user_id);
 CREATE INDEX IF NOT EXISTS idx_history_user ON user_history(user_id);
+
+-- ⑩ 菜品教学视频表（一菜多视频，外链为主）
+CREATE TABLE IF NOT EXISTS dish_videos (
+    id                        TEXT PRIMARY KEY,
+    dish_id                   INTEGER NOT NULL,
+    dish_name                 TEXT DEFAULT '',
+    title                     TEXT NOT NULL,
+    category                  TEXT DEFAULT '',
+    tags                      TEXT DEFAULT '',
+    cover                     TEXT DEFAULT '',
+    duration                  TEXT DEFAULT '',
+    source                    TEXT DEFAULT '',
+    author                    TEXT DEFAULT '',
+    external_url              TEXT DEFAULT '',
+    video_url                 TEXT DEFAULT '',
+    playable_in_miniprogram   INTEGER DEFAULT 0,
+    description               TEXT DEFAULT '',
+    created_at                TEXT DEFAULT (datetime('now','localtime')),
+    FOREIGN KEY (dish_id) REFERENCES dishes(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_dish_videos_dish ON dish_videos(dish_id);
+CREATE INDEX IF NOT EXISTS idx_dish_videos_source ON dish_videos(source);

@@ -13,7 +13,7 @@
 | 🎰 摇杆机选菜 | 老虎机式滚轮动画，随机抽取食材组合，匹配出最佳菜品 |
 | 🎯 四维筛选 | 食材个数（2/3/4）× 食材种类 × 菜系（17 种）× 口味（8 档）任意组合 |
 | 📋 做菜步骤 | 时间线式分步指导，支持食材勾选清单和进度追踪 |
-| 🎬 视频教学 | 按菜系分类的教学视频列表 |
+| 🎬 视频教学 | 一菜多视频，100 道菜全覆盖；外链跳转（B站/抖音/小红书）+ 可播放 mp4 双模式 |
 | 🤖 AI 数字人问答 | 本地 Ollama qwen3.5 大模型 + 长按语音输入 + TTS 语音播报 + 数字人动效 |
 | 👤 用户系统 | 账号密码注册登录 + 微信一键登录，JWT 鉴权 |
 | 🛡️ 后台用户管理 | 管理员可在小程序内管理用户（列表/搜索/禁用/删除/重置密码） |
@@ -44,7 +44,7 @@ FastAPI + Uvicorn（热重载）
 Pydantic 数据校验
 JWT 认证（PyJWT + bcrypt 密码哈希）
 CORS 跨域支持
-SQLite 数据库（9 张表）
+SQLite 数据库（10 张表）
 edge-tts 微软免费语音合成
 Ollama 本地大模型集成（qwen3.5:0.8b）
 httpx 异步 HTTP 客户端（trust_env=False 绕过代理）
@@ -54,9 +54,10 @@ httpx 异步 HTTP 客户端（trust_env=False 绕过代理）
 
 ```
 100 道菜品（涵盖 17 大菜系）
+100 条教学视频（每道菜绑定一个外部教学视频链接）
 160+ 种食材（6 大分类，含用量信息）
 80+ SVG 原创图标
-9 张数据库表（菜品 6 张 + 用户 3 张）
+10 张数据库表（菜品 6 张 + 用户 3 张 + 视频 1 张）
 ```
 
 ---
@@ -98,26 +99,30 @@ what-to-cook/
 │   │   └── video-match.js          # 视频与菜品匹配规范化
 │   ├── mock/                       # 本地 Mock 数据
 │   │   ├── dishes.js               # 100 道菜品 + 160+ 食材
-│   │   ├── videos.js               # 视频数据
+│   │   ├── dish-videos.js          # 100 条菜品教学视频（一菜多视频）
+│   │   ├── videos.js               # 旧版视频数据（兼容）
 │   │   └── ai-replies.js           # AI 回复规则（降级用）
 │   └── images/icons/               # 80+ SVG 食材图标
 │
 ├── backend/                        # FastAPI 后端
 │   ├── main.py                     # 应用入口，注册 6 个路由 + 启动建表
 │   ├── requirements.txt            # Python 依赖
-│   ├── migrate.py                  # JSON → SQLite 数据迁移脚本
+│   ├── migrate.py                  # JSON → SQLite 数据迁移脚本（含视频导入）
+│   ├── gen_videos.py               # 生成 dish-videos.json + 前端 mock 脚本
+│   ├── check_videos.py             # 视频链接可访问性检查脚本
 │   ├── gen_mock.py                 # 生成前端 mock 数据脚本
 │   ├── upgrade_data.py             # 数据升级脚本
 │   ├── whattocook.db               # SQLite 数据库文件
 │   ├── static/audio/               # TTS 生成的 mp3 缓存
 │   └── app/
-│       ├── database.py             # 数据访问层（菜品 + 用户收藏/历史）
+│       ├── database.py             # 数据访问层（菜品 + 用户收藏/历史 + 视频）
 │       ├── deps.py                 # 认证依赖注入（get_current_user/require_admin）
 │       ├── data/                   # 数据层
-│       │   ├── schema.sql          # 9 张表结构（6 菜品 + 3 用户）
+│       │   ├── schema.sql          # 10 张表结构（6 菜品 + 3 用户 + 1 视频）
 │       │   ├── dishes-data.json    # 100 道菜品完整数据
+│       │   ├── dish-videos.json    # 100 条菜品教学视频种子数据
 │       │   ├── dishes.py           # 菜品数据（Python 模块）
-│       │   ├── videos.py           # 视频数据
+│       │   ├── videos.py           # 旧版视频数据
 │       │   ├── collection-template.json    # 数据采集模板
 │       │   └── dishes-collection-sample.json  # 采集样本
 │       ├── models/
@@ -329,9 +334,14 @@ api.js withFallback(apiFn, fallbackFn)
 
 | 方法 | 路径 | 说明 |
 |------|------|------|
-| GET | `/api/videos/categories` | 视频分类 |
-| GET | `/api/videos` | 视频列表（支持 `?category=`） |
-| GET | `/api/videos/{id}` | 视频详情 |
+| GET | `/api/videos/categories` | 视频分类（兼容旧版） |
+| GET | `/api/videos` | 视频列表（支持 `?category=`，兼容旧版） |
+| GET | `/api/videos/all/list` | 所有菜品教学视频（新版，支持 `?category=`） |
+| GET | `/api/videos/dish/{dish_id}` | 按菜品 ID 查询所有教学视频（一菜多视频） |
+| GET | `/api/videos/sources/list` | 所有视频来源平台（bilibili/douyin/...） |
+| GET | `/api/videos/{video_id}` | 视频详情（优先查 dish_videos 表，回退旧版） |
+| POST | `/api/videos/admin/add` | 新增视频（管理员） |
+| DELETE | `/api/videos/admin/{video_id}` | 删除视频（管理员） |
 
 ### AI 问答接口
 
@@ -440,7 +450,7 @@ Content-Type: application/json
 
 ## 🗄 数据库设计
 
-共 9 张表（6 菜品相关 + 3 用户相关）：
+共 10 张表（6 菜品相关 + 3 用户相关 + 1 视频相关）：
 
 ```
 菜品相关：
@@ -455,6 +465,12 @@ Content-Type: application/json
 ├── users               用户表（username/password_hash/nickname/wx_openid/is_admin）
 ├── user_favorites      用户收藏（user_id + dish_id 唯一约束）
 └── user_history        用户推荐历史
+
+视频相关：
+└── dish_videos         菜品教学视频（一菜多视频，外链为主）
+                         字段：id/dish_id/dish_name/title/category/tags/cover/
+                              duration/source/author/external_url/video_url/
+                              playable_in_miniprogram/description
 ```
 
 完整表结构见 [backend/app/data/schema.sql](backend/app/data/schema.sql)。
@@ -600,12 +616,83 @@ const USE_API = true  // true 启用后端，false 走本地 Mock
 
 ---
 
+## 🎬 视频教学系统
+
+### 设计理念：一菜多视频，外链为主
+
+采用「菜品表 + 视频表」分离设计，不破坏原有菜品数据，每道菜可绑定多个教学视频。
+
+### 数据结构
+
+每条视频包含以下字段：
+
+| 字段 | 说明 | 示例 |
+|------|------|------|
+| `id` | 视频条目 ID | `v_dish_029` |
+| `dishId` | 绑定的菜品 ID | `29` |
+| `dishName` | 菜品名（冗余） | `地三鲜` |
+| `title` | 视频标题 | `地三鲜家常做法教学` |
+| `category` | 所属菜系 | `东北菜` |
+| `tags` | 标签数组 | `["东北菜","家常菜"]` |
+| `cover` | 封面图 URL | `https://...` |
+| `duration` | 时长 | `08:30` |
+| `source` | 来源平台 | `bilibili` / `douyin` / `xiaohongshu` |
+| `author` | UP主 | `某某厨房` |
+| `externalUrl` | 外部页面链接 | `https://www.bilibili.com/video/BVxxxx` |
+| `videoUrl` | 可播放 mp4/HLS | `https://...mp4` |
+| `playableInMiniprogram` | 能否小程序内播放 | `false`（外链需跳转） |
+
+### 前端展示逻辑
+
+```
+用户点击"看教学视频"
+    │
+    ▼
+按 dishId 进入 video-player 页
+    │
+    ▼
+查询该菜品的所有视频
+    │
+    ├── 无视频 → 展示空状态
+    ├── 1 个视频 → 直接展示详情
+    └── 多个视频 → 展示列表，点击查看
+         │
+         ▼
+    判断 playableInMiniprogram
+    ├── true  → <video> 组件直接播放 mp4
+    └── false → 外链模式：复制链接到剪贴板 + 提示浏览器打开
+```
+
+### 当前数据状态
+
+- **100 道菜全部有视频链接**（100% 覆盖）
+- 当前 `externalUrl` 为 B站搜索链接占位，可替换为具体视频页 URL
+- 所有链接已通过可访问性检查（`python check_videos.py`）
+
+### 视频收集方法
+
+1. 在 B站/抖音/小红书/YouTube 搜索菜名 + "做法"
+2. 挑选清晰、步骤完整的教学视频
+3. 编辑 [backend/app/data/dish-videos.json](backend/app/data/dish-videos.json)，替换对应条目的 `external_url`
+4. 运行 `python migrate.py` 重新导入数据库
+5. 运行 `python check_videos.py` 检查链接可访问性
+
+### 相关文件
+
+- 种子数据：[backend/app/data/dish-videos.json](backend/app/data/dish-videos.json)
+- 生成脚本：[backend/gen_videos.py](backend/gen_videos.py)
+- 检查脚本：[backend/check_videos.py](backend/check_videos.py)
+- 前端降级：[miniprogram/mock/dish-videos.js](miniprogram/mock/dish-videos.js)
+- 视频页：[miniprogram/pages/video-player/](miniprogram/pages/video-player/)
+
+---
+
 ## 🔮 后续工作完善
 
 ### 短期（功能补全）
 
 - [ ] 接入真实微信 AppID/AppSecret 实现 code2session
-- [ ] 真实视频地址接入视频 CDN
+- [ ] 将视频外链替换为具体视频页面 URL（当前为 B站搜索链接占位）
 - [ ] 菜品图片替换为真实照片
 - [ ] 语音识别 ASR 对接（替换当前录音 mock）
 

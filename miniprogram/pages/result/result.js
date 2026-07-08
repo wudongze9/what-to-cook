@@ -95,12 +95,14 @@ Page({
 
   /**
    * 看教学视频
+   * 统一按菜品 ID 进入视频页，由视频页查询该菜品的所有教学视频。
+   * 若该菜暂无视频，视频页会展示空状态。
    */
   onWatchVideo() {
     const dish = this.data.dish
-    if (dish && dish.videoId) {
+    if (dish && dish.id) {
       wx.navigateTo({
-        url: `/pages/video-player/video-player?videoId=${dish.videoId}`
+        url: `/pages/video-player/video-player?dishId=${dish.id}&dishName=${encodeURIComponent(dish.name || '')}`
       })
       return
     }

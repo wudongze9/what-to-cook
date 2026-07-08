@@ -1,0 +1,2029 @@
+{
+  "_说明": {
+    "用途": "菜品教学视频种子数据，每道菜绑定一个外部视频链接",
+    "数据结构": "每个对象对应 dish_videos 表一条记录",
+    "字段说明": {
+      "id": "视频条目 ID，格式 v_dish_{dish_id:03d}",
+      "dish_id": "菜品 ID（对应 dishes 表 id）",
+      "dish_name": "菜品名（冗余字段，方便核对）",
+      "title": "视频标题",
+      "category": "所属菜系",
+      "tags": "标签数组",
+      "cover": "封面图 URL（可后续补充）",
+      "duration": "预估时长",
+      "source": "来源平台：bilibili/douyin/xiaohongshu/youtube/other",
+      "author": "UP主或作者名",
+      "external_url": "外部页面链接（B站搜索链接，可替换为具体视频页）",
+      "video_url": "可直接播放的 mp4/HLS 地址，有才填",
+      "playable_in_miniprogram": "是否能在小程序 <video> 直接播放（false=需跳转）",
+      "description": "视频简介"
+    },
+    "收集方法": {
+      "step1": "在 B站/抖音/小红书/YouTube 搜索菜名 + \"做法\"",
+      "step2": "挑选清晰、步骤完整的教学视频",
+      "step3": "复制视频页面链接填入 external_url（替换搜索链接）",
+      "step4": "记录标题、UP主、时长、封面",
+      "step5": "playable_in_miniprogram 默认 false",
+      "step6": "若找到 mp4 直链，可填 video_url 并设 playable_in_miniprogram 为 true"
+    },
+    "注意事项": [
+      "当前 external_url 为 B站搜索链接占位，可替换为具体视频页 URL",
+      "外链视频在小程序中只能复制链接跳转，不能用 <video> 直接播放",
+      "收集后运行 python migrate.py 重新导入数据库",
+      "共 100 道菜，每道菜至少有 1 条视频链接"
+    ]
+  },
+  "_收集模板_复制此块修改": {
+    "id": "v_dish_xxx",
+    "dish_id": 0,
+    "dish_name": "菜品名",
+    "title": "视频标题",
+    "category": "家常菜",
+    "tags": [
+      "家常菜"
+    ],
+    "cover": "",
+    "duration": "08:00",
+    "source": "bilibili",
+    "author": "",
+    "external_url": "",
+    "video_url": "",
+    "playable_in_miniprogram": false,
+    "description": ""
+  },
+  "videos": [
+    {
+      "id": "v_dish_001",
+      "dish_id": 1,
+      "dish_name": "番茄炒蛋",
+      "title": "番茄炒蛋家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "05:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=番茄炒蛋做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "番茄炒蛋的详细做法教学。经典中式家常菜，酸甜可口，营养丰富，十分钟搞定 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_002",
+      "dish_id": 2,
+      "dish_name": "青椒肉丝",
+      "title": "青椒肉丝家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=青椒肉丝做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "青椒肉丝的详细做法教学。下饭神菜，肉丝嫩滑，青椒爽脆，米饭杀手 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_003",
+      "dish_id": 3,
+      "dish_name": "红烧肉",
+      "title": "红烧肉家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜"
+      ],
+      "cover": "",
+      "duration": "15:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=红烧肉做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "红烧肉的详细做法教学。肥而不腻，入口即化的经典红烧肉，家的味道 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_004",
+      "dish_id": 4,
+      "dish_name": "蒜蓉西兰花",
+      "title": "蒜蓉西兰花家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "05:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=蒜蓉西兰花做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "蒜蓉西兰花的详细做法教学。清淡爽口，营养满分，减脂期也能放心吃 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_005",
+      "dish_id": 5,
+      "dish_name": "酸辣土豆丝",
+      "title": "酸辣土豆丝家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=酸辣土豆丝做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "酸辣土豆丝的详细做法教学。酸辣爽脆，开胃下饭，十分钟搞定一道菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_006",
+      "dish_id": 6,
+      "dish_name": "可乐鸡翅",
+      "title": "可乐鸡翅家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=可乐鸡翅做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "可乐鸡翅的详细做法教学。甜香入味，零失败入门菜，小朋友最爱 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_007",
+      "dish_id": 7,
+      "dish_name": "糖醋排骨",
+      "title": "糖醋排骨家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=糖醋排骨做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "糖醋排骨的详细做法教学。外酥里嫩，酸甜适口，大人小孩都爱吃 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_008",
+      "dish_id": 8,
+      "dish_name": "鱼香茄子",
+      "title": "鱼香茄子家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=鱼香茄子做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "鱼香茄子的详细做法教学。茄子软糯入味，鱼香味浓，超级下饭 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_009",
+      "dish_id": 9,
+      "dish_name": "干煸豆角",
+      "title": "干煸豆角家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=干煸豆角做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "干煸豆角的详细做法教学。豆角干香，肉末入味，下饭一绝 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_010",
+      "dish_id": 10,
+      "dish_name": "家常豆腐",
+      "title": "家常豆腐家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=家常豆腐做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "家常豆腐的详细做法教学。豆腐外焦里嫩，酱香浓郁，家常下饭首选 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_011",
+      "dish_id": 11,
+      "dish_name": "蒸蛋羹",
+      "title": "蒸蛋羹家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=蒸蛋羹做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "蒸蛋羹的详细做法教学。嫩滑如布丁，老少皆宜，零失败的入门菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_012",
+      "dish_id": 12,
+      "dish_name": "番茄牛腩",
+      "title": "番茄牛腩家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜"
+      ],
+      "cover": "",
+      "duration": "20:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=番茄牛腩做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "番茄牛腩的详细做法教学。牛腩软烂，番茄酸甜，汤汁拌饭一绝 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_013",
+      "dish_id": 13,
+      "dish_name": "麻婆豆腐",
+      "title": "麻婆豆腐家常做法教学，手把手教你做出好味道",
+      "category": "川菜",
+      "tags": [
+        "川菜",
+        "下饭菜",
+        "辣",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=麻婆豆腐做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "麻婆豆腐的详细做法教学。麻辣鲜香，豆腐嫩滑，正宗川味下饭神菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_014",
+      "dish_id": 14,
+      "dish_name": "水煮牛肉",
+      "title": "水煮牛肉家常做法教学，手把手教你做出好味道",
+      "category": "川菜",
+      "tags": [
+        "川菜",
+        "下饭菜",
+        "辣"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=水煮牛肉做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "水煮牛肉的详细做法教学。麻辣鲜烫，肉片滑嫩，川菜馆必点硬菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_015",
+      "dish_id": 15,
+      "dish_name": "回锅肉",
+      "title": "回锅肉家常做法教学，手把手教你做出好味道",
+      "category": "川菜",
+      "tags": [
+        "川菜",
+        "下饭菜",
+        "辣"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=回锅肉做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "回锅肉的详细做法教学。肥而不腻，酱香浓郁，川菜之首 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_016",
+      "dish_id": 16,
+      "dish_name": "宫保鸡丁",
+      "title": "宫保鸡丁家常做法教学，手把手教你做出好味道",
+      "category": "川菜",
+      "tags": [
+        "川菜",
+        "下饭菜",
+        "辣"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=宫保鸡丁做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "宫保鸡丁的详细做法教学。麻辣鲜香，鸡丁滑嫩，花生酥脆，经典川菜代表作 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_017",
+      "dish_id": 17,
+      "dish_name": "鱼香肉丝",
+      "title": "鱼香肉丝家常做法教学，手把手教你做出好味道",
+      "category": "川菜",
+      "tags": [
+        "川菜",
+        "下饭菜",
+        "辣"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=鱼香肉丝做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "鱼香肉丝的详细做法教学。鱼香味浓，肉丝滑嫩，没有鱼的鱼香味 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_018",
+      "dish_id": 18,
+      "dish_name": "夫妻肺片",
+      "title": "夫妻肺片家常做法教学，手把手教你做出好味道",
+      "category": "川菜",
+      "tags": [
+        "川菜",
+        "下饭菜",
+        "辣",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=夫妻肺片做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "夫妻肺片的详细做法教学。麻辣鲜香，片薄入味，川菜经典凉菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_019",
+      "dish_id": 19,
+      "dish_name": "辣子鸡",
+      "title": "辣子鸡家常做法教学，手把手教你做出好味道",
+      "category": "川菜",
+      "tags": [
+        "川菜",
+        "下饭菜",
+        "辣"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=辣子鸡做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "辣子鸡的详细做法教学。麻辣干香，鸡块酥脆，在辣椒堆里找肉的乐趣 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_020",
+      "dish_id": 20,
+      "dish_name": "水煮鱼",
+      "title": "水煮鱼家常做法教学，手把手教你做出好味道",
+      "category": "川菜",
+      "tags": [
+        "川菜",
+        "下饭菜",
+        "辣",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=水煮鱼做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "水煮鱼的详细做法教学。鱼片滑嫩，麻辣鲜香，川菜硬菜代表 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_021",
+      "dish_id": 21,
+      "dish_name": "毛血旺",
+      "title": "毛血旺家常做法教学，手把手教你做出好味道",
+      "category": "川菜",
+      "tags": [
+        "川菜",
+        "下饭菜",
+        "辣"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=毛血旺做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "毛血旺的详细做法教学。麻辣鲜烫，料多味浓，川菜江湖菜代表 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_022",
+      "dish_id": 22,
+      "dish_name": "干煸四季豆",
+      "title": "干煸四季豆家常做法教学，手把手教你做出好味道",
+      "category": "川菜",
+      "tags": [
+        "川菜",
+        "下饭菜",
+        "辣"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=干煸四季豆做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "干煸四季豆的详细做法教学。四季豆干香，肉末入味，川菜经典素菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_023",
+      "dish_id": 23,
+      "dish_name": "白切鸡",
+      "title": "白切鸡家常做法教学，手把手教你做出好味道",
+      "category": "粤菜",
+      "tags": [
+        "粤菜",
+        "经典菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=白切鸡做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "白切鸡的详细做法教学。皮爽肉滑，原汁原味，粤菜经典冷盘 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_024",
+      "dish_id": 24,
+      "dish_name": "清蒸鲈鱼",
+      "title": "清蒸鲈鱼家常做法教学，手把手教你做出好味道",
+      "category": "粤菜",
+      "tags": [
+        "粤菜",
+        "经典菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=清蒸鲈鱼做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "清蒸鲈鱼的详细做法教学。鲜嫩无比，原汁原味，宴客必备硬菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_025",
+      "dish_id": 25,
+      "dish_name": "白灼虾",
+      "title": "白灼虾家常做法教学，手把手教你做出好味道",
+      "category": "粤菜",
+      "tags": [
+        "粤菜",
+        "经典菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "05:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=白灼虾做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "白灼虾的详细做法教学。原汁原味，鲜甜弹牙，粤菜最简做法 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_026",
+      "dish_id": 26,
+      "dish_name": "煲仔饭",
+      "title": "煲仔饭家常做法教学，手把手教你做出好味道",
+      "category": "粤菜",
+      "tags": [
+        "粤菜",
+        "经典菜"
+      ],
+      "cover": "",
+      "duration": "15:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=煲仔饭做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "煲仔饭的详细做法教学。锅巴焦香，腊味浓郁，一锅满足的广式经典 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_027",
+      "dish_id": 27,
+      "dish_name": "叉烧",
+      "title": "叉烧家常做法教学，手把手教你做出好味道",
+      "category": "粤菜",
+      "tags": [
+        "粤菜",
+        "经典菜"
+      ],
+      "cover": "",
+      "duration": "15:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=叉烧做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "叉烧的详细做法教学。色泽红亮，甜香多汁，广式烧腊代表 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_028",
+      "dish_id": 28,
+      "dish_name": "蚝油生菜",
+      "title": "蚝油生菜家常做法教学，手把手教你做出好味道",
+      "category": "粤菜",
+      "tags": [
+        "粤菜",
+        "经典菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "05:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=蚝油生菜做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "蚝油生菜的详细做法教学。翠绿爽脆，鲜香清淡，三分钟搞定 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_029",
+      "dish_id": 29,
+      "dish_name": "剁椒鱼头",
+      "title": "剁椒鱼头家常做法教学，手把手教你做出好味道",
+      "category": "湘菜",
+      "tags": [
+        "湘菜",
+        "辣",
+        "下饭菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=剁椒鱼头做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "剁椒鱼头的详细做法教学。鲜辣过瘾，鱼头嫩滑，湘菜头牌 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_030",
+      "dish_id": 30,
+      "dish_name": "小炒黄牛肉",
+      "title": "小炒黄牛肉家常做法教学，手把手教你做出好味道",
+      "category": "湘菜",
+      "tags": [
+        "湘菜",
+        "辣",
+        "下饭菜"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=小炒黄牛肉做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "小炒黄牛肉的详细做法教学。牛肉滑嫩，辣香四溢，湘菜下饭神菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_031",
+      "dish_id": 31,
+      "dish_name": "干锅花菜",
+      "title": "干锅花菜家常做法教学，手把手教你做出好味道",
+      "category": "湘菜",
+      "tags": [
+        "湘菜",
+        "辣",
+        "下饭菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=干锅花菜做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "干锅花菜的详细做法教学。花菜干香入味，下饭停不下来 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_032",
+      "dish_id": 32,
+      "dish_name": "辣椒炒肉",
+      "title": "辣椒炒肉家常做法教学，手把手教你做出好味道",
+      "category": "湘菜",
+      "tags": [
+        "湘菜",
+        "辣",
+        "下饭菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=辣椒炒肉做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "辣椒炒肉的详细做法教学。湖南人餐桌的灵魂菜，辣得过瘾 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_033",
+      "dish_id": 33,
+      "dish_name": "腊味炒蒜薹",
+      "title": "腊味炒蒜薹家常做法教学，手把手教你做出好味道",
+      "category": "湘菜",
+      "tags": [
+        "湘菜",
+        "辣",
+        "下饭菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=腊味炒蒜薹做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "腊味炒蒜薹的详细做法教学。腊味醇香，蒜薹脆嫩，下饭好菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_034",
+      "dish_id": 34,
+      "dish_name": "地三鲜",
+      "title": "地三鲜家常做法教学，手把手教你做出好味道",
+      "category": "东北菜",
+      "tags": [
+        "东北菜",
+        "家常菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=地三鲜做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "地三鲜的详细做法教学。东北经典素菜，三种蔬菜完美搭配，下饭神器 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_035",
+      "dish_id": 35,
+      "dish_name": "锅包肉",
+      "title": "锅包肉家常做法教学，手把手教你做出好味道",
+      "category": "东北菜",
+      "tags": [
+        "东北菜",
+        "家常菜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=锅包肉做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "锅包肉的详细做法教学。外酥里嫩，酸甜可口，东北菜代表 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_036",
+      "dish_id": 36,
+      "dish_name": "小鸡炖蘑菇",
+      "title": "小鸡炖蘑菇家常做法教学，手把手教你做出好味道",
+      "category": "东北菜",
+      "tags": [
+        "东北菜",
+        "家常菜"
+      ],
+      "cover": "",
+      "duration": "15:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=小鸡炖蘑菇做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "小鸡炖蘑菇的详细做法教学。鸡肉软烂，蘑菇鲜香，东北名菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_037",
+      "dish_id": 37,
+      "dish_name": "猪肉炖粉条",
+      "title": "猪肉炖粉条家常做法教学，手把手教你做出好味道",
+      "category": "东北菜",
+      "tags": [
+        "东北菜",
+        "家常菜"
+      ],
+      "cover": "",
+      "duration": "15:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=猪肉炖粉条做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "猪肉炖粉条的详细做法教学。肉香浓郁，粉条吸汁，东北冬日暖菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_038",
+      "dish_id": 38,
+      "dish_name": "糖醋鲤鱼",
+      "title": "糖醋鲤鱼家常做法教学，手把手教你做出好味道",
+      "category": "鲁菜",
+      "tags": [
+        "鲁菜",
+        "经典菜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=糖醋鲤鱼做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "糖醋鲤鱼的详细做法教学。外酥里嫩，酸甜适口，鲁菜经典名菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_039",
+      "dish_id": 39,
+      "dish_name": "葱烧海参",
+      "title": "葱烧海参家常做法教学，手把手教你做出好味道",
+      "category": "鲁菜",
+      "tags": [
+        "鲁菜",
+        "经典菜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=葱烧海参做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "葱烧海参的详细做法教学。葱香浓郁，海参软糯，鲁菜硬菜代表 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_040",
+      "dish_id": 40,
+      "dish_name": "九转大肠",
+      "title": "九转大肠家常做法教学，手把手教你做出好味道",
+      "category": "鲁菜",
+      "tags": [
+        "鲁菜",
+        "经典菜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "15:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=九转大肠做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "九转大肠的详细做法教学。酸甜苦辣咸五味俱全，鲁菜经典名菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_041",
+      "dish_id": 41,
+      "dish_name": "东坡肉",
+      "title": "东坡肉家常做法教学，手把手教你做出好味道",
+      "category": "苏菜",
+      "tags": [
+        "苏菜",
+        "经典菜"
+      ],
+      "cover": "",
+      "duration": "20:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=东坡肉做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "东坡肉的详细做法教学。色红味醇，酥烂如豆腐，苏菜传世名菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_042",
+      "dish_id": 42,
+      "dish_name": "松鼠桂鱼",
+      "title": "松鼠桂鱼家常做法教学，手把手教你做出好味道",
+      "category": "苏菜",
+      "tags": [
+        "苏菜",
+        "经典菜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=松鼠桂鱼做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "松鼠桂鱼的详细做法教学。形似松鼠，外酥里嫩，酸甜可口，苏菜代表 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_043",
+      "dish_id": 43,
+      "dish_name": "蒜蓉粉丝蒸虾",
+      "title": "蒜蓉粉丝蒸虾家常做法教学，手把手教你做出好味道",
+      "category": "海鲜",
+      "tags": [
+        "海鲜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=蒜蓉粉丝蒸虾做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "蒜蓉粉丝蒸虾的详细做法教学。蒜香浓郁，虾肉弹牙，粉丝吸汁，宴客硬菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_044",
+      "dish_id": 44,
+      "dish_name": "辣炒花甲",
+      "title": "辣炒花甲家常做法教学，手把手教你做出好味道",
+      "category": "海鲜",
+      "tags": [
+        "海鲜",
+        "宴客菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=辣炒花甲做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "辣炒花甲的详细做法教学。鲜辣过瘾，花甲鲜嫩，下酒下饭都行 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_045",
+      "dish_id": 45,
+      "dish_name": "清蒸螃蟹",
+      "title": "清蒸螃蟹家常做法教学，手把手教你做出好味道",
+      "category": "海鲜",
+      "tags": [
+        "海鲜",
+        "宴客菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=清蒸螃蟹做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "清蒸螃蟹的详细做法教学。原汁原味，蟹黄鲜香，秋日美味 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_046",
+      "dish_id": 46,
+      "dish_name": "椒盐虾",
+      "title": "椒盐虾家常做法教学，手把手教你做出好味道",
+      "category": "海鲜",
+      "tags": [
+        "海鲜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=椒盐虾做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "椒盐虾的详细做法教学。外酥里嫩，椒盐香浓，连壳都能吃 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_047",
+      "dish_id": 47,
+      "dish_name": "紫菜蛋花汤",
+      "title": "紫菜蛋花汤家常做法教学，手把手教你做出好味道",
+      "category": "汤煲",
+      "tags": [
+        "汤煲",
+        "快手菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "05:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=紫菜蛋花汤做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "紫菜蛋花汤的详细做法教学。简单快手的家常汤品，鲜香可口，几分钟搞定 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_048",
+      "dish_id": 48,
+      "dish_name": "玉米排骨汤",
+      "title": "玉米排骨汤家常做法教学，手把手教你做出好味道",
+      "category": "汤煲",
+      "tags": [
+        "汤煲",
+        "快手菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "15:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=玉米排骨汤做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "玉米排骨汤的详细做法教学。清甜可口，营养滋补，全家老少都爱喝 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_049",
+      "dish_id": 49,
+      "dish_name": "冬瓜排骨汤",
+      "title": "冬瓜排骨汤家常做法教学，手把手教你做出好味道",
+      "category": "汤煲",
+      "tags": [
+        "汤煲",
+        "快手菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "15:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=冬瓜排骨汤做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "冬瓜排骨汤的详细做法教学。清淡消暑，利尿消肿，夏日养生汤 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_050",
+      "dish_id": 50,
+      "dish_name": "番茄蛋汤",
+      "title": "番茄蛋汤家常做法教学，手把手教你做出好味道",
+      "category": "汤煲",
+      "tags": [
+        "汤煲",
+        "快手菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "05:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=番茄蛋汤做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "番茄蛋汤的详细做法教学。酸甜开胃，简单快手，国民家常汤 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_051",
+      "dish_id": 51,
+      "dish_name": "蛋炒饭",
+      "title": "蛋炒饭家常做法教学，手把手教你做出好味道",
+      "category": "主食",
+      "tags": [
+        "主食",
+        "快手菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "05:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=蛋炒饭做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "蛋炒饭的详细做法教学。粒粒分明，蛋香四溢，最简单的美味 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_052",
+      "dish_id": 52,
+      "dish_name": "葱油拌面",
+      "title": "葱油拌面家常做法教学，手把手教你做出好味道",
+      "category": "主食",
+      "tags": [
+        "主食",
+        "快手菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=葱油拌面做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "葱油拌面的详细做法教学。葱香浓郁，面条爽滑，上海经典早餐 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_053",
+      "dish_id": 53,
+      "dish_name": "饺子",
+      "title": "饺子家常做法教学，手把手教你做出好味道",
+      "category": "主食",
+      "tags": [
+        "主食",
+        "快手菜"
+      ],
+      "cover": "",
+      "duration": "15:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=饺子做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "饺子的详细做法教学。皮薄馅大，家常味道，团圆必备 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_054",
+      "dish_id": 54,
+      "dish_name": "炒面",
+      "title": "炒面家常做法教学，手把手教你做出好味道",
+      "category": "主食",
+      "tags": [
+        "主食",
+        "快手菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=炒面做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "炒面的详细做法教学。面条筋道，配菜丰富，饱腹又美味 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_055",
+      "dish_id": 55,
+      "dish_name": "牛肉面",
+      "title": "牛肉面家常做法教学，手把手教你做出好味道",
+      "category": "主食",
+      "tags": [
+        "主食",
+        "快手菜"
+      ],
+      "cover": "",
+      "duration": "20:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=牛肉面做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "牛肉面的详细做法教学。汤浓肉烂，面条筋道，一碗满足 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_056",
+      "dish_id": 56,
+      "dish_name": "双皮奶",
+      "title": "双皮奶家常做法教学，手把手教你做出好味道",
+      "category": "甜品",
+      "tags": [
+        "甜品",
+        "下午茶"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=双皮奶做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "双皮奶的详细做法教学。奶香浓郁，嫩滑如丝，广式经典甜品 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_057",
+      "dish_id": 57,
+      "dish_name": "芒果西米露",
+      "title": "芒果西米露家常做法教学，手把手教你做出好味道",
+      "category": "甜品",
+      "tags": [
+        "甜品",
+        "下午茶",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=芒果西米露做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "芒果西米露的详细做法教学。芒果香甜，西米Q弹，夏日消暑甜品 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_058",
+      "dish_id": 58,
+      "dish_name": "红豆沙",
+      "title": "红豆沙家常做法教学，手把手教你做出好味道",
+      "category": "甜品",
+      "tags": [
+        "甜品",
+        "下午茶",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "20:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=红豆沙做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "红豆沙的详细做法教学。绵密香甜，暖胃滋补，广式传统糖水 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_059",
+      "dish_id": 59,
+      "dish_name": "意大利肉酱面",
+      "title": "意大利肉酱面家常做法教学，手把手教你做出好味道",
+      "category": "西餐",
+      "tags": [
+        "西餐",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=意大利肉酱面做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "意大利肉酱面的详细做法教学。肉酱浓郁，面条筋道，西餐入门经典 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_060",
+      "dish_id": 60,
+      "dish_name": "煎牛排",
+      "title": "煎牛排家常做法教学，手把手教你做出好味道",
+      "category": "西餐",
+      "tags": [
+        "西餐",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=煎牛排做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "煎牛排的详细做法教学。外焦里嫩，多汁鲜美，西餐硬菜代表 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_061",
+      "dish_id": 61,
+      "dish_name": "木须肉",
+      "title": "木须肉家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=木须肉做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "木须肉的详细做法教学。鸡蛋滑嫩，木耳脆爽，黄瓜清香，经典家常菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_062",
+      "dish_id": 62,
+      "dish_name": "黄焖鸡米饭",
+      "title": "黄焖鸡米饭家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=黄焖鸡米饭做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "黄焖鸡米饭的详细做法教学。鸡肉软烂入味，汤汁拌饭一绝，风靡全国的国民菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_063",
+      "dish_id": 63,
+      "dish_name": "干锅土豆片",
+      "title": "干锅土豆片家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=干锅土豆片做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "干锅土豆片的详细做法教学。土豆片干香焦脆，麻辣入味，下饭神器 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_064",
+      "dish_id": 64,
+      "dish_name": "板栗烧鸡",
+      "title": "板栗烧鸡家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜"
+      ],
+      "cover": "",
+      "duration": "15:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=板栗烧鸡做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "板栗烧鸡的详细做法教学。鸡肉软烂，板栗粉糯，秋日滋补经典菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_065",
+      "dish_id": 65,
+      "dish_name": "咖喱鸡块",
+      "title": "咖喱鸡块家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=咖喱鸡块做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "咖喱鸡块的详细做法教学。咖喱香浓，鸡肉软嫩，拌饭绝佳的异域风味 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_066",
+      "dish_id": 66,
+      "dish_name": "香干炒肉",
+      "title": "香干炒肉家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=香干炒肉做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "香干炒肉的详细做法教学。香干入味，肉片滑嫩，下饭快手的家常小炒 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_067",
+      "dish_id": 67,
+      "dish_name": "口水鸡",
+      "title": "口水鸡家常做法教学，手把手教你做出好味道",
+      "category": "川菜",
+      "tags": [
+        "川菜",
+        "下饭菜",
+        "辣"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=口水鸡做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "口水鸡的详细做法教学。麻辣鲜香，鸡肉嫩滑，让人流口水的川菜凉菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_068",
+      "dish_id": 68,
+      "dish_name": "蒜泥白肉",
+      "title": "蒜泥白肉家常做法教学，手把手教你做出好味道",
+      "category": "川菜",
+      "tags": [
+        "川菜",
+        "下饭菜",
+        "辣"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=蒜泥白肉做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "蒜泥白肉的详细做法教学。蒜香浓郁，肉片薄如纸，麻辣鲜香的川菜凉菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_069",
+      "dish_id": 69,
+      "dish_name": "蚂蚁上树",
+      "title": "蚂蚁上树家常做法教学，手把手教你做出好味道",
+      "category": "川菜",
+      "tags": [
+        "川菜",
+        "下饭菜",
+        "辣",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=蚂蚁上树做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "蚂蚁上树的详细做法教学。肉末裹粉丝，麻辣鲜香，名菜味道家常做法 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_070",
+      "dish_id": 70,
+      "dish_name": "干烧鱼",
+      "title": "干烧鱼家常做法教学，手把手教你做出好味道",
+      "category": "川菜",
+      "tags": [
+        "川菜",
+        "下饭菜",
+        "辣"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=干烧鱼做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "干烧鱼的详细做法教学。鱼肉鲜嫩，酱香浓郁，干烧入味川菜经典 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_071",
+      "dish_id": 71,
+      "dish_name": "菠萝咕噜肉",
+      "title": "菠萝咕噜肉家常做法教学，手把手教你做出好味道",
+      "category": "粤菜",
+      "tags": [
+        "粤菜",
+        "经典菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=菠萝咕噜肉做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "菠萝咕噜肉的详细做法教学。外酥里嫩，酸甜开胃，菠萝清香广式名菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_072",
+      "dish_id": 72,
+      "dish_name": "虾饺",
+      "title": "虾饺家常做法教学，手把手教你做出好味道",
+      "category": "粤菜",
+      "tags": [
+        "粤菜",
+        "经典菜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "15:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=虾饺做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "虾饺的详细做法教学。皮薄馅大，虾肉弹牙，广式早茶经典点心 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_073",
+      "dish_id": 73,
+      "dish_name": "肠粉",
+      "title": "肠粉家常做法教学，手把手教你做出好味道",
+      "category": "粤菜",
+      "tags": [
+        "粤菜",
+        "经典菜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=肠粉做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "肠粉的详细做法教学。皮薄滑嫩，馅料鲜香，广式早餐经典 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_074",
+      "dish_id": 74,
+      "dish_name": "血酱鸭",
+      "title": "血酱鸭家常做法教学，手把手教你做出好味道",
+      "category": "湘菜",
+      "tags": [
+        "湘菜",
+        "辣",
+        "下饭菜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "15:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=血酱鸭做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "血酱鸭的详细做法教学。鸭肉紧实，血酱浓郁，湖南传统名菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_075",
+      "dish_id": 75,
+      "dish_name": "酸辣鸡杂",
+      "title": "酸辣鸡杂家常做法教学，手把手教你做出好味道",
+      "category": "湘菜",
+      "tags": [
+        "湘菜",
+        "辣",
+        "下饭菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=酸辣鸡杂做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "酸辣鸡杂的详细做法教学。酸辣开胃，鸡杂脆嫩，下饭绝佳的湘菜小炒 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_076",
+      "dish_id": 76,
+      "dish_name": "剁椒蒸排骨",
+      "title": "剁椒蒸排骨家常做法教学，手把手教你做出好味道",
+      "category": "湘菜",
+      "tags": [
+        "湘菜",
+        "辣",
+        "下饭菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=剁椒蒸排骨做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "剁椒蒸排骨的详细做法教学。排骨嫩滑，剁椒香辣，蒸出来的下饭好菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_077",
+      "dish_id": 77,
+      "dish_name": "酸菜白肉",
+      "title": "酸菜白肉家常做法教学，手把手教你做出好味道",
+      "category": "东北菜",
+      "tags": [
+        "东北菜",
+        "家常菜"
+      ],
+      "cover": "",
+      "duration": "15:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=酸菜白肉做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "酸菜白肉的详细做法教学。酸菜开胃，白肉不腻，东北冬日暖菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_078",
+      "dish_id": 78,
+      "dish_name": "溜肉段",
+      "title": "溜肉段家常做法教学，手把手教你做出好味道",
+      "category": "东北菜",
+      "tags": [
+        "东北菜",
+        "家常菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=溜肉段做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "溜肉段的详细做法教学。外酥里嫩，酱香入味，东北经典家常菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_079",
+      "dish_id": 79,
+      "dish_name": "油焖大虾",
+      "title": "油焖大虾家常做法教学，手把手教你做出好味道",
+      "category": "鲁菜",
+      "tags": [
+        "鲁菜",
+        "经典菜"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=油焖大虾做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "油焖大虾的详细做法教学。色泽红亮，虾肉鲜甜，鲁菜经典硬菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_080",
+      "dish_id": 80,
+      "dish_name": "德州扒鸡",
+      "title": "德州扒鸡家常做法教学，手把手教你做出好味道",
+      "category": "鲁菜",
+      "tags": [
+        "鲁菜",
+        "经典菜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "20:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=德州扒鸡做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "德州扒鸡的详细做法教学。骨酥肉烂，香透入骨，鲁菜传统名菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_081",
+      "dish_id": 81,
+      "dish_name": "清炖狮子头",
+      "title": "清炖狮子头家常做法教学，手把手教你做出好味道",
+      "category": "苏菜",
+      "tags": [
+        "苏菜",
+        "经典菜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "20:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=清炖狮子头做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "清炖狮子头的详细做法教学。肉丸松软，汤汁清鲜，苏菜经典名菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_082",
+      "dish_id": 82,
+      "dish_name": "叫花鸡",
+      "title": "叫花鸡家常做法教学，手把手教你做出好味道",
+      "category": "苏菜",
+      "tags": [
+        "苏菜",
+        "经典菜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "20:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=叫花鸡做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "叫花鸡的详细做法教学。鸡肉酥烂，香气四溢，苏菜传奇名菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_083",
+      "dish_id": 83,
+      "dish_name": "西湖醋鱼",
+      "title": "西湖醋鱼家常做法教学，手把手教你做出好味道",
+      "category": "浙菜",
+      "tags": [
+        "浙菜",
+        "经典菜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=西湖醋鱼做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "西湖醋鱼的详细做法教学。鱼肉嫩滑，酸甜适口，杭州传统名菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_084",
+      "dish_id": 84,
+      "dish_name": "龙井虾仁",
+      "title": "龙井虾仁家常做法教学，手把手教你做出好味道",
+      "category": "浙菜",
+      "tags": [
+        "浙菜",
+        "经典菜"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=龙井虾仁做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "龙井虾仁的详细做法教学。虾仁弹牙，茶香清雅，杭州名菜代表 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_085",
+      "dish_id": 85,
+      "dish_name": "梅菜扣肉",
+      "title": "梅菜扣肉家常做法教学，手把手教你做出好味道",
+      "category": "浙菜",
+      "tags": [
+        "浙菜",
+        "经典菜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "20:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=梅菜扣肉做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "梅菜扣肉的详细做法教学。肉烂入味，梅菜醇香，肥而不腻的经典菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_086",
+      "dish_id": 86,
+      "dish_name": "佛跳墙",
+      "title": "佛跳墙家常做法教学，手把手教你做出好味道",
+      "category": "闽菜",
+      "tags": [
+        "闽菜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "20:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=佛跳墙做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "佛跳墙的详细做法教学。山珍海味一坛香，闽菜之首，豪华宴客菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_087",
+      "dish_id": 87,
+      "dish_name": "荔枝肉",
+      "title": "荔枝肉家常做法教学，手把手教你做出好味道",
+      "category": "闽菜",
+      "tags": [
+        "闽菜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=荔枝肉做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "荔枝肉的详细做法教学。形似荔枝，酸甜可口，福州传统名菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_088",
+      "dish_id": 88,
+      "dish_name": "羊肉泡馍",
+      "title": "羊肉泡馍家常做法教学，手把手教你做出好味道",
+      "category": "西北菜",
+      "tags": [
+        "西北菜",
+        "下饭菜"
+      ],
+      "cover": "",
+      "duration": "20:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=羊肉泡馍做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "羊肉泡馍的详细做法教学。汤浓肉烂，馍吸汁香，西安传统名吃 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_089",
+      "dish_id": 89,
+      "dish_name": "大盘鸡",
+      "title": "大盘鸡家常做法教学，手把手教你做出好味道",
+      "category": "西北菜",
+      "tags": [
+        "西北菜",
+        "下饭菜"
+      ],
+      "cover": "",
+      "duration": "15:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=大盘鸡做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "大盘鸡的详细做法教学。鸡肉软烂，土豆粉糯，面条吸汁，西北名菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_090",
+      "dish_id": 90,
+      "dish_name": "手抓羊肉",
+      "title": "手抓羊肉家常做法教学，手把手教你做出好味道",
+      "category": "西北菜",
+      "tags": [
+        "西北菜",
+        "下饭菜"
+      ],
+      "cover": "",
+      "duration": "20:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=手抓羊肉做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "手抓羊肉的详细做法教学。原汁原味，肉香浓郁，西北传统美食 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_091",
+      "dish_id": 91,
+      "dish_name": "葱姜炒蟹",
+      "title": "葱姜炒蟹家常做法教学，手把手教你做出好味道",
+      "category": "海鲜",
+      "tags": [
+        "海鲜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=葱姜炒蟹做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "葱姜炒蟹的详细做法教学。蟹肉鲜甜，葱姜增香，粤式海鲜经典 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_092",
+      "dish_id": 92,
+      "dish_name": "蒜蓉烤生蚝",
+      "title": "蒜蓉烤生蚝家常做法教学，手把手教你做出好味道",
+      "category": "海鲜",
+      "tags": [
+        "海鲜",
+        "宴客菜"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=蒜蓉烤生蚝做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "蒜蓉烤生蚝的详细做法教学。蒜香浓郁，生蚝鲜嫩，夜宵摊人气王 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_093",
+      "dish_id": 93,
+      "dish_name": "莲藕排骨汤",
+      "title": "莲藕排骨汤家常做法教学，手把手教你做出好味道",
+      "category": "汤煲",
+      "tags": [
+        "汤煲",
+        "快手菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "20:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=莲藕排骨汤做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "莲藕排骨汤的详细做法教学。莲藕粉糯，排骨软烂，秋冬滋补靓汤 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_094",
+      "dish_id": 94,
+      "dish_name": "酸萝卜老鸭汤",
+      "title": "酸萝卜老鸭汤家常做法教学，手把手教你做出好味道",
+      "category": "汤煲",
+      "tags": [
+        "汤煲",
+        "快手菜"
+      ],
+      "cover": "",
+      "duration": "20:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=酸萝卜老鸭汤做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "酸萝卜老鸭汤的详细做法教学。酸香开胃，鸭肉软烂，夏日去暑靓汤 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_095",
+      "dish_id": 95,
+      "dish_name": "葱花鸡蛋饼",
+      "title": "葱花鸡蛋饼家常做法教学，手把手教你做出好味道",
+      "category": "主食",
+      "tags": [
+        "主食",
+        "快手菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "05:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=葱花鸡蛋饼做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "葱花鸡蛋饼的详细做法教学。葱香四溢，外脆里嫩，十分钟早餐 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_096",
+      "dish_id": 96,
+      "dish_name": "汤圆",
+      "title": "汤圆家常做法教学，手把手教你做出好味道",
+      "category": "主食",
+      "tags": [
+        "主食",
+        "快手菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=汤圆做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "汤圆的详细做法教学。皮糯馅香，甜在心头，元宵节传统美食 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_097",
+      "dish_id": 97,
+      "dish_name": "寿司",
+      "title": "寿司家常做法教学，手把手教你做出好味道",
+      "category": "日料",
+      "tags": [
+        "日料",
+        "快手菜"
+      ],
+      "cover": "",
+      "duration": "12:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=寿司做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "寿司的详细做法教学。米饭酸甜，配料丰富，日料经典美食 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_098",
+      "dish_id": 98,
+      "dish_name": "味噌汤",
+      "title": "味噌汤家常做法教学，手把手教你做出好味道",
+      "category": "日料",
+      "tags": [
+        "日料",
+        "快手菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "05:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=味噌汤做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "味噌汤的详细做法教学。鲜香暖胃，简单快手，日料经典汤品 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_099",
+      "dish_id": 99,
+      "dish_name": "葱爆羊肉",
+      "title": "葱爆羊肉家常做法教学，手把手教你做出好味道",
+      "category": "西北菜",
+      "tags": [
+        "西北菜",
+        "下饭菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "08:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=葱爆羊肉做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "葱爆羊肉的详细做法教学。羊肉嫩滑，葱香浓郁，西北经典快手菜 从食材准备到火候控制，新手也能学会。"
+    },
+    {
+      "id": "v_dish_100",
+      "dish_id": 100,
+      "dish_name": "凉拌黄瓜",
+      "title": "凉拌黄瓜家常做法教学，手把手教你做出好味道",
+      "category": "家常菜",
+      "tags": [
+        "家常菜",
+        "下饭菜",
+        "新手友好"
+      ],
+      "cover": "",
+      "duration": "05:00",
+      "source": "bilibili",
+      "author": "教学视频",
+      "external_url": "https://www.bilibili.com/search?keyword=凉拌黄瓜做法",
+      "video_url": "",
+      "playable_in_miniprogram": false,
+      "description": "凉拌黄瓜的详细做法教学。清脆爽口，开胃解腻，五分钟凉菜 从食材准备到火候控制，新手也能学会。"
+    }
+  ]
+}

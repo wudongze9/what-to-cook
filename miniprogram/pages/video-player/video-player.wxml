@@ -1,46 +1,113 @@
-<view class="video-player-page" wx:if="{{video}}">
-  <!-- 视频播放区 -->
-  <view class="video-container">
-    <video
-      class="player"
-      src="{{video.videoUrl}}"
-      poster="{{video.cover}}"
-      controls
-      autoplay
-      show-center-play-btn="{{false}}"
-      enable-play-gesture
-      object-fit="contain"
-      binderror="onVideoError"
-    />
-  </view>
+<view class="video-player-page">
 
-  <!-- 视频信息 -->
-  <view class="video-detail">
-    <text class="video-title">{{video.title}}</text>
-    <view class="video-meta">
-      <text class="meta-chef">{{video.chef}}</text>
-      <text class="meta-views">{{video.views}}次观看</text>
+  <!-- 模式1：视频列表 -->
+  <block wx:if="{{mode === 'list'}}">
+    <view class="dish-header">
+      <text class="dish-title">{{dishName}} 的教学视频</text>
+      <text class="dish-count">共 {{videoList.length}} 个视频，点击查看</text>
     </view>
-    <text class="video-desc">{{video.description}}</text>
-  </view>
-
-  <!-- 相关视频 -->
-  <view wx:if="{{relatedVideos.length > 0}}" class="related-section">
-    <text class="related-title">相关推荐</text>
-    <view class="related-list">
-      <view
-        wx:for="{{relatedVideos}}"
-        wx:key="id"
-        class="related-item"
-        bindtap="onRelatedVideo"
-        data-video="{{item}}"
-      >
-        <image class="related-cover" src="{{item.cover}}" mode="aspectFill" />
-        <view class="related-info">
-          <text class="related-name">{{item.title}}</text>
-          <text class="related-chef">{{item.chef}} · {{item.duration}}</text>
+    <view class="video-list">
+      <view wx:for="{{videoList}}" wx:key="id" class="video-card" bindtap="onSelectVideo" data-video="{{item}}">
+        <view class="card-cover">
+          <image wx:if="{{item.cover}}" src="{{item.cover}}" mode="aspectFill" class="cover-img" />
+          <view wx:else class="cover-placeholder"><text class="placeholder-text">{{item.dishName}}</text></view>
+          <view class="duration-badge" wx:if="{{item.duration}}">{{item.duration}}</view>
+          <view class="source-badge">{{sourceLabels[item.source] || item.source}}</view>
+        </view>
+        <view class="card-info">
+          <text class="card-title">{{item.title}}</text>
+          <view class="card-meta">
+            <text class="card-author" wx:if="{{item.author}}">UP主：{{item.author}}</text>
+            <text class="card-cat">{{item.category}}</text>
+          </view>
+          <text class="card-desc" wx:if="{{item.description}}">{{item.description}}</text>
         </view>
       </view>
     </view>
-  </view>
+  </block>
+
+  <!-- 模式2：空状态 -->
+  <block wx:elif="{{mode === 'empty'}}">
+    <view class="empty-state">
+      <text class="empty-icon">📺</text>
+      <text class="empty-title">{{dishName}} 暂无教学视频</text>
+      <text class="empty-desc">我们正在收集中，敬请期待</text>
+    </view>
+  </block>
+
+  <!-- 模式3：可播放视频 -->
+  <block wx:elif="{{mode === 'playable' && video}}">
+    <view class="video-container">
+      <video class="player" src="{{video.videoUrl}}" poster="{{videoPoster}}" controls autoplay show-center-play-btn="{{false}}" enable-play-gesture object-fit="contain" binderror="onVideoError" />
+    </view>
+    <view class="video-detail">
+      <text class="video-title">{{video.title}}</text>
+      <view class="video-meta">
+        <text class="meta-author" wx:if="{{video.author}}">{{video.author}}</text>
+        <text class="meta-source">{{sourceLabels[video.source] || video.source}}</text>
+        <text class="meta-duration" wx:if="{{video.duration}}">{{video.duration}}</text>
+      </view>
+      <text class="video-desc" wx:if="{{video.description}}">{{video.description}}</text>
+    </view>
+    <view wx:if="{{relatedVideos.length > 0}}" class="related-section">
+      <text class="related-title">相关推荐</text>
+      <view class="related-list">
+        <view wx:for="{{relatedVideos}}" wx:key="id" class="related-item" bindtap="onRelatedVideo" data-video="{{item}}">
+          <image wx:if="{{item.cover}}" class="related-cover" src="{{item.cover}}" mode="aspectFill" />
+          <view wx:else class="related-cover related-cover-placeholder"><text>{{item.dishName}}</text></view>
+          <view class="related-info">
+            <text class="related-name">{{item.title}}</text>
+            <text class="related-author">{{item.author || ''}} · {{item.duration || ''}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 模式4：外链视频 -->
+  <block wx:elif="{{mode === 'external' && video}}">
+    <view class="external-cover" bindtap="onOpenExternal">
+      <image wx:if="{{video.cover}}" src="{{video.cover}}" mode="aspectFill" class="cover-img" />
+      <view wx:else class="cover-placeholder cover-placeholder-lg"><text class="placeholder-text-lg">{{video.dishName}}</text></view>
+      <view class="play-overlay">
+        <view class="play-btn">▶</view>
+        <text class="play-text">点击打开视频</text>
+      </view>
+      <view class="duration-badge" wx:if="{{video.duration}}">{{video.duration}}</view>
+      <view class="source-badge source-badge-lg">{{sourceLabels[video.source] || video.source}}</view>
+    </view>
+    <view class="video-detail">
+      <text class="video-title">{{video.title}}</text>
+      <view class="video-meta">
+        <text class="meta-author" wx:if="{{video.author}}">UP主：{{video.author}}</text>
+        <text class="meta-source">{{sourceLabels[video.source] || video.source}}</text>
+        <text class="meta-duration" wx:if="{{video.duration}}">{{video.duration}}</text>
+      </view>
+      <text class="video-desc" wx:if="{{video.description}}">{{video.description}}</text>
+      <view wx:if="{{video.tags.length > 0}}" class="video-tags">
+        <text wx:for="{{video.tags}}" wx:key="*this" class="tag-item">{{item}}</text>
+      </view>
+    </view>
+    <view class="external-actions">
+      <button class="btn-primary" bindtap="onOpenExternal">打开 {{sourceLabels[video.source] || '外部'}} 视频</button>
+      <button class="btn-secondary" bindtap="onCopyLink">复制链接</button>
+    </view>
+    <view class="external-tip">
+      <text class="tip-text">ℹ️ 小程序不支持直接播放{{sourceLabels[video.source] || '外部'}}视频，点击上方按钮复制链接后在浏览器打开。</text>
+    </view>
+    <view wx:if="{{relatedVideos.length > 0}}" class="related-section">
+      <text class="related-title">相关推荐</text>
+      <view class="related-list">
+        <view wx:for="{{relatedVideos}}" wx:key="id" class="related-item" bindtap="onRelatedVideo" data-video="{{item}}">
+          <image wx:if="{{item.cover}}" class="related-cover" src="{{item.cover}}" mode="aspectFill" />
+          <view wx:else class="related-cover related-cover-placeholder"><text>{{item.dishName}}</text></view>
+          <view class="related-info">
+            <text class="related-name">{{item.title}}</text>
+            <text class="related-author">{{item.author || ''}} · {{item.duration || ''}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+
 </view>

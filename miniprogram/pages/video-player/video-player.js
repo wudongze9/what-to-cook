@@ -1,53 +1,159 @@
-const { getVideoDetail } = require('../../utils/api')
+const { getDishVideoDetail, getDishVideos } = require('../../utils/api')
+
+// 来源平台中文标签
+const SOURCE_LABELS = {
+  bilibili: 'B站',
+  douyin: '抖音',
+  xiaohongshu: '小红书',
+  youtube: 'YouTube',
+  other: '其他'
+}
 
 Page({
   data: {
+    // list | playable | external | empty
+    mode: 'list',
+    dishId: null,
+    dishName: '',
+    videoList: [],
     video: null,
-    relatedVideos: []
+    videoPoster: '',
+    relatedVideos: [],
+    sourceLabels: SOURCE_LABELS
   },
 
   async onLoad(options) {
-    const videoId = options.videoId
+    if (options.videoId) {
+      await this._loadVideoDetail(options.videoId)
+      return
+    }
+    if (options.dishId) {
+      const dishId = parseInt(options.dishId, 10)
+      this.setData({ dishId })
+      await this._loadDishVideos(dishId, options.dishName || '')
+      return
+    }
+    this._showError('参数缺失')
+  },
 
-    if (videoId) {
-      const data = await getVideoDetail(videoId)
+  async _loadVideoDetail(videoId) {
+    wx.showLoading({ title: '加载中' })
+    try {
+      const data = await getDishVideoDetail(videoId)
+      wx.hideLoading()
       if (data && data.video) {
-        this.setData({
-          video: data.video,
-          relatedVideos: data.related || []
-        })
-        wx.setNavigationBarTitle({ title: data.video.title })
+        this._renderSingleVideo(data.video, data.related || [])
       } else {
-        this._showError()
+        this._showError('视频不存在')
       }
-    } else {
-      this._showError()
+    } catch (err) {
+      wx.hideLoading()
+      this._showError('加载失败')
     }
   },
 
-  /**
-   * 视频播放错误
-   */
+  async _loadDishVideos(dishId, dishName) {
+    wx.showLoading({ title: '加载中' })
+    try {
+      const videos = await getDishVideos(dishId)
+      wx.hideLoading()
+      if (!videos || videos.length === 0) {
+        this.setData({ mode: 'empty', dishName, videoList: [] })
+        wx.setNavigationBarTitle({ title: dishName ? `${dishName}教学视频` : '教学视频' })
+        return
+      }
+      if (videos.length === 1) {
+        this._renderSingleVideo(videos[0], [])
+        return
+      }
+      this.setData({
+        mode: 'list',
+        dishName: dishName || videos[0].dishName || '',
+        videoList: videos
+      })
+      wx.setNavigationBarTitle({ title: (dishName || videos[0].dishName || '菜品') + '教学视频' })
+    } catch (err) {
+      wx.hideLoading()
+      this._showError('加载失败')
+    }
+  },
+
+  _renderSingleVideo(video, related) {
+    const playable = video.playableInMiniprogram && video.videoUrl
+    this.setData({
+      mode: playable ? 'playable' : 'external',
+      video,
+      videoPoster: this._getVideoPoster(video),
+      relatedVideos: related || []
+    })
+    wx.setNavigationBarTitle({ title: video.title || '视频播放' })
+  },
+
+  onSelectVideo(e) {
+    const video = e.currentTarget.dataset.video
+    if (!video) return
+    this._renderSingleVideo(video, [])
+  },
+
   onVideoError(e) {
     console.error('视频播放错误:', e.detail)
-    wx.showToast({
-      title: '视频加载失败，请检查网络',
-      icon: 'none'
+    wx.showToast({ title: '视频加载失败，请检查网络', icon: 'none' })
+  },
+
+  onOpenExternal() {
+    const url = this.data.video && this.data.video.externalUrl
+    if (!url) {
+      wx.showToast({ title: '暂无视频链接', icon: 'none' })
+      return
+    }
+    wx.setClipboardData({
+      data: url,
+      success: () => {
+        const source = this.data.video.source || 'other'
+        const label = SOURCE_LABELS[source] || '外部'
+        wx.showModal({
+          title: '链接已复制',
+          content: `已复制${label}视频链接，请打开浏览器粘贴访问。\n\n${url}`,
+          showCancel: false,
+          confirmText: '我知道了'
+        })
+      }
     })
   },
 
-  /**
-   * 查看相关视频
-   */
+  onCopyLink() {
+    const url = this.data.video && this.data.video.externalUrl
+    if (!url) {
+      wx.showToast({ title: '暂无视频链接', icon: 'none' })
+      return
+    }
+    wx.setClipboardData({
+      data: url,
+      success: () => wx.showToast({ title: '链接已复制', icon: 'success' })
+    })
+  },
+
   onRelatedVideo(e) {
     const video = e.currentTarget.dataset.video
-    wx.redirectTo({
-      url: `/pages/video-player/video-player?videoId=${video.id}`
-    })
+    if (!video) return
+    this._renderSingleVideo(video, [])
   },
 
-  _showError() {
-    wx.showToast({ title: '视频不存在', icon: 'none' })
+  onBackToList() {
+    if (this.data.videoList.length > 0) {
+      this.setData({ mode: 'list', video: null, relatedVideos: [] })
+    } else {
+      wx.navigateBack()
+    }
+  },
+
+  _getVideoPoster(video) {
+    const cover = video && video.cover ? video.cover : ''
+    return /^https?:\/\//.test(cover) ? cover : ''
+  },
+
+  _showError(msg) {
+    wx.showToast({ title: msg || '出错了', icon: 'none' })
     setTimeout(() => wx.navigateBack(), 1500)
   }
 })

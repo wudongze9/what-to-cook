@@ -390,3 +390,114 @@ def clear_user_history(user_id: int):
     """清空用户历史"""
     with get_conn() as conn:
         conn.execute("DELETE FROM user_history WHERE user_id = ?", (user_id,))
+
+
+# ==================== 菜品教学视频 ====================
+
+def _format_video(row: sqlite3.Row) -> dict:
+    """格式化视频行 → 前端友好字典"""
+    tags_raw = row["tags"] or "[]"
+    try:
+        tags = json.loads(tags_raw) if tags_raw.startswith("[") else []
+    except Exception:
+        tags = []
+    return {
+        "id": row["id"],
+        "dishId": row["dish_id"],
+        "dishName": row["dish_name"] or "",
+        "title": row["title"],
+        "category": row["category"] or "",
+        "tags": tags,
+        "cover": row["cover"] or "",
+        "duration": row["duration"] or "",
+        "source": row["source"] or "",
+        "author": row["author"] or "",
+        "externalUrl": row["external_url"] or "",
+        "videoUrl": row["video_url"] or "",
+        "playableInMiniprogram": bool(row["playable_in_miniprogram"]),
+        "description": row["description"] or "",
+    }
+
+
+def get_videos_by_dish(dish_id: int) -> list[dict]:
+    """按菜品 ID 查询所有教学视频（一菜多视频）"""
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT * FROM dish_videos WHERE dish_id = ? ORDER BY id",
+            (dish_id,)
+        ).fetchall()
+        return [_format_video(r) for r in rows]
+
+
+def get_video_by_id(video_id: str) -> dict | None:
+    """按视频条目 ID 查询单个视频"""
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT * FROM dish_videos WHERE id = ?",
+            (video_id,)
+        ).fetchone()
+        if not row:
+            return None
+        video = _format_video(row)
+        related = conn.execute(
+            "SELECT * FROM dish_videos WHERE dish_id != ? AND category = ? LIMIT 4",
+            (row["dish_id"], row["category"] or "")
+        ).fetchall()
+        return {"video": video, "related": [_format_video(r) for r in related], "source": "db"}
+
+
+def get_all_videos(category: str | None = None) -> list[dict]:
+    """获取所有视频（可按菜系筛选）"""
+    with get_conn() as conn:
+        if category and category not in ("全部", "all"):
+            rows = conn.execute(
+                "SELECT * FROM dish_videos WHERE category = ? ORDER BY dish_id",
+                (category,)
+            ).fetchall()
+        else:
+            rows = conn.execute(
+                "SELECT * FROM dish_videos ORDER BY dish_id"
+            ).fetchall()
+        return [_format_video(r) for r in rows]
+
+
+def get_video_sources() -> list[str]:
+    """获取所有视频来源平台"""
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT DISTINCT source FROM dish_videos WHERE source != '' ORDER BY source"
+        ).fetchall()
+        return [r["source"] for r in rows]
+
+
+def add_dish_video(data: dict) -> dict:
+    """新增一条菜品视频（管理员用）"""
+    vid = data.get("id") or f"v_{data['dish_id']}_{int(__import__('time').time())}"
+    tags = data.get("tags", [])
+    tags_json = json.dumps(tags, ensure_ascii=False) if tags else ""
+    with get_conn() as conn:
+        conn.execute("""
+            INSERT OR REPLACE INTO dish_videos
+                (id, dish_id, dish_name, title, category, tags, cover, duration,
+                 source, author, external_url, video_url, playable_in_miniprogram, description)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+        """, (
+            vid, data["dish_id"], data.get("dish_name", ""),
+            data["title"], data.get("category", ""), tags_json,
+            data.get("cover", ""), data.get("duration", ""),
+            data.get("source", ""), data.get("author", ""),
+            data.get("external_url", ""), data.get("video_url", ""),
+            1 if data.get("playable_in_miniprogram") else 0,
+            data.get("description", "")
+        ))
+    return get_video_by_id(vid)
+
+
+def delete_dish_video(video_id: str) -> bool:
+    """删除一条视频"""
+    with get_conn() as conn:
+        cursor = conn.execute(
+            "DELETE FROM dish_videos WHERE id = ?",
+            (video_id,)
+        )
+        return cursor.rowcount > 0

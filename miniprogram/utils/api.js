@@ -179,6 +179,65 @@ function getVideoDetail(videoId) {
   )
 }
 
+// ==================== 菜品教学视频（新版：一菜多视频，外链为主）====================
+
+/**
+ * 按菜品 ID 查询所有教学视频
+ * 后端：GET /videos/dish/{dish_id} → { dishId, videos, total }
+ * 降级：从 mock/dish-videos.js 查询
+ */
+function getDishVideos(dishId) {
+  const dishVideosMock = require('../mock/dish-videos')
+  return withFallback(
+    () => request(`/videos/dish/${dishId}`).then(r => r.videos),
+    () => dishVideosMock.getVideosByDish(dishId)
+  )
+}
+
+/**
+ * 获取所有菜品教学视频（管理/浏览用）
+ * 后端：GET /videos/all/list?category=xxx → { videos, total }
+ */
+function getAllDishVideos(category) {
+  const dishVideosMock = require('../mock/dish-videos')
+  return withFallback(
+    () => request(`/videos/all/list${!isAllCategory(category) ? `?category=${encodeURIComponent(category)}` : ''}`).then(r => r.videos),
+    () => dishVideosMock.getAllVideos(category)
+  )
+}
+
+/**
+ * 获取菜品视频详情（新版 dish_videos 表）
+ * 后端：GET /videos/{video_id} → { video, related, source }
+ * 降级：从 mock/dish-videos.js 查询并组装相关视频
+ */
+function getDishVideoDetail(videoId) {
+  const dishVideosMock = require('../mock/dish-videos')
+  return withFallback(
+    () => request(`/videos/${videoId}`),
+    () => {
+      const video = dishVideosMock.getVideoById(videoId)
+      if (!video) return { video: null, related: [], source: 'mock' }
+      const related = dishVideosMock.getAllVideos(video.category)
+        .filter(v => v.id !== videoId)
+        .slice(0, 4)
+      return { video, related, source: 'mock' }
+    }
+  )
+}
+
+/**
+ * 获取所有视频来源平台
+ * 后端：GET /videos/sources/list → { sources }
+ */
+function getDishVideoSources() {
+  const dishVideosMock = require('../mock/dish-videos')
+  return withFallback(
+    () => request('/videos/sources/list').then(r => r.sources),
+    () => dishVideosMock.getSources()
+  )
+}
+
 function sendChatMessage(message, context = []) {
   const { getAIReply } = require('../mock/ai-replies')
   return withFallback(

@@ -9,6 +9,7 @@ import sqlite3
 DB_PATH = os.path.join(os.path.dirname(__file__), 'whattocook.db')
 DATA_PATH = os.path.join(os.path.dirname(__file__), 'app', 'data', 'dishes-data.json')
 SCHEMA_PATH = os.path.join(os.path.dirname(__file__), 'app', 'data', 'schema.sql')
+VIDEOS_PATH = os.path.join(os.path.dirname(__file__), 'app', 'data', 'dish-videos.json')
 
 
 def _norm_ingredients(raw):
@@ -139,6 +140,40 @@ def migrate():
 
     print(f"✅ 菜品：{len(dishes)} 道")
 
+    # ⑦ 导入菜品教学视频（dish-videos.json → dish_videos 表）
+    video_count = 0
+    if os.path.exists(VIDEOS_PATH):
+        with open(VIDEOS_PATH, 'r', encoding='utf-8') as f:
+            video_data = json.load(f)
+        videos = video_data.get('videos', [])
+        # 菜品 ID 集合，用于校验 dish_id 是否存在
+        dish_id_set = {row[0] for row in conn.execute("SELECT id FROM dishes").fetchall()}
+        for v in videos:
+            dish_id = v.get('dish_id', 0)
+            if dish_id not in dish_id_set:
+                print(f"⚠️  跳过视频 {v.get('id', '?')}：dish_id={dish_id} 不存在")
+                continue
+            tags_list = v.get('tags', [])
+            tags_json = json.dumps(tags_list, ensure_ascii=False) if tags_list else ''
+            conn.execute("""
+                INSERT OR REPLACE INTO dish_videos
+                    (id, dish_id, dish_name, title, category, tags, cover, duration,
+                     source, author, external_url, video_url, playable_in_miniprogram, description)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+            """, (
+                v['id'], dish_id, v.get('dish_name', ''),
+                v['title'], v.get('category', ''), tags_json,
+                v.get('cover', ''), v.get('duration', ''),
+                v.get('source', ''), v.get('author', ''),
+                v.get('external_url', ''), v.get('video_url', ''),
+                1 if v.get('playable_in_miniprogram') else 0,
+                v.get('description', '')
+            ))
+            video_count += 1
+        print(f"✅ 菜品教学视频：{video_count} 条")
+    else:
+        print("ℹ️  未找到 dish-videos.json，跳过视频导入")
+
     conn.commit()
 
     # 验证
@@ -151,6 +186,8 @@ def migrate():
     has_tags = conn.execute("SELECT COUNT(*) FROM dishes WHERE tags != ''").fetchone()[0]
     has_cover = conn.execute("SELECT COUNT(*) FROM dishes WHERE cover != ''").fetchone()[0]
     has_amount = conn.execute("SELECT COUNT(*) FROM dish_ingredients WHERE amount != ''").fetchone()[0]
+    count_videos = conn.execute("SELECT COUNT(*) FROM dish_videos").fetchone()[0]
+    dishes_with_video = conn.execute("SELECT COUNT(DISTINCT dish_id) FROM dish_videos").fetchone()[0]
 
     conn.close()
     print(f"\n📊 数据库验证：")
@@ -158,6 +195,7 @@ def migrate():
     print(f"   食材：{count_ings} 种")
     print(f"   菜品-食材关联：{count_di} 条（其中 {has_amount} 条含用量）")
     print(f"   步骤：{count_steps} 步")
+    print(f"   教学视频：{count_videos} 条，覆盖 {dishes_with_video} 道菜")
     print(f"   菜系字段已填：{has_cuisine}/{count_dishes}")
     print(f"   标签字段已填：{has_tags}/{count_dishes}")
     print(f"   封面字段已填：{has_cover}/{count_dishes}")
