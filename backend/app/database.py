@@ -262,7 +262,9 @@ def pick_random_ingredients(count=3, ingredient_type='all'):
     with get_conn() as conn:
         if not ingredient_type or ingredient_type == 'all':
             rows = conn.execute("""
-                SELECT name, emoji, type_key as type, icon FROM ingredients
+                SELECT i.name, i.emoji, t.key as type_key, i.icon
+                FROM ingredients i
+                LEFT JOIN ingredient_types t ON i.type_id = t.id
                 ORDER BY RANDOM() LIMIT ?
             """, (count,)).fetchall()
         else:
