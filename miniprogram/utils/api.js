@@ -122,16 +122,21 @@ function getDishList(category) {
 }
 
 function getVideoList(category) {
-  const { videos } = require('../mock/videos')
+  const dishVideosMock = require('../mock/dish-videos')
   return withFallback(
-    () => request(`/videos${!isAllCategory(category) ? `?category=${encodeURIComponent(category)}` : ''}`),
-    () => {
-      const result = !isAllCategory(category)
-        ? videos.filter(v => videoMatchesCategory(v, category))
-        : videos
+    () => request(`/videos/all/list${!isAllCategory(category) ? `?category=${encodeURIComponent(category)}` : ''}`).then(r => {
+      const videos = r.videos || []
       return {
-        featured: result.find(v => v.isFeatured) || null,
-        videos: result.filter(v => !v.isFeatured),
+        featured: videos[0] || null,
+        videos: videos.slice(1),
+        total: videos.length
+      }
+    }),
+    () => {
+      const result = dishVideosMock.getAllVideos(category)
+      return {
+        featured: result[0] || null,
+        videos: result.slice(1),
         total: result.length
       }
     }
@@ -419,6 +424,10 @@ module.exports = {
   getVideoList,
   getVideoCategories,
   getVideoDetail,
+  getDishVideos,
+  getAllDishVideos,
+  getDishVideoDetail,
+  getDishVideoSources,
   sendChatMessage,
   getQuickQuestions,
   getCuisineTypes,

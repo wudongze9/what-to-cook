@@ -193,7 +193,26 @@ def generate():
     js_lines.append(' * - description: 视频简介')
     js_lines.append(' */')
     js_lines.append('')
-    js_lines.append('const dishVideos = ' + json.dumps(videos, ensure_ascii=False, indent=2))
+    frontend_videos = []
+    for v in videos:
+        frontend_videos.append({
+            'id': v['id'],
+            'dishId': v['dish_id'],
+            'dishName': v['dish_name'],
+            'title': v['title'],
+            'category': v.get('category', ''),
+            'tags': v.get('tags', []),
+            'cover': v.get('cover', ''),
+            'duration': v.get('duration', ''),
+            'source': v.get('source', ''),
+            'author': v.get('author', ''),
+            'externalUrl': v.get('external_url', ''),
+            'videoUrl': v.get('video_url', ''),
+            'playableInMiniprogram': bool(v.get('playable_in_miniprogram')),
+            'description': v.get('description', ''),
+        })
+
+    js_lines.append('const dishVideos = ' + json.dumps(frontend_videos, ensure_ascii=False, indent=2))
     js_lines.append('')
     js_lines.append('/**')
     js_lines.append(' * 按菜品 ID 查询所有教学视频')

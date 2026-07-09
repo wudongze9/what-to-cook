@@ -210,8 +210,10 @@ Page({
    */
   onWatchVideo() {
     const dish = this.data.dish
-    if (dish && dish.videoId) {
-      wx.navigateTo({ url: `/pages/video-player/video-player?videoId=${dish.videoId}` })
+    if (dish && dish.id) {
+      wx.navigateTo({
+        url: `/pages/video-player/video-player?dishId=${dish.id}&dishName=${encodeURIComponent(dish.name || '')}`
+      })
       return
     }
     wx.switchTab({ url: '/pages/videos/videos' })

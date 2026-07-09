@@ -5,6 +5,8 @@ function normalizeVideo(video) {
   const result = Object.assign({}, video)
   result.cover = video.cover || '/images/video-cover-food.svg'
   result.chefAvatar = video.chefAvatar || '/images/icons/chef.svg'
+  result.chef = video.chef || video.author || '教学视频'
+  result.views = video.views || (video.source ? video.source : '外部链接')
   return result
 }
 

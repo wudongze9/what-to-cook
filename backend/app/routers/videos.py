@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Query, Depends, HTTPException
+from fastapi import APIRouter, Query, Depends, HTTPException, Body
 from app.data.videos import videos as legacy_videos, video_categories
 from app.database import (
     get_videos_by_dish, get_video_by_id, get_all_videos,
@@ -36,7 +36,7 @@ async def get_dish_videos(dish_id: int):
 
 
 @router.post("/admin/add")
-async def admin_add_video(data: dict = Depends(require_admin)):
+async def admin_add_video(data: dict = Body(...), user: dict = Depends(require_admin)):
     """管理员新增视频"""
     if not data.get("dish_id") or not data.get("title"):
         raise HTTPException(status_code=400, detail="dish_id 和 title 必填")
@@ -44,7 +44,7 @@ async def admin_add_video(data: dict = Depends(require_admin)):
 
 
 @router.delete("/admin/{video_id}")
-async def admin_delete_video(video_id: str = Depends(require_admin)):
+async def admin_delete_video(video_id: str, user: dict = Depends(require_admin)):
     """管理员删除视频"""
     ok = delete_dish_video(video_id)
     if not ok:
