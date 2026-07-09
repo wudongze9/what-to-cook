@@ -1,0 +1,32 @@
+.webview-page {
+  width: 100vw;
+  min-height: 100vh;
+  background: #fff9f3;
+}
+
+.webview-empty {
+  min-height: 100vh;
+  padding: 160rpx 48rpx 48rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32rpx;
+}
+
+.empty-title {
+  color: #2f1647;
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.copy-btn {
+  width: 360rpx;
+  height: 88rpx;
+  border-radius: 44rpx;
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ff4b68 0%, #ff7a1a 100%);
+  box-shadow: 0 18rpx 36rpx rgba(255, 103, 45, 0.24);
+}

@@ -1,11 +1,12 @@
 from fastapi import APIRouter, Request
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel
 from typing import Optional
 from app.models.schemas import ChatRequest, ChatResponse
-from app.services.ai_chat import call_ai_api
+from app.services.ai_chat import call_ai_api, stream_ai_reply
 from app.services.tts_service import synthesize_speech, AUDIO_DIR
 import os
+import json
 import logging
 
 logger = logging.getLogger(__name__)
@@ -17,6 +18,38 @@ async def chat(req: ChatRequest):
     """AI 数字人问答 - 调用本地 Ollama qwen3.5"""
     reply = await call_ai_api(req.message, req.context)
     return ChatResponse(reply=reply)
+
+
+@router.post("/stream")
+async def chat_stream(req: ChatRequest):
+    """AI 问答流式接口 - NDJSON events for Mini Program chunk parsing."""
+
+    def encode_event(event_type: str, **payload):
+        data = {"type": event_type, **payload}
+        return json.dumps(data, ensure_ascii=True) + "\n"
+
+    async def event_generator():
+        full_text = ""
+        try:
+            yield encode_event("start")
+            async for chunk in stream_ai_reply(req.message, req.context):
+                if not chunk:
+                    continue
+                full_text += chunk
+                yield encode_event("delta", text=chunk)
+            yield encode_event("done", text=full_text)
+        except Exception as exc:
+            logger.exception("chat stream failed")
+            yield encode_event("error", message=str(exc))
+
+    return StreamingResponse(
+        event_generator(),
+        media_type="application/x-ndjson",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",
+        },
+    )
 
 
 @router.get("/quick-questions")

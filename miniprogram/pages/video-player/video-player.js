@@ -1,12 +1,11 @@
 const { getDishVideoDetail, getDishVideos } = require('../../utils/api')
 
-// 来源平台中文标签
 const SOURCE_LABELS = {
   bilibili: 'B站',
   douyin: '抖音',
   xiaohongshu: '小红书',
   youtube: 'YouTube',
-  other: '其他'
+  other: '外部'
 }
 
 Page({
@@ -27,12 +26,14 @@ Page({
       await this._loadVideoDetail(options.videoId)
       return
     }
+
     if (options.dishId) {
       const dishId = parseInt(options.dishId, 10)
       this.setData({ dishId })
       await this._loadDishVideos(dishId, options.dishName || '')
       return
     }
+
     this._showError('参数缺失')
   },
 
@@ -41,11 +42,13 @@ Page({
     try {
       const data = await getDishVideoDetail(videoId)
       wx.hideLoading()
+
       if (data && data.video) {
         this._renderSingleVideo(data.video, data.related || [])
-      } else {
-        this._showError('视频不存在')
+        return
       }
+
+      this._showError('视频不存在')
     } catch (err) {
       wx.hideLoading()
       this._showError('加载失败')
@@ -57,15 +60,18 @@ Page({
     try {
       const videos = await getDishVideos(dishId)
       wx.hideLoading()
+
       if (!videos || videos.length === 0) {
         this.setData({ mode: 'empty', dishName, videoList: [] })
         wx.setNavigationBarTitle({ title: dishName ? `${dishName}教学视频` : '教学视频' })
         return
       }
+
       if (videos.length === 1) {
         this._renderSingleVideo(videos[0], [])
         return
       }
+
       this.setData({
         mode: 'list',
         dishName: dishName || videos[0].dishName || '',
@@ -106,18 +112,11 @@ Page({
       wx.showToast({ title: '暂无视频链接', icon: 'none' })
       return
     }
-    wx.setClipboardData({
-      data: url,
-      success: () => {
-        const source = this.data.video.source || 'other'
-        const label = SOURCE_LABELS[source] || '外部'
-        wx.showModal({
-          title: '链接已复制',
-          content: `已复制${label}视频链接，请打开浏览器粘贴访问。\n\n${url}`,
-          showCancel: false,
-          confirmText: '我知道了'
-        })
-      }
+
+    const title = this.data.video.title || '教学视频'
+    wx.navigateTo({
+      url: `/pages/webview/webview?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`,
+      fail: () => this._copyExternalLink(url, true)
     })
   },
 
@@ -127,9 +126,24 @@ Page({
       wx.showToast({ title: '暂无视频链接', icon: 'none' })
       return
     }
+    this._copyExternalLink(url)
+  },
+
+  _copyExternalLink(url, showModal) {
     wx.setClipboardData({
       data: url,
-      success: () => wx.showToast({ title: '链接已复制', icon: 'success' })
+      success: () => {
+        if (showModal) {
+          wx.showModal({
+            title: '无法直接打开',
+            content: `已为你复制视频链接，请粘贴到浏览器访问。\n\n${url}`,
+            showCancel: false,
+            confirmText: '我知道了'
+          })
+          return
+        }
+        wx.showToast({ title: '链接已复制', icon: 'success' })
+      }
     })
   },
 

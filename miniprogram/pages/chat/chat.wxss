@@ -406,6 +406,20 @@
   color: #a78a96;
 }
 
+/* 实时识别结果显示 */
+.recording-result {
+  font-size: 28rpx;
+  color: #ff7a1a;
+  font-weight: 600;
+  max-width: 460rpx;
+  text-align: center;
+  line-height: 1.5;
+  padding: 12rpx 20rpx;
+  background: #fff7ed;
+  border-radius: 16rpx;
+  border: 1rpx solid rgba(255, 122, 26, 0.2);
+}
+
 /* Reference replica polish */
 .page-chat {
   height: 100vh;
@@ -585,4 +599,465 @@
 
 .send-btn.active {
   box-shadow: 0 14rpx 28rpx rgba(255, 90, 31, 0.26);
+}
+
+/* ==================== Recipe ask upgrade ==================== */
+
+.page-chat {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 278rpx);
+}
+
+.ai-actions {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  margin-top: 18rpx;
+}
+
+.ask-recipe-btn,
+.mini-action-btn,
+.send-text-btn {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  line-height: 1;
+}
+
+.ask-recipe-btn::after,
+.mini-action-btn::after,
+.send-text-btn::after {
+  border: 0;
+}
+
+.ask-recipe-btn {
+  height: 64rpx;
+  min-width: 244rpx;
+  padding: 0 22rpx;
+  border-radius: 999rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  color: #ffffff;
+  font-size: 25rpx;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ff3d6e 0%, #ff7a1a 100%);
+  box-shadow: 0 14rpx 28rpx rgba(255, 90, 31, 0.24);
+}
+
+.ask-recipe-icon {
+  width: 34rpx;
+  height: 34rpx;
+  filter: brightness(0) invert(1);
+}
+
+.mini-action-btn {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff7ef;
+  border: 1rpx solid rgba(255, 215, 194, 0.96);
+}
+
+.mini-action-icon {
+  width: 34rpx;
+  height: 34rpx;
+}
+
+.recipe-ask-card {
+  margin: 0 24rpx 22rpx;
+  padding: 22rpx;
+  border-radius: 32rpx;
+  background: rgba(255, 255, 255, 0.92);
+  border: 2rpx solid rgba(255, 215, 194, 0.9);
+  box-shadow: 0 14rpx 34rpx rgba(91, 43, 111, 0.08);
+}
+
+.recipe-ask-head {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  margin-bottom: 18rpx;
+}
+
+.recipe-ask-icon {
+  width: 54rpx;
+  height: 54rpx;
+  padding: 12rpx;
+  border-radius: 20rpx;
+  background: #fff7ef;
+  box-shadow: 0 8rpx 18rpx rgba(255, 107, 26, 0.10);
+}
+
+.recipe-ask-title {
+  display: block;
+  color: #32163f;
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.recipe-ask-desc {
+  display: block;
+  margin-top: 4rpx;
+  color: #8c7488;
+  font-size: 23rpx;
+  line-height: 1.35;
+}
+
+.recipe-prompt-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12rpx;
+}
+
+.recipe-prompt {
+  min-width: 0;
+  min-height: 104rpx;
+  padding: 14rpx 8rpx;
+  border-radius: 24rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  background: linear-gradient(180deg, #fffaf6 0%, #ffffff 100%);
+  border: 1rpx solid rgba(255, 195, 160, 0.94);
+  color: #32163f;
+  font-size: 23rpx;
+  font-weight: 850;
+  box-sizing: border-box;
+}
+
+.recipe-prompt-icon {
+  width: 42rpx;
+  height: 42rpx;
+}
+
+.chat-bottom-spacer {
+  height: 250rpx;
+}
+
+.quick-questions {
+  position: fixed;
+  left: 24rpx;
+  right: 24rpx;
+  bottom: calc(env(safe-area-inset-bottom) + 224rpx);
+  z-index: 30;
+  padding: 0;
+  pointer-events: none;
+}
+
+.quick-label,
+.quick-scroll {
+  pointer-events: auto;
+}
+
+.quick-label {
+  margin-left: 10rpx;
+  margin-bottom: 8rpx;
+  color: #8c7488;
+}
+
+.quick-scroll {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.quick-list {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  gap: 12rpx;
+  padding: 0 2rpx;
+}
+
+.quick-item {
+  flex: 0 0 auto;
+  max-width: 260rpx;
+}
+
+.input-area {
+  position: fixed;
+  left: 24rpx;
+  right: 24rpx;
+  bottom: calc(env(safe-area-inset-bottom) + 118rpx);
+  z-index: 40;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.input-row {
+  gap: 10rpx;
+}
+
+.message-input {
+  min-width: 0;
+  padding: 0 22rpx;
+  font-size: 27rpx;
+}
+
+.send-text-btn {
+  width: 126rpx;
+  height: 82rpx;
+  border-radius: 26rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a78a96;
+  background: #fff7ef;
+  font-size: 26rpx;
+  font-weight: 900;
+}
+
+.send-text-btn.active {
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff3d6e 0%, #ff7a1a 100%);
+  box-shadow: 0 14rpx 28rpx rgba(255, 90, 31, 0.26);
+}
+
+.send-text-btn.disabled {
+  color: #c7b8c2;
+  background: #fff7ef;
+  opacity: 1;
+}
+
+@media (max-width: 360px) {
+  .recipe-prompt-list {
+    grid-template-columns: 1fr;
+  }
+
+  .recipe-prompt {
+    min-height: 78rpx;
+    flex-direction: row;
+  }
+
+  .ask-recipe-btn {
+    min-width: 216rpx;
+    font-size: 23rpx;
+  }
+
+  .send-text-btn {
+    width: 108rpx;
+    font-size: 24rpx;
+  }
+}
+
+/* Cohesive Q&A polish */
+.page-chat {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 226rpx);
+  background:
+    radial-gradient(circle at 18% 4%, rgba(255, 122, 26, 0.10), transparent 260rpx),
+    linear-gradient(180deg, #fffaf5 0%, #fff7ef 46%, #fffdfb 100%);
+}
+
+.ai-header {
+  margin: 18rpx 24rpx 16rpx;
+  padding: 28rpx 30rpx;
+  border-radius: 32rpx;
+  border: 1rpx solid rgba(255, 214, 185, 0.82);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 14rpx 36rpx rgba(91, 43, 111, 0.08);
+}
+
+.ai-header-pot {
+  right: -88rpx;
+  bottom: -110rpx;
+  opacity: 0.07;
+}
+
+.ai-header-leaf {
+  right: 126rpx;
+  top: 26rpx;
+  width: 34rpx;
+  height: 34rpx;
+  opacity: 0.62;
+}
+
+.ai-profile {
+  align-items: flex-start;
+  gap: 22rpx;
+}
+
+.ai-avatar-wrap,
+.ai-avatar {
+  width: 96rpx;
+  height: 96rpx;
+}
+
+.ai-avatar {
+  box-shadow: 0 12rpx 26rpx rgba(255, 107, 26, 0.13);
+}
+
+.ai-name {
+  font-size: 34rpx;
+  line-height: 1.2;
+}
+
+.online-pill {
+  height: 36rpx;
+  padding: 0 14rpx;
+  font-size: 21rpx;
+}
+
+.ai-subtitle {
+  margin-top: 8rpx;
+  color: #6f5a6f;
+  font-size: 25rpx;
+  line-height: 1.48;
+}
+
+.ai-actions {
+  margin-top: 16rpx;
+}
+
+.ask-recipe-btn {
+  height: 60rpx;
+  min-width: 224rpx;
+  font-size: 24rpx;
+  box-shadow: 0 10rpx 22rpx rgba(255, 90, 31, 0.20);
+}
+
+.mini-action-btn {
+  height: 60rpx;
+  width: 96rpx;
+  border-radius: 24rpx;
+}
+
+.chat-messages {
+  padding-top: 0;
+}
+
+.recipe-ask-card {
+  margin: 0 24rpx 18rpx;
+  padding: 22rpx;
+  border-radius: 28rpx;
+  background: #ffffff;
+  border: 1rpx solid rgba(255, 190, 150, 0.78);
+  box-shadow: 0 10rpx 28rpx rgba(91, 43, 111, 0.06);
+}
+
+.recipe-ask-head {
+  align-items: flex-start;
+  margin-bottom: 16rpx;
+}
+
+.recipe-ask-icon {
+  width: 48rpx;
+  height: 48rpx;
+  padding: 10rpx;
+  border-radius: 18rpx;
+  background: #fff7ef;
+  box-shadow: none;
+}
+
+.recipe-ask-title {
+  font-size: 28rpx;
+}
+
+.recipe-ask-desc {
+  color: #806a7c;
+  font-size: 22rpx;
+}
+
+.recipe-prompt-list {
+  gap: 10rpx;
+}
+
+.recipe-prompt {
+  min-height: 96rpx;
+  border-radius: 20rpx;
+  background: #fffaf6;
+  box-shadow: none;
+  font-size: 22rpx;
+}
+
+.recipe-prompt-icon {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.msg-row {
+  margin-bottom: 4rpx;
+}
+
+.msg-tts-row {
+  min-height: 52rpx;
+  margin: -12rpx 0 16rpx 112rpx;
+  background: #fff7ef;
+  box-shadow: none;
+}
+
+.quick-questions {
+  bottom: calc(env(safe-area-inset-bottom) + 204rpx);
+}
+
+.quick-label {
+  color: #735f72;
+  font-size: 22rpx;
+}
+
+.quick-item {
+  min-height: 54rpx;
+  border-color: rgba(255, 199, 166, 0.86);
+  background: #ffffff;
+  color: #5b2b6f;
+  box-shadow: 0 6rpx 16rpx rgba(91, 43, 111, 0.05);
+}
+
+.input-area {
+  bottom: calc(env(safe-area-inset-bottom) + 104rpx);
+  padding: 10rpx;
+  border-radius: 28rpx;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 12rpx 32rpx rgba(91, 43, 111, 0.10);
+}
+
+.message-input,
+.action-btn,
+.send-text-btn {
+  height: 76rpx;
+  border-radius: 24rpx;
+}
+
+.message-input {
+  background: #fff8f2;
+  font-size: 25rpx;
+}
+
+.action-btn {
+  width: 76rpx;
+  background: #fff8f2;
+}
+
+.send-text-btn {
+  width: 116rpx;
+  font-size: 24rpx;
+}
+
+.send-text-btn.active {
+  box-shadow: 0 10rpx 22rpx rgba(255, 90, 31, 0.22);
+}
+
+.chat-bottom-spacer {
+  height: 224rpx;
+}
+
+/* Bottom stack clearance: custom tab bar is 118rpx plus shell padding. */
+.page-chat {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 340rpx);
+}
+
+.input-area {
+  bottom: calc(env(safe-area-inset-bottom) + 154rpx);
+  z-index: 80;
+}
+
+.quick-questions {
+  bottom: calc(env(safe-area-inset-bottom) + 268rpx);
+}
+
+.chat-bottom-spacer {
+  height: 334rpx;
 }

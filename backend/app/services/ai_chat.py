@@ -39,6 +39,19 @@ def _build_dish_summary():
     return "、".join(names)
 
 
+def _build_messages(user_message: str, context: list[dict] = None) -> list[dict]:
+    """Build the prompt messages shared by normal and streaming chat calls."""
+    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+    if context:
+        for msg in context[-6:]:
+            role = msg.get("role", "user")
+            content = msg.get("content", "")
+            if role in ("user", "assistant") and content:
+                messages.append({"role": role, "content": content})
+    messages.append({"role": "user", "content": user_message})
+    return messages
+
+
 # ==================== 本地降级回复（Ollama 不可用时）====================
 
 reply_rules = [
@@ -112,20 +125,9 @@ async def call_ai_api(user_message: str, context: list[dict] = None) -> str:
         logger.warning("httpx 未安装，降级到本地匹配")
         return get_ai_reply(user_message)
 
-    # 构建消息列表
-    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
-    if context:
-        # 取最近 6 条上下文
-        for msg in context[-6:]:
-            role = msg.get("role", "user")
-            content = msg.get("content", "")
-            if role in ("user", "assistant") and content:
-                messages.append({"role": role, "content": content})
-    messages.append({"role": "user", "content": user_message})
-
     payload = {
         "model": OLLAMA_MODEL,
-        "messages": messages,
+        "messages": _build_messages(user_message, context),
         "stream": False,
         "think": False,  # 关闭 qwen3.5 思考模式，直接返回 content
         "options": {
@@ -147,3 +149,49 @@ async def call_ai_api(user_message: str, context: list[dict] = None) -> str:
     except Exception as e:
         logger.warning(f"Ollama 调用失败：{e}，降级到本地匹配")
         return get_ai_reply(user_message)
+
+
+def _split_reply(text: str, size: int = 8):
+    """Split fallback replies so the UI still feels streamed."""
+    for i in range(0, len(text), size):
+        yield text[i:i + size]
+
+
+async def stream_ai_reply(user_message: str, context: list[dict] = None):
+    """Yield reply text chunks from Ollama. Falls back to local chunks on failure."""
+    try:
+        import httpx
+    except ImportError:
+        logger.warning("httpx 未安装，流式降级到本地匹配")
+        for chunk in _split_reply(get_ai_reply(user_message)):
+            yield chunk
+        return
+
+    payload = {
+        "model": OLLAMA_MODEL,
+        "messages": _build_messages(user_message, context),
+        "stream": True,
+        "think": False,
+        "options": {
+            "temperature": 0.7,
+            "num_predict": 400,
+        }
+    }
+
+    try:
+        async with httpx.AsyncClient(timeout=OLLAMA_TIMEOUT, trust_env=False) as client:
+            async with client.stream("POST", OLLAMA_URL, json=payload) as resp:
+                resp.raise_for_status()
+                async for line in resp.aiter_lines():
+                    if not line:
+                        continue
+                    data = json.loads(line)
+                    content = data.get("message", {}).get("content", "")
+                    if content:
+                        yield content
+                    if data.get("done"):
+                        break
+    except Exception as e:
+        logger.warning(f"Ollama 流式调用失败：{e}，降级到本地匹配")
+        for chunk in _split_reply(get_ai_reply(user_message)):
+            yield chunk

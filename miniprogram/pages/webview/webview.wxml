@@ -1,0 +1,7 @@
+<view class="webview-page">
+  <web-view wx:if="{{url}}" src="{{url}}" bindmessage="onMessage" />
+  <view wx:else class="webview-empty">
+    <text class="empty-title">视频链接不可用</text>
+    <button class="copy-btn" bindtap="onCopyLink">复制链接</button>
+  </view>
+</view>

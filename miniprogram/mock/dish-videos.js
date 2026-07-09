@@ -2060,17 +2060,40 @@ const dishVideos = [
   }
 ]
 
+function normalizeVideo(video) {
+  return {
+    id: video.id,
+    dishId: video.dishId || video.dish_id,
+    dishName: video.dishName || video.dish_name || '',
+    title: video.title || '',
+    category: video.category || '',
+    tags: video.tags || [],
+    cover: video.cover || '',
+    duration: video.duration || '',
+    source: video.source || '',
+    author: video.author || '',
+    externalUrl: video.externalUrl || video.external_url || '',
+    videoUrl: video.videoUrl || video.video_url || '',
+    playableInMiniprogram: Boolean(video.playableInMiniprogram || video.playable_in_miniprogram),
+    description: video.description || '',
+    playCount: video.playCount || video.play_count || 0
+  }
+}
+
+const normalizedDishVideos = dishVideos.map(normalizeVideo)
+
 function getVideosByDish(dishId) {
-  return dishVideos.filter(v => v.dishId === dishId)
+  const id = Number(dishId)
+  return normalizedDishVideos.filter(v => Number(v.dishId) === id)
 }
 
 function getVideoById(videoId) {
-  return dishVideos.find(v => v.id === videoId) || null
+  return normalizedDishVideos.find(v => v.id === videoId) || null
 }
 
 function getAllVideos(category) {
-  if (!category || category === '全部' || category === 'all') return dishVideos
-  return dishVideos.filter(v => v.category === category)
+  if (!category || category === '全部' || category === 'all') return normalizedDishVideos
+  return normalizedDishVideos.filter(v => v.category === category)
 }
 
 function getSources() {
@@ -2079,5 +2102,5 @@ function getSources() {
 }
 
 module.exports = {
-  dishVideos, getVideosByDish, getVideoById, getAllVideos, getSources
+  dishVideos: normalizedDishVideos, getVideosByDish, getVideoById, getAllVideos, getSources
 }

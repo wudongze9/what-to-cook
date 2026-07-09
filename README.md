@@ -14,7 +14,7 @@
 | 🎯 四维筛选 | 食材个数（2/3/4）× 食材种类 × 菜系（17 种）× 口味（8 档）任意组合 |
 | 📋 做菜步骤 | 时间线式分步指导，支持食材勾选清单和进度追踪 |
 | 🎬 视频教学 | 一菜多视频，100 道菜全覆盖；外链跳转（B站/抖音/小红书）+ 可播放 mp4 双模式 |
-| 🤖 AI 数字人问答 | 本地 Ollama qwen3.5 大模型 + 长按语音输入 + TTS 语音播报 + 数字人动效 |
+| 🤖 AI 数字人问答 | 本地 Ollama qwen3.5 大模型 + 流式响应 + 微信 WechatSI 语音识别 + TTS 语音播报 + 数字人动效 |
 | 👤 用户系统 | 账号密码注册登录 + 微信一键登录，JWT 鉴权 |
 | 🛡️ 后台用户管理 | 管理员可在小程序内管理用户（列表/搜索/禁用/删除/重置密码） |
 | ❤️ 收藏与历史 | 登录后云端同步，未登录本地存储 |
@@ -30,9 +30,11 @@
 WXML + WXSS + JavaScript (ES6+)
 自定义 Component / 自定义 TabBar
 wx.request 网络请求（自动注入 JWT Authorization 头）
+wx.request enableChunked 流式响应（AI 问答逐字输出）
 wx.getStorageSync 本地存储
-wx.getRecorderManager 长按录音
+WechatSI 插件语音识别（wx069ba97219f66d99，中文 ASR）
 wx.createInnerAudioContext TTS 音频播放
+web-view 组件承载外部教学视频
 CSS Variables 设计系统 + 纯 CSS 数字人动效
 ```
 
@@ -46,8 +48,9 @@ JWT 认证（PyJWT + bcrypt 密码哈希）
 CORS 跨域支持
 SQLite 数据库（10 张表）
 edge-tts 微软免费语音合成
-Ollama 本地大模型集成（qwen3.5:0.8b）
+Ollama 本地大模型集成（qwen3.5:0.8b，支持流式响应）
 httpx 异步 HTTP 客户端（trust_env=False 绕过代理）
+NDJSON 流式协议（每行一个 JSON 事件）
 ```
 
 ### 数据
@@ -68,16 +71,17 @@ httpx 异步 HTTP 客户端（trust_env=False 绕过代理）
 what-to-cook/
 ├── miniprogram/                    # 微信小程序前端
 │   ├── app.js                      # 全局入口，初始化登录态恢复
-│   ├── app.json                    # 页面路由、窗口、TabBar 配置（9 个页面）
+│   ├── app.json                    # 页面路由、窗口、TabBar、WechatSI 插件配置（10 个页面）
 │   ├── app.wxss                    # 全局样式与设计系统（CSS 变量）
 │   │
-│   ├── pages/                      # 9 个页面
+│   ├── pages/                      # 10 个页面
 │   │   ├── index/                  # 首页：摇杆机 + 配置面板 + 登录引导
 │   │   ├── result/                 # 结果页：菜品详情 + 食材组合 + 可替换食材
 │   │   ├── steps/                  # 步骤页：时间线 + 食材清单
 │   │   ├── videos/                 # 视频列表页
-│   │   ├── video-player/           # 视频播放页
-│   │   ├── chat/                   # AI 数字人问答页（数字人动效+录音+TTS）
+│   │   ├── video-player/           # 视频播放页（list/playable/external/empty 四模式）
+│   │   ├── webview/                # web-view 容器页（承载 B站/抖音等外部教学视频）
+│   │   ├── chat/                   # AI 数字人问答页（流式响应+语音识别+TTS+数字人动效）
 │   │   ├── profile/                # 个人中心：登录态展示 + 收藏/历史云同步
 │   │   ├── login/                  # 登录注册页（账号密码 + 微信登录）
 │   │   └── admin/                  # 管理员用户管理页
@@ -94,7 +98,7 @@ what-to-cook/
 │   │   ├── shuffle.js              # 摇一摇算法（本地降级版）
 │   │   ├── storage.js              # 本地存储封装（含 TOKEN/USER_INFO 登录态）
 │   │   ├── icon-map.js             # 食材 → SVG 图标映射
-│   │   ├── ai-service.js           # AI 服务（Ollama 对话 + 录音 + TTS）
+│   │   ├── ai-service.js           # AI 服务（Ollama 对话 + WechatSI 语音识别 + TTS）
 │   │   ├── ingredient-tools.js     # 食材工具函数
 │   │   └── video-match.js          # 视频与菜品匹配规范化
 │   ├── mock/                       # 本地 Mock 数据
@@ -209,26 +213,40 @@ API 层判断 USE_API
     │
     ├── 文字输入：用户键入问题
     ├── 快捷问题：点击预设问题
-    └── 语音输入：长按麦克风按钮录音
+    ├── 菜谱提问：三宫格快捷菜谱卡片
+    └── 语音输入：点击麦克风按钮 → WechatSI 语音识别
+         │  ├── 点击开始聆听（遮罩弹出，显示"正在聆听..."）
+         │  ├── 说话过程中实时显示识别中间结果
+         │  └── 再次点击 → 停止识别，自动发送识别文本
     │
     ▼
-调用 sendChatMessage(message, context)
+调用 sendChatMessageStream(message, context)
     │  └── context 携带最近 6 条对话
     │
     ▼
-后端 /api/chat 接收请求
+后端 /api/chat/stream 接收请求（NDJSON 流式协议）
     │
     ▼
-ai_chat.py 调用本地 Ollama qwen3.5:0.8b
+ai_chat.py stream_ai_reply() 调用本地 Ollama qwen3.5:0.8b
     │  ├── payload: { model, messages, think: false }
     │  ├── httpx.AsyncClient(trust_env=False) 绕过系统代理
-    │  └── 超时 120s
+    │  ├── client.stream 逐行读取 Ollama 流式响应
+    │  └── 逐块 yield content（start/delta/done/error 事件）
     │
-    ├── Ollama 可用  ──→  返回 AI 回复
-    └── Ollama 不可用  ──→  降级到本地关键词匹配
+    ├── Ollama 可用  ──→  流式返回 AI 回复（逐字输出）
+    └── Ollama 不可用  ──→  降级到本地关键词匹配（伪流式切片）
     │
     ▼
-前端展示回复 + 可选 TTS 播报
+前端 onChunkReceived 实时解析 NDJSON
+    │  ├── 插入空 AI 气泡占位
+    │  ├── onDelta 实时追加文本（打字机效果）
+    │  └── onDone 落库到本地存储
+    │
+    ▼
+用户可随时点击"停止生成"中断流式请求
+    │
+    ▼
+前端展示回复 + 可选 TTS 语音播报
     │  ├── 点击"语音播报"按钮
     │  ├── POST /api/chat/tts（edge-tts zh-CN-XiaoyiNeural 女声）
     │  └── wx.createInnerAudioContext 播放 mp3
@@ -239,8 +257,9 @@ ai_chat.py 调用本地 Ollama qwen3.5:0.8b
 
 **关键代码位置：**
 - 数字人 UI：[miniprogram/pages/chat/chat.wxml](miniprogram/pages/chat/chat.wxml) + [chat.wxss](miniprogram/pages/chat/chat.wxss)
-- 录音 + TTS：[miniprogram/utils/ai-service.js](miniprogram/utils/ai-service.js)
-- 后端 AI：[backend/app/services/ai_chat.py](backend/app/services/ai_chat.py)
+- 流式问答 + 语音识别 + TTS：[miniprogram/utils/ai-service.js](miniprogram/utils/ai-service.js)
+- 流式请求解析：[miniprogram/utils/api.js](miniprogram/utils/api.js)（`sendChatMessageStream`）
+- 后端 AI 流式：[backend/app/services/ai_chat.py](backend/app/services/ai_chat.py)（`stream_ai_reply`）
 - 后端 TTS：[backend/app/services/tts_service.py](backend/app/services/tts_service.py)
 
 ---
@@ -347,10 +366,24 @@ api.js withFallback(apiFn, fallbackFn)
 
 | 方法 | 路径 | 说明 |
 |------|------|------|
-| POST | `/api/chat` | 发送问题，返回 AI 回复（Ollama qwen3.5） |
+| POST | `/api/chat` | 发送问题，返回完整 AI 回复（Ollama qwen3.5） |
+| POST | `/api/chat/stream` | 流式问答（NDJSON 协议，逐字输出） |
 | GET | `/api/chat/quick-questions` | 快捷问题列表 |
 | POST | `/api/chat/tts` | 文本转语音（edge-tts 中文女声） |
 | GET | `/api/chat/tts-file/{filename}` | 获取 TTS 音频文件 |
+
+#### 流式问答协议（NDJSON）
+
+`POST /api/chat/stream` 返回 `Content-Type: text/plain`，响应体为换行分隔的 JSON 事件流：
+
+```
+{"event":"start"}\n
+{"event":"delta","content":"番茄"}\n
+{"event":"delta","content":"炒蛋"}\n
+{"event":"done","content":"番茄炒蛋的做法..."}\n
+```
+
+前端通过 `wx.request` 的 `enableChunked: true` + `task.onChunkReceived` 接收，按 `\n` 切行解析事件。
 
 ### 用户认证接口
 
@@ -660,13 +693,16 @@ const USE_API = true  // true 启用后端，false 走本地 Mock
          ▼
     判断 playableInMiniprogram
     ├── true  → <video> 组件直接播放 mp4
-    └── false → 外链模式：复制链接到剪贴板 + 提示浏览器打开
+    └── false → 外链模式：
+         ├── 跳转到 webview 页用 <web-view> 加载外链
+         └── 跳转失败 → 复制链接到剪贴板 + 提示浏览器打开
 ```
 
 ### 当前数据状态
 
 - **100 道菜全部有视频链接**（100% 覆盖）
-- 当前 `externalUrl` 为 B站搜索链接占位，可替换为具体视频页 URL
+- 所有 `externalUrl` 已替换为 B站具体视频页 BV 链接（通过 B站搜索 API 自动获取）
+- 视频字段包含 `play_count`（播放量）用于排序展示
 - 所有链接已通过可访问性检查（`python check_videos.py`）
 
 ### 视频收集方法
@@ -692,9 +728,8 @@ const USE_API = true  // true 启用后端，false 走本地 Mock
 ### 短期（功能补全）
 
 - [ ] 接入真实微信 AppID/AppSecret 实现 code2session
-- [ ] 将视频外链替换为具体视频页面 URL（当前为 B站搜索链接占位）
 - [ ] 菜品图片替换为真实照片
-- [ ] 语音识别 ASR 对接（替换当前录音 mock）
+- [ ] 视频外链替换为具体视频页面 URL（当前 100/100 已为 B站 BV 链接，可继续补充抖音/小红书来源）
 
 ### 中期（体验升级）
 
@@ -702,6 +737,7 @@ const USE_API = true  // true 启用后端，false 走本地 Mock
 - [ ] 智能推荐：基于用户历史、收藏、季节的个性化推荐
 - [ ] 冰箱食材输入：拍照识别 / 手动输入已有食材
 - [ ] 营养分析：热量、蛋白质、碳水等营养成分计算
+- [ ] 语音连续对话：支持多轮语音问答，无需每次点击
 
 ### 长期（产品演进）
 

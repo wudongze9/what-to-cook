@@ -255,6 +255,166 @@ function sendChatMessage(message, context = []) {
   )
 }
 
+function arrayBufferToString(buffer) {
+  const bytes = new Uint8Array(buffer)
+  let text = ''
+  for (let i = 0; i < bytes.length; i += 1) {
+    text += String.fromCharCode(bytes[i])
+  }
+  return text
+}
+
+function createMockStream(message, handlers = {}) {
+  const { getAIReply } = require('../mock/ai-replies')
+  const result = getAIReply(message)
+  const text = typeof result === 'string' ? result : (result.text || '')
+  let aborted = false
+  let index = 0
+  let timer = null
+  let rejectStream = null
+
+  const promise = new Promise((resolve, reject) => {
+    rejectStream = reject
+    const tick = () => {
+      if (aborted) {
+        reject({ errMsg: 'request:fail abort' })
+        return
+      }
+      if (index >= text.length) {
+        if (handlers.onDone) handlers.onDone(text)
+        resolve({ text })
+        return
+      }
+      const chunk = text.slice(index, index + 4)
+      index += 4
+      if (handlers.onDelta) handlers.onDelta(chunk)
+      timer = setTimeout(tick, 36)
+    }
+    timer = setTimeout(tick, 120)
+  })
+
+  return {
+    promise,
+    abort() {
+      aborted = true
+      if (timer) clearTimeout(timer)
+      if (rejectStream) rejectStream({ errMsg: 'request:fail abort' })
+    }
+  }
+}
+
+function sendChatMessageStream(message, context = [], handlers = {}) {
+  if (!USE_API) {
+    return createMockStream(message, handlers)
+  }
+
+  let lineBuffer = ''
+  let fullText = ''
+  let didChunk = false
+  let settled = false
+  let task = null
+
+  const finish = (resolve, value) => {
+    if (settled) return
+    settled = true
+    resolve(value)
+  }
+
+  const fail = (reject, err) => {
+    if (settled) return
+    settled = true
+    reject(err)
+  }
+
+  const handleEvent = (event, resolve, reject) => {
+    if (!event || !event.type) return
+    if (event.type === 'delta') {
+      const text = event.text || ''
+      fullText += text
+      if (handlers.onDelta) handlers.onDelta(text, fullText)
+      return
+    }
+    if (event.type === 'done') {
+      const text = event.text || fullText
+      if (handlers.onDone) handlers.onDone(text)
+      finish(resolve, { text })
+      return
+    }
+    if (event.type === 'error') {
+      fail(reject, event)
+    }
+  }
+
+  const processText = (text, resolve, reject) => {
+    lineBuffer += text
+    const lines = lineBuffer.split('\n')
+    lineBuffer = lines.pop() || ''
+    lines.forEach((line) => {
+      const trimmed = line.trim()
+      if (!trimmed) return
+      try {
+        handleEvent(JSON.parse(trimmed), resolve, reject)
+      } catch (err) {
+        fail(reject, err)
+      }
+    })
+  }
+
+  const promise = new Promise((resolve, reject) => {
+    const header = { 'Content-Type': 'application/json' }
+    const token = getToken()
+    if (token) {
+      header['Authorization'] = 'Bearer ' + token
+    }
+
+    task = wx.request({
+      url: BASE_URL + '/chat/stream',
+      method: 'POST',
+      data: { message, context },
+      header,
+      timeout: 120000,
+      enableChunked: true,
+      responseType: 'arraybuffer',
+      success: (res) => {
+        if (!didChunk) {
+          fail(reject, { errMsg: 'chunk unsupported', statusCode: res.statusCode })
+          return
+        }
+        if (!settled) {
+          if (lineBuffer.trim()) {
+            processText('\n', resolve, reject)
+          }
+          if (!settled) {
+            if (handlers.onDone) handlers.onDone(fullText)
+            finish(resolve, { text: fullText })
+          }
+        }
+      },
+      fail: (err) => fail(reject, err)
+    })
+
+    if (!task || typeof task.onChunkReceived !== 'function') {
+      if (task && typeof task.abort === 'function') task.abort()
+      fail(reject, { errMsg: 'onChunkReceived unsupported' })
+      return
+    }
+
+    task.onChunkReceived((res) => {
+      didChunk = true
+      processText(arrayBufferToString(res.data), resolve, reject)
+    })
+  })
+
+  return {
+    promise,
+    abort() {
+      if (task && typeof task.abort === 'function') {
+        task.abort()
+      }
+    }
+  }
+}
+
 function getQuickQuestions() {
   return withFallback(
     () => request('/chat/quick-questions').then(r => r.questions),
@@ -429,6 +589,7 @@ module.exports = {
   getDishVideoDetail,
   getDishVideoSources,
   sendChatMessage,
+  sendChatMessageStream,
   getQuickQuestions,
   getCuisineTypes,
   getSpiceLevels,
