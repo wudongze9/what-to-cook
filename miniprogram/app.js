@@ -25,20 +25,23 @@ App({
     userInfo: null,
     // 颜色主题
     theme: {
-      primary: '#F28C38',
-      primaryDark: '#D96A14',
-      primaryLight: '#F9B77A',
-      primaryLightest: '#FFF3E4',
-      bg: '#FFF9F3',
-      bgSecondary: '#FFF1E4',
+      primary: '#9A3412',
+      primaryDark: '#7C2D12',
+      primaryLight: '#FB923C',
+      primaryLightest: '#FFF1E8',
+      accent: '#FF5A1F',
+      cta: '#FF3D6E',
+      purple: '#5B2B6F',
+      bg: '#FFFBEB',
+      bgSecondary: '#FFF7ED',
       surface: '#FFFFFF',
-      text: '#3D2B1F',
-      textSecondary: '#7A6258',
-      textTertiary: '#A89288',
-      border: '#F0DCC8',
-      success: '#4CAF50',
-      warning: '#FF9800',
-      error: '#E74C3C'
+      text: '#2A1735',
+      textSecondary: '#6D536C',
+      textTertiary: '#A78A96',
+      border: '#FED7AA',
+      success: '#15803D',
+      warning: '#B45309',
+      error: '#B42318'
     }
   }
 })

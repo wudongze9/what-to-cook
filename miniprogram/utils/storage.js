@@ -6,6 +6,7 @@ const KEYS = {
   DISH_HISTORY: 'dishHistory',
   FAVORITES: 'favorites',
   CHAT_MESSAGES: 'chatMessages',
+  CHAT_SESSION_ID: 'chatSessionId',
   USER_PREFERENCES: 'userPreferences',
   SHOPPING_LIST: 'shoppingList',
   COOKING_PROGRESS: 'cookingProgress',
@@ -94,6 +95,7 @@ function saveChatMessage(message) {
   const messages = getStorage(KEYS.CHAT_MESSAGES, [])
   const item = Object.assign({}, message)
   item.timestamp = Date.now()
+  item.sessionId = getCurrentChatSessionId()
   messages.push(item)
   // 最多保留 200 条
   if (messages.length > 200) {
@@ -106,7 +108,29 @@ function saveChatMessage(message) {
  * 获取聊天记录
  */
 function getChatHistory() {
-  return getStorage(KEYS.CHAT_MESSAGES, [])
+  const messages = getStorage(KEYS.CHAT_MESSAGES, [])
+  const sessionId = getStorage(KEYS.CHAT_SESSION_ID, '')
+  if (!sessionId) return messages
+  return messages.filter(item => item.sessionId === sessionId)
+}
+
+function getCurrentChatSessionId() {
+  let sessionId = getStorage(KEYS.CHAT_SESSION_ID, '')
+  if (!sessionId) {
+    sessionId = createChatSessionId()
+    setStorage(KEYS.CHAT_SESSION_ID, sessionId)
+  }
+  return sessionId
+}
+
+function createChatSessionId() {
+  return 'chat-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10)
+}
+
+function startNewChatSession() {
+  const sessionId = createChatSessionId()
+  setStorage(KEYS.CHAT_SESSION_ID, sessionId)
+  return sessionId
 }
 
 function getUserPreferences() {
@@ -179,6 +203,42 @@ function clearCheckedShoppingItems() {
   return next
 }
 
+function upsertShoppingItem(item) {
+  const list = getShoppingList()
+  const name = String(item && item.name || '').trim()
+  if (!name) return list
+  const id = item.id || ('manual::' + Date.now())
+  const nextItem = Object.assign({
+    id,
+    name,
+    amount: '',
+    dishId: 'manual',
+    dishName: '手动添加',
+    checked: false,
+    createdAt: Date.now()
+  }, item, { id, name, updatedAt: Date.now() })
+  const index = list.findIndex(current => current.id === id)
+  if (index >= 0) list[index] = nextItem
+  else list.unshift(nextItem)
+  setStorage(KEYS.SHOPPING_LIST, list)
+  return list
+}
+
+function removeShoppingItem(id) {
+  const next = getShoppingList().filter(item => item.id !== id)
+  setStorage(KEYS.SHOPPING_LIST, next)
+  return next
+}
+
+function setAllShoppingItemsChecked(checked) {
+  const next = getShoppingList().map(item => Object.assign({}, item, {
+    checked: !!checked,
+    updatedAt: Date.now()
+  }))
+  setStorage(KEYS.SHOPPING_LIST, next)
+  return next
+}
+
 function saveCookingProgress(dishId, progress) {
   const all = getStorage(KEYS.COOKING_PROGRESS, {})
   all[String(dishId)] = Object.assign({}, progress || {}, { updatedAt: Date.now() })
@@ -233,12 +293,17 @@ module.exports = {
   toggleFavorite,
   saveChatMessage,
   getChatHistory,
+  getCurrentChatSessionId,
+  startNewChatSession,
   getUserPreferences,
   setUserPreferences,
   addToShoppingList,
   getShoppingList,
   toggleShoppingItem,
   clearCheckedShoppingItems,
+  upsertShoppingItem,
+  removeShoppingItem,
+  setAllShoppingItemsChecked,
   saveCookingProgress,
   getCookingProgress,
   clearCookingProgress,

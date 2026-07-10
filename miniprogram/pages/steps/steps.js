@@ -21,6 +21,7 @@ Page({
     timerTotalSeconds: 0,
     timerText: '00:00',
     timerRunning: false,
+    stepTimers: {},
     completed: false
   },
 
@@ -61,7 +62,8 @@ Page({
       checkedCount: prepared.filter(i => i.checked).length,
       currentStep,
       currentStepInfo: dish.steps[currentStep] || {},
-      progressPercent: Math.round(((currentStep + 1) / dish.steps.length) * 100)
+      progressPercent: Math.round(((currentStep + 1) / dish.steps.length) * 100),
+      stepTimers: (saved && saved.stepTimers) || {}
     })
     this._resetTimerForStep(currentStep)
     if (saved && typeof saved.timerSeconds === 'number' && saved.timerSeconds > 0) {
@@ -72,15 +74,37 @@ Page({
     }
 
     wx.setNavigationBarTitle({ title: dish.name + ' - 做法' })
+    wx.setKeepScreenOn({ keepScreenOn: true })
   },
 
   onUnload() {
     this._clearTimer()
     this._saveProgress()
+    wx.setKeepScreenOn({ keepScreenOn: false })
   },
 
   onHide() {
+    if (this.data.timerRunning) {
+      this._backgroundAt = Date.now()
+      this._resumeTimerOnShow = true
+      this._clearTimer()
+    }
     this._saveProgress()
+  },
+
+  onShow() {
+    if (!this._resumeTimerOnShow) return
+    const elapsed = Math.max(0, Math.floor((Date.now() - this._backgroundAt) / 1000))
+    const next = Math.max(0, this.data.timerSeconds - elapsed)
+    this._resumeTimerOnShow = false
+    this.setData({
+      timerSeconds: next,
+      timerText: this._formatSeconds(next),
+      timerRunning: next > 0
+    })
+    this._setCurrentStepTimer(next)
+    if (next > 0) this._startTimerInterval()
+    else wx.showToast({ title: '本步骤时间到', icon: 'none' })
   },
 
   /**
@@ -160,6 +184,11 @@ Page({
 
     if (this.data.timerSeconds <= 0) this._resetTimerForStep(this.data.currentStep)
     this.setData({ timerRunning: true })
+    this._startTimerInterval()
+  },
+
+  _startTimerInterval() {
+    this._clearTimer()
     this._timer = setInterval(() => {
       const next = this.data.timerSeconds - 1
       if (next <= 0) {
@@ -177,6 +206,7 @@ Page({
         timerSeconds: next,
         timerText: this._formatSeconds(next)
       })
+      this._setCurrentStepTimer(next)
     }, 1000)
   },
 
@@ -231,7 +261,10 @@ Page({
 
   _resetTimerForStep(index) {
     const step = this.data.steps[index] || {}
-    const seconds = Math.max(0, Number(step.time || 0) * 60)
+    const stored = this.data.stepTimers[String(index)]
+    const seconds = stored === undefined
+      ? Math.max(0, Number(step.time || 0) * 60)
+      : Math.max(0, Number(stored) || 0)
     const currentStepInfo = Object.assign({}, step, {
       desc: getStepDesc(step)
     })
@@ -242,6 +275,14 @@ Page({
       timerText: this._formatSeconds(seconds),
       timerRunning: false
     })
+    this._setCurrentStepTimer(seconds)
+  },
+
+  _setCurrentStepTimer(seconds) {
+    const stepTimers = Object.assign({}, this.data.stepTimers, {
+      [String(this.data.currentStep)]: Math.max(0, Number(seconds) || 0)
+    })
+    this.setData({ stepTimers })
   },
 
   _clearTimer() {
@@ -265,7 +306,8 @@ Page({
       checkedIngredients: (this.data.ingredients || [])
         .filter(item => item.checked)
         .map(item => item.name),
-      timerSeconds: this.data.timerSeconds
+      timerSeconds: this.data.timerSeconds,
+      stepTimers: this.data.stepTimers
     })
   }
 })

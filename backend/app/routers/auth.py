@@ -7,15 +7,18 @@
 - PUT  /profile      更新用户资料
 - PUT  /password     修改密码
 """
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
+from pathlib import Path
+import uuid
 from app.services import auth_service
 from app.deps import get_current_user
 from app.models.schemas import (
     RegisterRequest, LoginRequest, WxLoginRequest,
-    UpdateProfileRequest, ChangePasswordRequest, UserResponse,
+    UpdateProfileRequest, ChangePasswordRequest, UserPreferencesRequest, UserResponse,
 )
 
 router = APIRouter()
+AVATAR_DIR = Path(__file__).resolve().parents[2] / "static" / "uploads" / "avatars"
 
 
 def _user_response(user: dict) -> dict:
@@ -121,3 +124,37 @@ async def change_password(
             detail="原密码错误",
         )
     return {"message": "密码修改成功"}
+
+
+@router.get("/preferences")
+async def get_preferences(user: dict = Depends(get_current_user)):
+    return {"preferences": auth_service.get_user_preferences(user["id"])}
+
+
+@router.put("/preferences")
+async def update_preferences(
+    req: UserPreferencesRequest,
+    user: dict = Depends(get_current_user),
+):
+    if req.household_size < 1 or req.household_size > 20:
+        raise HTTPException(status_code=400, detail="家庭人数应在 1 到 20 之间")
+    preferences = auth_service.update_user_preferences(user["id"], req.model_dump())
+    return {"message": "饮食偏好已保存", "preferences": preferences}
+
+
+@router.post("/avatar")
+async def upload_avatar(
+    file: UploadFile = File(...),
+    user: dict = Depends(get_current_user),
+):
+    content_type = (file.content_type or "").lower()
+    extensions = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp"}
+    if content_type not in extensions:
+        raise HTTPException(status_code=400, detail="仅支持 JPG、PNG 或 WebP 头像")
+    content = await file.read()
+    if len(content) > 2 * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="头像不能超过 2MB")
+    AVATAR_DIR.mkdir(parents=True, exist_ok=True)
+    filename = f"u{user['id']}-{uuid.uuid4().hex}{extensions[content_type]}"
+    (AVATAR_DIR / filename).write_bytes(content)
+    return {"avatar": f"/uploads/avatars/{filename}"}

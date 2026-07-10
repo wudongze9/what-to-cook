@@ -18,7 +18,13 @@ Page({
     video: null,
     videoPoster: '',
     relatedVideos: [],
-    sourceLabels: SOURCE_LABELS
+    sourceLabels: SOURCE_LABELS,
+    playbackRates: [0.5, 1, 1.25, 1.5, 2],
+    playbackRate: 1,
+    currentTime: 0,
+    duration: 0,
+    currentTimeText: '00:00',
+    durationText: '00:00'
   },
 
   async onLoad(options) {
@@ -104,6 +110,41 @@ Page({
   onVideoError(e) {
     console.error('视频播放错误:', e.detail)
     wx.showToast({ title: '视频加载失败，请检查网络', icon: 'none' })
+  },
+
+  onVideoTimeUpdate(e) {
+    const currentTime = Number(e.detail.currentTime) || 0
+    const duration = Number(e.detail.duration) || 0
+    this.setData({
+      currentTime,
+      duration,
+      currentTimeText: this._formatVideoTime(currentTime),
+      durationText: this._formatVideoTime(duration)
+    })
+  },
+
+  onSkipVideo(e) {
+    const offset = Number(e.currentTarget.dataset.seconds) || 0
+    const next = Math.max(0, Math.min(this.data.duration || Infinity, this.data.currentTime + offset))
+    this._getVideoContext().seek(next)
+  },
+
+  onPlaybackRate(e) {
+    const rate = Number(e.currentTarget.dataset.rate) || 1
+    this._getVideoContext().playbackRate(rate)
+    this.setData({ playbackRate: rate })
+  },
+
+  _getVideoContext() {
+    if (!this._videoContext) this._videoContext = wx.createVideoContext('nativePlayer', this)
+    return this._videoContext
+  },
+
+  _formatVideoTime(seconds) {
+    const safe = Math.max(0, Math.floor(Number(seconds) || 0))
+    const min = Math.floor(safe / 60)
+    const sec = safe % 60
+    return (min < 10 ? '0' + min : '' + min) + ':' + (sec < 10 ? '0' + sec : '' + sec)
   },
 
   onOpenExternal() {

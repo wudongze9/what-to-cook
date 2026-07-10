@@ -1,5 +1,5 @@
 const { sendChatMessage, sendChatMessageStream, getQuickQuestions } = require('../../utils/api')
-const { saveChatMessage, getChatHistory } = require('../../utils/storage')
+const { saveChatMessage, getChatHistory, startNewChatSession } = require('../../utils/storage')
 const { startVoiceRecognition, stopVoiceRecognition, playTTS, stopTTS } = require('../../utils/ai-service')
 
 Page({
@@ -18,7 +18,9 @@ Page({
       { text: '红烧肉', question: '红烧肉怎么做？', icon: '/images/icons/meat.svg' },
       { text: '土豆片', question: '干锅土豆片怎么做？', icon: '/images/icons/potato.svg' }
     ],
-    currentTTSIndex: -1
+    currentTTSIndex: -1,
+    lastFailedQuestion: '',
+    serviceNotice: ''
   },
 
   onLoad() {
@@ -106,6 +108,27 @@ Page({
 
   onSuggestionTap() {
     wx.switchTab({ url: '/pages/index/index' })
+  },
+
+  onNewConversation() {
+    this._abortStream()
+    stopTTS()
+    startNewChatSession()
+    this.setData({
+      messages: [],
+      isTyping: false,
+      lastFailedQuestion: '',
+      serviceNotice: '',
+      showSuggestion: false
+    })
+    this._addAIMessage('新对话已经开始。告诉我你想做什么菜，或者手头有哪些食材。', false)
+  },
+
+  onRetryLast() {
+    const question = this.data.lastFailedQuestion
+    if (!question || this.data.isTyping) return
+    this.setData({ lastFailedQuestion: '', serviceNotice: '' })
+    this._getAIReply(question)
   },
 
   onVoiceTap() {
@@ -232,7 +255,7 @@ Page({
   },
 
   async _getAIReply(userMessage) {
-    this.setData({ isTyping: true })
+    this.setData({ isTyping: true, lastFailedQuestion: '', serviceNotice: '' })
     this._scrollToBottom()
 
     const context = this.data.messages.slice(-6).map(m => ({
@@ -259,6 +282,7 @@ Page({
       this._streamTask = null
       this.setData({ isTyping: false })
       this._updateAIMessage(aiIndex, replyText)
+      this.setData({ serviceNotice: '' })
       if (replyText) saveChatMessage({ text: replyText, isUser: false })
     } catch (err) {
       this._streamTask = null
@@ -279,12 +303,16 @@ Page({
       try {
         const result = await sendChatMessage(userMessage, context)
         const replyText = typeof result === 'string' ? result : result.text
-        this.setData({ isTyping: false })
+        this.setData({ isTyping: false, serviceNotice: '流式服务暂时不可用，已切换为兼容回复。' })
         this._updateAIMessage(aiIndex, replyText)
         if (replyText) saveChatMessage({ text: replyText, isUser: false })
       } catch (fallbackErr) {
         const errorText = '我刚刚有点没听清，可以换个问法再问我一次。'
-        this.setData({ isTyping: false })
+        this.setData({
+          isTyping: false,
+          lastFailedQuestion: userMessage,
+          serviceNotice: '网络连接失败，可以点击重试继续本次问题。'
+        })
         this._updateAIMessage(aiIndex, errorText)
         saveChatMessage({ text: errorText, isUser: false })
       }

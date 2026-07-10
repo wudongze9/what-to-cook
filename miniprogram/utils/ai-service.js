@@ -6,8 +6,9 @@
  */
 
 const { getAIReply } = require('../mock/ai-replies')
+const runtime = require('../config/env')
 
-const BASE_URL = 'http://localhost:8001/api'
+const BASE_URL = runtime.API_BASE_URL
 const API_ORIGIN = BASE_URL.replace(/\/api\/?$/, '')
 
 /**
@@ -21,7 +22,7 @@ async function callAI(userMessage, context = []) {
         method: 'POST',
         data: { message: userMessage, context },
         header: { 'Content-Type': 'application/json' },
-        timeout: 120000,
+        timeout: runtime.STREAM_TIMEOUT,
         success: (r) => {
           if (r.statusCode === 200 && r.data && r.data.reply) {
             resolve(r.data.reply)

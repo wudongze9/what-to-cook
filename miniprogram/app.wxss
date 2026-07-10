@@ -22,8 +22,28 @@ page {
   --color-text-secondary: #6D536C;
   --color-text-tertiary: #A78A96;
   --color-border: #FED7AA;
+  --color-success: #15803D;
+  --color-warning: #B45309;
+  --color-danger: #B42318;
+  --color-info: #2563EB;
+  --space-1: 8rpx;
+  --space-2: 16rpx;
+  --space-3: 24rpx;
+  --space-4: 32rpx;
+  --space-5: 40rpx;
+  --icon-sm: 32rpx;
+  --icon-md: 40rpx;
+  --icon-lg: 56rpx;
+  --touch-min: 88rpx;
+  --radius-control: 16rpx;
   --radius-card: 30rpx;
   --radius-panel: 38rpx;
+  --z-header: 20;
+  --z-tabbar: 100;
+  --z-sheet: 1200;
+  --motion-fast: 160ms;
+  --motion-standard: 240ms;
+  --shadow-sm: 0 8rpx 20rpx rgba(91,43,111,0.10);
   --shadow-card: 0 18rpx 48rpx rgba(91, 43, 111, 0.10), inset 0 -4rpx 0 rgba(154,52,18,0.04);
   --shadow-pop: 0 18rpx 42rpx rgba(255, 90, 31, 0.28);
   --shadow-clay: 0 18rpx 48rpx rgba(91,43,111,0.14), inset 0 -5rpx 0 rgba(91,43,111,0.06);
@@ -75,6 +95,33 @@ page {
 
 .btn-primary:active {
   opacity: 0.85;
+}
+
+button,
+.tap-target {
+  transition: opacity var(--motion-fast) ease-out, transform var(--motion-fast) ease-out;
+}
+
+button:active,
+.tap-target:active {
+  opacity: 0.82;
+}
+
+.safe-bottom {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 24rpx);
+}
+
+.state-message {
+  min-height: 180rpx;
+  padding: 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  box-sizing: border-box;
+  color: var(--color-text-secondary);
+  text-align: center;
 }
 
 /* 描边按钮 */

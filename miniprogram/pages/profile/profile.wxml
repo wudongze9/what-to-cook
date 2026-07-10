@@ -1,17 +1,20 @@
 <view class="page-profile">
   <!-- 已登录：显示用户信息 -->
-  <view wx:if="{{isLoggedIn && userInfo}}" class="profile-hero" bindtap="onLogout">
-    <image class="avatar" src="{{userInfo.avatar || '/images/icons/chef.svg'}}" mode="aspectFit" />
+  <view wx:if="{{isLoggedIn && userInfo}}" class="profile-hero" bindtap="onEditProfile">
+    <image class="avatar" src="{{userInfo.avatar || '/images/ai-chef-v2.png'}}" mode="aspectFill" />
     <view class="user-info">
       <text class="nickname">{{userInfo.nickname || userInfo.username}}</text>
       <text class="signature">{{userInfo.signature || '把不知道吃什么，变成今天的小期待'}}</text>
     </view>
-    <text wx:if="{{userInfo.is_admin}}" class="admin-badge">管理员</text>
+    <view class="profile-side">
+      <text wx:if="{{userInfo.is_admin}}" class="admin-badge">管理员</text>
+      <text class="edit-profile-pill">编辑资料</text>
+    </view>
   </view>
 
   <!-- 未登录：显示登录入口 -->
   <view wx:else class="profile-hero" bindtap="onLogin">
-    <image class="avatar" src="/images/icons/chef.svg" mode="aspectFit" />
+    <image class="avatar" src="/images/brand-logo.png" mode="aspectFill" />
     <view class="user-info">
       <text class="nickname">点击登录</text>
       <text class="signature">登录后可同步收藏和历史</text>
@@ -40,7 +43,12 @@
         <image class="section-icon" src="/images/icons/cart.svg" mode="aspectFit" />
         <text class="section-title">采购清单</text>
       </view>
-      <text wx:if="{{shoppingGroups.length > 0}}" class="clear-btn" bindtap="onClearCheckedShopping">清空已买</text>
+      <view class="section-actions">
+        <text class="section-action" bindtap="onAddShoppingItem">添加</text>
+        <text wx:if="{{shoppingGroups.length > 0}}" class="section-action" bindtap="onToggleAllShopping">全选</text>
+        <text wx:if="{{shoppingGroups.length > 0}}" class="section-action" bindtap="onShareShoppingList">分享</text>
+        <text wx:if="{{shoppingGroups.length > 0}}" class="clear-btn" bindtap="onClearCheckedShopping">清空已买</text>
+      </view>
     </view>
     <view wx:if="{{shoppingGroups.length === 0}}" class="empty-tip compact">
       <text class="empty-text">还没有要买的食材</text>
@@ -60,10 +68,22 @@
             <image class="shopping-icon" src="{{food.icon}}" mode="aspectFit" />
             <text>{{food.name}}</text>
             <text wx:if="{{food.amount}}" class="shopping-amount">{{food.amount}}</text>
+            <text class="shopping-edit" catchtap="onEditShoppingItem" data-id="{{food.id}}">编辑</text>
           </view>
         </view>
       </view>
     </view>
+  </view>
+
+  <view class="section preference-section" bindtap="onEditPreferences">
+    <view class="section-header">
+      <view class="section-title-wrap">
+        <image class="section-icon" src="/images/icons/seasoning.svg" mode="aspectFit" />
+        <text class="section-title">饮食偏好</text>
+      </view>
+      <text class="arrow">›</text>
+    </view>
+    <text class="preference-summary">{{preferenceSummary}}</text>
   </view>
 
   <view class="section">
@@ -121,16 +141,23 @@
   </view>
 
   <view class="section settings-section">
+    <view wx:if="{{isLoggedIn}}" class="setting-item" bindtap="onEditProfile">
+      <view class="section-title-wrap">
+        <image class="section-icon" src="/images/icons/shield.svg" mode="aspectFit" />
+        <text class="setting-text">个人资料</text>
+      </view>
+      <text class="arrow">›</text>
+    </view>
     <view wx:if="{{isLoggedIn && userInfo.is_admin}}" class="setting-item" bindtap="onAdmin">
       <view class="section-title-wrap">
-        <image class="section-icon" src="/images/icons/user.svg" mode="aspectFit" />
+        <image class="section-icon" src="/images/icons/logout.svg" mode="aspectFit" />
         <text class="setting-text">用户管理</text>
       </view>
       <text class="arrow">›</text>
     </view>
     <view wx:if="{{isLoggedIn}}" class="setting-item" bindtap="onLogout">
       <view class="section-title-wrap">
-        <image class="section-icon" src="/images/icons/user.svg" mode="aspectFit" />
+        <image class="section-icon" src="/images/icons/info.svg" mode="aspectFit" />
         <text class="setting-text">退出登录</text>
       </view>
       <text class="arrow">›</text>
@@ -141,6 +168,94 @@
         <text class="setting-text">关于今天吃什么</text>
       </view>
       <text class="arrow">›</text>
+    </view>
+  </view>
+
+  <view wx:if="{{showProfileEditor}}" class="profile-editor-mask" catchtap="onCloseProfileEditor">
+    <view class="profile-editor" catchtap="onProfileEditorTap">
+      <view class="editor-head">
+        <view>
+          <text class="editor-title">编辑个人资料</text>
+          <text class="editor-subtitle">选择头像并完善你的厨房名片</text>
+        </view>
+        <text class="editor-close" bindtap="onCloseProfileEditor">取消</text>
+      </view>
+
+      <text class="field-label">头像</text>
+      <button class="avatar-upload-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">上传微信头像</button>
+      <view class="avatar-options">
+        <view
+          wx:for="{{avatarOptions}}"
+          wx:key="path"
+          class="avatar-option {{profileDraft.avatar === item.path ? 'selected' : ''}}"
+          bindtap="onSelectAvatar"
+          data-avatar="{{item.path}}"
+        >
+          <image src="{{item.path}}" mode="aspectFill" />
+        </view>
+      </view>
+
+      <text class="field-label">昵称</text>
+      <input class="profile-input" maxlength="20" value="{{profileDraft.nickname}}" placeholder="请输入昵称" bindinput="onNicknameInput" />
+
+      <text class="field-label">个性签名</text>
+      <textarea class="profile-textarea" maxlength="60" value="{{profileDraft.signature}}" placeholder="例如：热爱家常菜，也喜欢尝试新味道" bindinput="onSignatureInput" />
+      <text class="field-count">{{profileDraft.signature.length || 0}}/60</text>
+
+      <button class="save-profile-btn" loading="{{savingProfile}}" disabled="{{savingProfile}}" bindtap="onSaveProfile">保存资料</button>
+    </view>
+  </view>
+
+  <view wx:if="{{showShoppingEditor}}" class="profile-editor-mask" catchtap="onCloseShoppingEditor">
+    <view class="profile-editor compact-editor" catchtap="onProfileEditorTap">
+      <view class="editor-head">
+        <view>
+          <text class="editor-title">{{shoppingDraft.id ? '编辑食材' : '添加食材'}}</text>
+          <text class="editor-subtitle">补充名称和需要购买的数量</text>
+        </view>
+        <text class="editor-close" bindtap="onCloseShoppingEditor">取消</text>
+      </view>
+      <text class="field-label">食材名称</text>
+      <input class="profile-input" value="{{shoppingDraft.name}}" data-field="name" bindinput="onShoppingDraftInput" placeholder="例如：番茄" />
+      <text class="field-label">数量</text>
+      <input class="profile-input" value="{{shoppingDraft.amount}}" data-field="amount" bindinput="onShoppingDraftInput" placeholder="例如：2个 / 300g" />
+      <button class="save-profile-btn" bindtap="onSaveShoppingItem">保存食材</button>
+      <button wx:if="{{shoppingDraft.id}}" class="delete-item-btn" bindtap="onDeleteShoppingItem">删除这项</button>
+    </view>
+  </view>
+
+  <view wx:if="{{showPreferenceEditor}}" class="profile-editor-mask" catchtap="onClosePreferenceEditor">
+    <view class="profile-editor preference-editor" catchtap="onPreferenceEditorTap">
+      <view class="editor-head">
+        <view>
+          <text class="editor-title">饮食偏好</text>
+          <text class="editor-subtitle">推荐时优先参考这些设置</text>
+        </view>
+        <text class="editor-close" bindtap="onClosePreferenceEditor">取消</text>
+      </view>
+
+      <text class="field-label">饮食目标</text>
+      <view class="preference-chips">
+        <view wx:for="{{dietaryOptions}}" wx:key="*this" class="preference-chip {{selectedDietaryMap[item] ? 'selected' : ''}}" bindtap="onToggleDietaryTag" data-tag="{{item}}">{{item}}</view>
+      </view>
+
+      <text class="field-label">家庭人数</text>
+      <view class="stepper">
+        <button bindtap="onHouseholdStep" data-delta="-1">−</button>
+        <text>{{preferenceDraft.household_size}} 人</text>
+        <button bindtap="onHouseholdStep" data-delta="1">＋</button>
+      </view>
+
+      <text class="field-label">默认辣度</text>
+      <view class="preference-chips">
+        <view wx:for="{{spiceOptions}}" wx:key="key" class="preference-chip {{preferenceDraft.default_spice === item.key ? 'selected' : ''}}" bindtap="onSelectDefaultSpice" data-spice="{{item.key}}">{{item.label}}</view>
+      </view>
+
+      <text class="field-label">不喜欢的食材</text>
+      <input class="profile-input" value="{{preferenceDraft.dislikedText}}" data-field="dislikedText" bindinput="onPreferenceTextInput" placeholder="用逗号分隔，例如：香菜、芹菜" />
+      <text class="field-label">过敏原</text>
+      <input class="profile-input" value="{{preferenceDraft.allergenText}}" data-field="allergenText" bindinput="onPreferenceTextInput" placeholder="例如：花生、虾" />
+      <button class="save-profile-btn" bindtap="onSavePreferences">保存偏好</button>
     </view>
   </view>
 </view>

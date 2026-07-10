@@ -17,7 +17,7 @@
 
   <view class="login-hero">
     <view class="brand-badge">
-      <image class="brand-icon" src="/images/icons/chef.svg" mode="aspectFit" />
+      <image class="brand-icon" src="/images/brand-logo.png" mode="aspectFill" />
     </view>
     <text class="app-title">今天吃什么</text>
     <text class="app-subtitle">登录后同步收藏、历史和你的专属口味</text>
@@ -95,7 +95,7 @@
       </view>
 
       <button
-        class="submit-btn"
+        class="submit-btn {{loading ? 'is-disabled' : ''}}"
         bindtap="onSubmit"
         loading="{{loading}}"
         disabled="{{loading}}"
@@ -111,7 +111,7 @@
       <view class="divider-line"></view>
     </view>
 
-    <button class="wx-login-btn" bindtap="onWxLogin" disabled="{{loading}}">
+    <button class="wx-login-btn {{loading ? 'is-disabled' : ''}}" bindtap="onWxLogin" disabled="{{loading}}">
       <view class="wechat-mark">
         <view class="wechat-dot dot-a"></view>
         <view class="wechat-dot dot-b"></view>

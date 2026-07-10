@@ -16,11 +16,18 @@ Page({
     total: 0,
     maxPage: 1,
     loading: false,
-    currentUserId: 0
+    currentUserId: 0,
+    adminCount: 0,
+    disabledCount: 0
   },
 
   onLoad() {
     const userInfo = getUserInfo()
+    if (!userInfo || !userInfo.is_admin) {
+      wx.showToast({ title: '仅管理员可访问', icon: 'none' })
+      setTimeout(() => wx.navigateBack(), 800)
+      return
+    }
     this.setData({ currentUserId: userInfo ? userInfo.id : 0 })
     this._loadUsers()
   },
@@ -29,10 +36,13 @@ Page({
     this.setData({ loading: true })
     try {
       const resp = await adminGetUsers(this.data.keyword, this.data.page, this.data.pageSize)
+      const users = resp.users || []
       this.setData({
-        users: resp.users || [],
+        users,
         total: resp.total || 0,
         maxPage: Math.ceil((resp.total || 0) / this.data.pageSize) || 1,
+        adminCount: users.filter(user => user.is_admin).length,
+        disabledCount: users.filter(user => !user.is_active).length,
         loading: false
       })
     } catch (err) {
@@ -81,13 +91,22 @@ Page({
     const username = e.currentTarget.dataset.username
     wx.showModal({
       title: '重置密码',
-      content: '确认将用户「' + username + '」的密码重置为 123456？',
+      content: '确认为用户「' + username + '」生成一次性临时密码？',
       confirmColor: '#FF6B1A',
       success: async (res) => {
         if (res.confirm) {
           try {
-            await adminResetUserPassword(userId)
-            wx.showToast({ title: '密码已重置为 123456', icon: 'none' })
+            const result = await adminResetUserPassword(userId)
+            const password = result.temporary_password || ''
+            wx.showModal({
+              title: '临时密码',
+              content: password + '\n请通过安全渠道发送给用户，并提醒其登录后立即修改。',
+              confirmText: '复制密码',
+              cancelText: '关闭',
+              success: (modalResult) => {
+                if (modalResult.confirm && password) wx.setClipboardData({ data: password })
+              }
+            })
           } catch (err) {
             const msg = (err && err.detail) || '操作失败'
             wx.showToast({ title: msg, icon: 'none' })

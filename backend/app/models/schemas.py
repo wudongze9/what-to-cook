@@ -104,6 +104,14 @@ class ChangePasswordRequest(BaseModel):
     new_password: str
 
 
+class UserPreferencesRequest(BaseModel):
+    dietary_tags: list[str] = []
+    disliked_ingredients: list[str] = []
+    allergens: list[str] = []
+    household_size: int = 1
+    default_spice: str = "all"
+
+
 class UserResponse(BaseModel):
     """用户信息响应"""
     id: int
@@ -120,3 +128,16 @@ class UserResponse(BaseModel):
 class FavoriteRequest(BaseModel):
     """收藏请求"""
     dish_id: int
+
+
+class ShoppingItemRequest(BaseModel):
+    id: str
+    name: str
+    amount: str = ""
+    dish_id: str = "manual"
+    dish_name: str = "手动添加"
+    checked: bool = False
+
+
+class ShoppingListRequest(BaseModel):
+    items: list[ShoppingItemRequest] = []

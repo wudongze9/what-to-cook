@@ -175,8 +175,10 @@
 }
 
 .brand-icon {
-  width: 96rpx;
-  height: 96rpx;
+  width: 136rpx;
+  height: 136rpx;
+  border-radius: 40rpx;
+  box-shadow: 0 10rpx 24rpx rgba(91, 43, 111, 0.12);
 }
 
 .app-title {
@@ -390,8 +392,8 @@
   border: none;
 }
 
-.submit-btn[disabled],
-.wx-login-btn[disabled] {
+.submit-btn.is-disabled,
+.wx-login-btn.is-disabled {
   opacity: 0.72;
 }
 

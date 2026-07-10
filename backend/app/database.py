@@ -5,7 +5,10 @@ import sqlite3
 import os
 import json
 
-DB_PATH = os.path.join(os.path.dirname(__file__), '..', 'whattocook.db')
+DB_PATH = os.environ.get(
+    'DATABASE_PATH',
+    os.path.join(os.path.dirname(__file__), '..', 'whattocook.db'),
+)
 SCHEMA_PATH = os.path.join(os.path.dirname(__file__), 'data', 'schema.sql')
 
 
@@ -217,7 +220,9 @@ def get_dish_steps(dish_id):
 
 # ==================== 摇杆机匹配（核心查询）====================
 
-def match_dishes_by_ingredients(ingredient_names, top_n=3, category=None, spice_level=None):
+def match_dishes_by_ingredients(
+    ingredient_names, top_n=3, category=None, spice_level=None, excluded_ingredients=None
+):
     """根据摇出的食材匹配菜品，按命中数排序"""
     if not ingredient_names:
         return []
@@ -239,12 +244,34 @@ def match_dishes_by_ingredients(ingredient_names, top_n=3, category=None, spice_
         params = list(ingredient_names)
 
         if category and category not in ('全部', 'all'):
-            sql += " AND c.name = ?"
-            params.append(category)
+            # Mini Program uses stable cuisine keys (home/sichuan/...), while
+            # older callers may still send the Chinese category label.
+            sql += " AND (c.name = ? OR d.cuisine = ?)"
+            params.extend([category, category])
 
         if spice_level and spice_level != 'all':
+            spice_aliases = {
+                'mild': '不辣',
+                'light': '微辣',
+                'medium': '中辣',
+                'hot': '重辣',
+            }
+            spice_level = spice_aliases.get(spice_level, spice_level)
             sql += " AND d.spice_level = ?"
             params.append(spice_level)
+
+        excluded_ingredients = [name for name in (excluded_ingredients or []) if name]
+        if excluded_ingredients:
+            excluded_placeholders = ','.join('?' * len(excluded_ingredients))
+            sql += f"""
+                AND NOT EXISTS (
+                    SELECT 1 FROM dish_ingredients blocked_di
+                    JOIN ingredients blocked_i ON blocked_i.id = blocked_di.ingredient_id
+                    WHERE blocked_di.dish_id = d.id
+                    AND blocked_i.name IN ({excluded_placeholders})
+                )
+            """
+            params.extend(excluded_ingredients)
 
         sql += """
             GROUP BY d.id
@@ -392,6 +419,128 @@ def clear_user_history(user_id: int):
     """清空用户历史"""
     with get_conn() as conn:
         conn.execute("DELETE FROM user_history WHERE user_id = ?", (user_id,))
+
+
+# ==================== 管理台内容维护 ====================
+
+def admin_list_dishes(keyword: str = "", page: int = 1, page_size: int = 20) -> dict:
+    offset = (page - 1) * page_size
+    where = "WHERE d.name LIKE ?" if keyword else ""
+    params = [f"%{keyword}%"] if keyword else []
+    with get_conn() as conn:
+        total = conn.execute(
+            f"SELECT COUNT(*) AS c FROM dishes d {where}", params
+        ).fetchone()["c"]
+        rows = conn.execute(
+            f"SELECT d.*, c.name AS category_name FROM dishes d "
+            f"LEFT JOIN categories c ON c.id = d.category_id {where} "
+            "ORDER BY d.id DESC LIMIT ? OFFSET ?",
+            params + [page_size, offset],
+        ).fetchall()
+    return {"total": total, "page": page, "page_size": page_size, "dishes": [dict(row) for row in rows]}
+
+
+def admin_save_dish(data: dict, dish_id: int | None = None) -> dict:
+    allowed = [
+        "name", "category_id", "category_tag", "cuisine", "tags", "cover",
+        "spice_level", "description", "difficulty", "time", "calories",
+        "protein", "fat", "carbs", "servings", "tips", "image_url",
+    ]
+    values = {key: data[key] for key in allowed if key in data}
+    if "tags" in values and isinstance(values["tags"], list):
+        values["tags"] = json.dumps(values["tags"], ensure_ascii=False)
+    if not values.get("name") and dish_id is None:
+        raise ValueError("菜品名称不能为空")
+    with get_conn() as conn:
+        if dish_id is None:
+            columns = list(values)
+            cursor = conn.execute(
+                f"INSERT INTO dishes ({', '.join(columns)}) VALUES ({', '.join('?' for _ in columns)})",
+                [values[key] for key in columns],
+            )
+            dish_id = cursor.lastrowid
+        else:
+            if not values:
+                raise ValueError("没有可更新字段")
+            conn.execute(
+                "UPDATE dishes SET " + ", ".join(f"{key} = ?" for key in values) + " WHERE id = ?",
+                [values[key] for key in values] + [dish_id],
+            )
+    return get_dish_detail(dish_id)
+
+
+def admin_delete_dish(dish_id: int) -> bool:
+    with get_conn() as conn:
+        cursor = conn.execute("DELETE FROM dishes WHERE id = ?", (dish_id,))
+    return cursor.rowcount > 0
+
+
+def admin_replace_steps(dish_id: int, steps: list[dict]) -> list[dict]:
+    with get_conn() as conn:
+        conn.execute("DELETE FROM dish_steps WHERE dish_id = ?", (dish_id,))
+        conn.executemany(
+            "INSERT INTO dish_steps (dish_id, step_index, title, description, time) VALUES (?, ?, ?, ?, ?)",
+            [(dish_id, index + 1, step.get("title", "步骤"), step.get("description", ""), step.get("time", 0)) for index, step in enumerate(steps)],
+        )
+    return get_dish_steps(dish_id)
+
+
+def admin_save_ingredient(data: dict, ingredient_id: int | None = None) -> dict:
+    with get_conn() as conn:
+        if ingredient_id is None:
+            cursor = conn.execute(
+                "INSERT INTO ingredients (name, emoji, type_id, icon) VALUES (?, ?, ?, ?)",
+                (data["name"], data.get("emoji", ""), data.get("type_id"), data.get("icon", "")),
+            )
+            ingredient_id = cursor.lastrowid
+        else:
+            conn.execute(
+                "UPDATE ingredients SET name = ?, emoji = ?, type_id = ?, icon = ? WHERE id = ?",
+                (data["name"], data.get("emoji", ""), data.get("type_id"), data.get("icon", ""), ingredient_id),
+            )
+        row = conn.execute("SELECT * FROM ingredients WHERE id = ?", (ingredient_id,)).fetchone()
+    return dict(row) if row else {}
+
+
+def admin_delete_ingredient(ingredient_id: int) -> bool:
+    with get_conn() as conn:
+        used = conn.execute("SELECT 1 FROM dish_ingredients WHERE ingredient_id = ? LIMIT 1", (ingredient_id,)).fetchone()
+        if used:
+            raise ValueError("食材已被菜品使用，不能直接删除")
+        cursor = conn.execute("DELETE FROM ingredients WHERE id = ?", (ingredient_id,))
+    return cursor.rowcount > 0
+
+
+def get_user_shopping_list(user_id: int) -> list[dict]:
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT id, name, amount, dish_id, dish_name, checked, updated_at "
+            "FROM user_shopping_items WHERE user_id = ? ORDER BY updated_at DESC",
+            (user_id,),
+        ).fetchall()
+    return [
+        {
+            "id": row["id"], "name": row["name"], "amount": row["amount"],
+            "dishId": row["dish_id"], "dishName": row["dish_name"],
+            "checked": bool(row["checked"]), "updatedAt": row["updated_at"],
+        }
+        for row in rows
+    ]
+
+
+def replace_user_shopping_list(user_id: int, items: list[dict]) -> list[dict]:
+    with get_conn() as conn:
+        conn.execute("DELETE FROM user_shopping_items WHERE user_id = ?", (user_id,))
+        conn.executemany(
+            "INSERT INTO user_shopping_items "
+            "(id, user_id, name, amount, dish_id, dish_name, checked) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            [(
+                item["id"], user_id, item["name"], item.get("amount", ""),
+                item.get("dish_id", "manual"), item.get("dish_name", "手动添加"),
+                1 if item.get("checked") else 0,
+            ) for item in items],
+        )
+    return get_user_shopping_list(user_id)
 
 
 # ==================== 菜品教学视频 ====================

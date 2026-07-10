@@ -4,24 +4,26 @@
 - JWT token 生成与验证
 - 注册/登录/微信登录核心逻辑
 """
-import os
 import time
 import logging
+import json
 from datetime import datetime
 import jwt
 import bcrypt
 from app.database import get_conn, init_db
+from app.config import (
+    ADMIN_PASSWORD,
+    ADMIN_USERNAME,
+    APP_ENV,
+    JWT_EXPIRE_HOURS,
+    JWT_SECRET,
+    WX_APPID,
+    WX_SECRET,
+)
 
 logger = logging.getLogger(__name__)
 
-# JWT 配置
-JWT_SECRET = os.environ.get("JWT_SECRET", "whattocook-secret-key-2026-please-change")
 JWT_ALGORITHM = "HS256"
-JWT_EXPIRE_HOURS = 72  # token 有效期 72 小时
-
-# 微信小程序配置（开发期可用占位值，真机调试需填真实 AppID/AppSecret）
-WX_APPID = os.environ.get("WX_APPID", "")
-WX_SECRET = os.environ.get("WX_SECRET", "")
 
 
 # ==================== 密码哈希 ====================
@@ -138,10 +140,9 @@ def register(username: str, password: str, nickname: str = "") -> dict:
     if get_user_by_username(username):
         return {"success": False, "message": "用户名已被占用"}
 
-    # 创建用户（首个用户自动成为管理员）
+    # Public registration never grants administrator privileges.
     with get_conn() as conn:
-        count = conn.execute("SELECT COUNT(*) as c FROM users").fetchone()["c"]
-        is_admin = 1 if count == 0 else 0
+        is_admin = 0
         nick = nickname or username
         cursor = conn.execute(
             "INSERT INTO users (username, password_hash, nickname, is_admin) VALUES (?, ?, ?, ?)",
@@ -202,8 +203,7 @@ def wx_login(code: str, nickname: str = "", avatar: str = "") -> dict:
         username = username + "_" + str(int(time.time()))
 
     with get_conn() as conn:
-        count = conn.execute("SELECT COUNT(*) as c FROM users").fetchone()["c"]
-        is_admin = 1 if count == 0 else 0
+        is_admin = 0
         nick = nickname or ("微信用户" + openid[-4:])
         cursor = conn.execute(
             "INSERT INTO users (username, password_hash, nickname, avatar, wx_openid, is_admin) "
@@ -228,8 +228,10 @@ def _code_to_openid(code: str) -> str | None:
     if not code:
         return None
 
-    # 未配置微信 AppID，走开发降级
+    # Missing credentials are tolerated only in local/test environments.
     if not WX_APPID or not WX_SECRET:
+        if APP_ENV == "production":
+            return None
         import hashlib
         return "dev_" + hashlib.md5(code.encode("utf-8")).hexdigest()[:24]
 
@@ -301,15 +303,53 @@ def change_password(user_id: int, old_password: str, new_password: str) -> bool:
     return True
 
 
+def get_user_preferences(user_id: int) -> dict:
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT preferences_json FROM user_preferences WHERE user_id = ?", (user_id,)
+        ).fetchone()
+    if not row:
+        return {}
+    try:
+        return json.loads(row["preferences_json"] or "{}")
+    except (TypeError, json.JSONDecodeError):
+        return {}
+
+
+def update_user_preferences(user_id: int, preferences: dict) -> dict:
+    value = json.dumps(preferences, ensure_ascii=False)
+    with get_conn() as conn:
+        conn.execute(
+            "INSERT INTO user_preferences (user_id, preferences_json, updated_at) "
+            "VALUES (?, ?, datetime('now','localtime')) "
+            "ON CONFLICT(user_id) DO UPDATE SET preferences_json = excluded.preferences_json, "
+            "updated_at = excluded.updated_at",
+            (user_id, value),
+        )
+    return preferences
+
+
 def init_admin_if_empty():
-    """如果用户表为空，提示首个注册用户将成为管理员（在 init_db 后调用）"""
+    """Create the explicitly configured bootstrap administrator once."""
+    if not ADMIN_USERNAME or not ADMIN_PASSWORD:
+        logger.info("未配置管理员引导账号，公开注册用户不会自动获得管理员权限")
+        return
     try:
         with get_conn() as conn:
-            count = conn.execute("SELECT COUNT(*) as c FROM users").fetchone()["c"]
-        if count == 0:
-            logger.info("用户表为空，首个注册的用户将自动成为管理员")
-    except Exception:
-        pass
+            existing = conn.execute(
+                "SELECT id FROM users WHERE username = ?", (ADMIN_USERNAME,)
+            ).fetchone()
+            if existing:
+                conn.execute("UPDATE users SET is_admin = 1 WHERE id = ?", (existing["id"],))
+                logger.info("已确认引导账号 %s 的管理员权限", ADMIN_USERNAME)
+                return
+            conn.execute(
+                "INSERT INTO users (username, password_hash, nickname, is_admin) VALUES (?, ?, ?, 1)",
+                (ADMIN_USERNAME, hash_password(ADMIN_PASSWORD), "系统管理员"),
+            )
+        logger.info("已创建环境变量指定的管理员账号 %s", ADMIN_USERNAME)
+    except Exception as exc:
+        logger.error("管理员引导失败：%s", exc)
 
 
 # ==================== 管理员：用户管理 ====================
@@ -364,7 +404,7 @@ def delete_user(user_id: int) -> bool:
         return cur.rowcount > 0
 
 
-def reset_user_password(user_id: int, new_password: str = "123456") -> bool:
+def reset_user_password(user_id: int, new_password: str) -> bool:
     """管理员重置用户密码"""
     if len(new_password) < 6:
         return False
@@ -387,3 +427,44 @@ def set_user_admin(user_id: int, is_admin: bool) -> dict | None:
             (1 if is_admin else 0, user_id),
         )
     return get_user_by_id(user_id)
+
+
+def record_audit_log(admin_id: int, action: str, target_type: str = "", target_id: str = "", detail: str = ""):
+    """Persist a compact audit record for privileged operations."""
+    with get_conn() as conn:
+        conn.execute(
+            "INSERT INTO admin_audit_logs (admin_id, action, target_type, target_id, detail) "
+            "VALUES (?, ?, ?, ?, ?)",
+            (admin_id, action, target_type, str(target_id), detail),
+        )
+
+
+def list_audit_logs(page: int = 1, page_size: int = 30) -> dict:
+    offset = (page - 1) * page_size
+    with get_conn() as conn:
+        total = conn.execute("SELECT COUNT(*) AS c FROM admin_audit_logs").fetchone()["c"]
+        rows = conn.execute(
+            "SELECT l.*, u.username AS admin_username FROM admin_audit_logs l "
+            "LEFT JOIN users u ON u.id = l.admin_id ORDER BY l.id DESC LIMIT ? OFFSET ?",
+            (page_size, offset),
+        ).fetchall()
+    return {"total": total, "page": page, "page_size": page_size, "logs": [dict(row) for row in rows]}
+
+
+def get_admin_dashboard() -> dict:
+    with get_conn() as conn:
+        users = conn.execute(
+            "SELECT COUNT(*) total, SUM(is_admin) admins, "
+            "SUM(CASE WHEN is_active = 0 THEN 1 ELSE 0 END) disabled FROM users"
+        ).fetchone()
+        dishes = conn.execute("SELECT COUNT(*) AS c FROM dishes").fetchone()["c"]
+        videos = conn.execute("SELECT COUNT(*) AS c FROM dish_videos").fetchone()["c"]
+        favorites = conn.execute("SELECT COUNT(*) AS c FROM user_favorites").fetchone()["c"]
+    return {
+        "users": users["total"] or 0,
+        "admins": users["admins"] or 0,
+        "disabled_users": users["disabled"] or 0,
+        "dishes": dishes,
+        "videos": videos,
+        "favorites": favorites,
+    }

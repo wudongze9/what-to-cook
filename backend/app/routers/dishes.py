@@ -11,6 +11,7 @@ class ShuffleRequest(BaseModel):
     selected_ingredients: list[str] = []
     category: Optional[str] = None
     spice_level: Optional[str] = None
+    excluded_ingredients: list[str] = []
 
 
 @router.get("/categories")
@@ -79,7 +80,27 @@ async def random_dish_with_ingredients(req: ShuffleRequest):
         ingredient_names=req.selected_ingredients,
         category=req.category,
         spice_level=req.spice_level,
+        excluded_ingredients=req.excluded_ingredients,
     )
+    relaxed_filters = []
+    if not matched and req.spice_level and req.spice_level != 'all':
+        matched = db.match_dishes_by_ingredients(
+            ingredient_names=req.selected_ingredients,
+            category=req.category,
+            spice_level=None,
+            excluded_ingredients=req.excluded_ingredients,
+        )
+        if matched:
+            relaxed_filters.append('spice_level')
+    if not matched and req.category and req.category not in ('全部', 'all'):
+        matched = db.match_dishes_by_ingredients(
+            ingredient_names=req.selected_ingredients,
+            category=None,
+            spice_level=None,
+            excluded_ingredients=req.excluded_ingredients,
+        )
+        if matched:
+            relaxed_filters.append('category')
     # 同时返回摇出的食材详情
     all_ings = db.get_all_ingredients()
     ing_map = {i['name']: i for i in all_ings}
@@ -89,7 +110,8 @@ async def random_dish_with_ingredients(req: ShuffleRequest):
     return {
         "selected_ingredients": selected,
         "matched_dish": matched[0] if matched else None,
-        "matched_dishes": matched
+        "matched_dishes": matched,
+        "match_meta": {"relaxed_filters": relaxed_filters}
     }
 
 

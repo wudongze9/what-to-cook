@@ -213,10 +213,7 @@
   font-weight: 800;
   color: #2a1735;
   line-height: 1.25;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  overflow: visible;
   word-break: break-all;
 }
 
@@ -256,7 +253,7 @@
 }
 
 .substitute-group {
-  width: 232rpx;
+  width: 252rpx;
   min-height: 170rpx;
   box-sizing: border-box;
   flex-shrink: 0;
@@ -272,7 +269,7 @@
 
 .substitute-source-wrap {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8rpx;
   min-width: 0;
 }
@@ -289,38 +286,43 @@
   font-weight: 800;
   color: #2a1735;
   line-height: 1.2;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: visible;
+  white-space: normal;
+  word-break: break-all;
 }
 
 .substitute-options {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  flex-wrap: nowrap;
   gap: 8rpx;
   white-space: normal;
 }
 
 .substitute-chip {
-  max-width: 94rpx;
-  display: inline-flex;
-  align-items: center;
+  width: 100%;
+  min-height: 52rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
   gap: 6rpx;
-  padding: 6rpx 14rpx;
-  border-radius: 999rpx;
+  padding: 8rpx 12rpx;
+  border-radius: 14rpx;
   background: #ffffff;
   border: 1rpx solid #ffd7c2;
   color: #5b2b6f;
   font-size: 22rpx;
   font-weight: 700;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .substitute-chip text {
+  flex: 1;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: visible;
+  white-space: normal;
+  word-break: break-all;
+  line-height: 1.3;
 }
 
 .substitute-icon {

@@ -38,8 +38,16 @@
   <!-- 模式3：可播放视频 -->
   <block wx:elif="{{mode === 'playable' && video}}">
     <view class="video-container">
-      <video class="player" src="{{video.videoUrl}}" poster="{{videoPoster}}" controls autoplay show-center-play-btn="{{false}}" enable-play-gesture object-fit="contain" binderror="onVideoError" />
+      <video id="nativePlayer" class="player" src="{{video.videoUrl}}" poster="{{videoPoster}}" controls autoplay show-progress show-play-btn show-fullscreen-btn show-center-play-btn enable-play-gesture enable-progress-gesture vslide-gesture vslide-gesture-in-fullscreen show-screen-lock-button object-fit="contain" bindtimeupdate="onVideoTimeUpdate" binderror="onVideoError" />
     </view>
+    <view class="native-controls">
+      <view class="skip-btn" bindtap="onSkipVideo" data-seconds="-10">后退 10秒</view>
+      <view class="rate-list">
+        <view wx:for="{{playbackRates}}" wx:key="*this" class="rate-item {{playbackRate === item ? 'active' : ''}}" bindtap="onPlaybackRate" data-rate="{{item}}">{{item}}x</view>
+      </view>
+      <view class="skip-btn" bindtap="onSkipVideo" data-seconds="10">前进 10秒</view>
+    </view>
+    <text class="play-progress">{{currentTimeText}} / {{durationText}}</text>
     <view class="video-detail">
       <text class="video-title">{{video.title}}</text>
       <view class="video-meta">
@@ -89,11 +97,18 @@
       </view>
     </view>
     <view class="external-actions">
-      <button class="btn-primary" bindtap="onOpenExternal">打开 {{sourceLabels[video.source] || '外部'}} 视频</button>
-      <button class="btn-secondary" bindtap="onCopyLink">复制链接</button>
+      <button class="external-open-btn" bindtap="onOpenExternal">
+        <image class="external-open-icon" src="/images/icons/play.svg" mode="aspectFit" />
+        <text>打开 {{sourceLabels[video.source] || '外部'}}</text>
+      </button>
+      <button class="external-copy-btn" bindtap="onCopyLink">
+        <image class="external-copy-icon" src="/images/icons/copy-link.svg" mode="aspectFit" />
+        <text>复制</text>
+      </button>
     </view>
     <view class="external-tip">
-      <text class="tip-text">ℹ️ 小程序不支持直接播放{{sourceLabels[video.source] || '外部'}}视频，点击上方按钮复制链接后在浏览器打开。</text>
+      <image class="tip-icon" src="/images/icons/play.svg" mode="aspectFit" />
+      <text class="tip-text">当前是第三方网页播放器，快进和倍速由 B站页面提供，小程序无法接管。后台补充视频直链后会自动启用原生倍速、进度拖动和 10 秒快进。</text>
     </view>
     <view wx:if="{{relatedVideos.length > 0}}" class="related-section">
       <text class="related-title">相关推荐</text>

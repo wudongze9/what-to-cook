@@ -23,6 +23,11 @@ function isAll(value) {
   return !value || value === 'all' || value === '全部'
 }
 
+function normalizeSpiceLevel(value) {
+  const aliases = { mild: '不辣', light: '微辣', medium: '中辣', hot: '重辣' }
+  return aliases[value] || value
+}
+
 function ingredientType(name) {
   const found = allIngredients.find(item => item.name === name)
   return found ? found.type : ''
@@ -40,7 +45,8 @@ function scoreDish(dish, selectedIngredients, category = 'all', spiceLevel = 'al
   const exactMatches = selectedNames.filter(name => dishNames.includes(name)).length
   const typeMatches = selectedTypes.filter(type => dishTypes.includes(type)).length
   const categoryMatch = isAll(category) || dish.cuisine === category || dish.category === category
-  const spiceMatch = isAll(spiceLevel) || dish.spiceLevel === spiceLevel
+  const normalizedSpice = normalizeSpiceLevel(spiceLevel)
+  const spiceMatch = isAll(normalizedSpice) || dish.spiceLevel === normalizedSpice
   const extraCount = Math.max(0, dishNames.length - exactMatches)
   const missingCount = Math.max(0, selectedNames.length - exactMatches)
 
@@ -99,7 +105,7 @@ function matchDishByIngredients(selectedIngredients, category, spiceLevel) {
  * @param {Array} options.selectedIngredients - 可选，摇杆机摇出的食材名数组（优先使用）
  */
 function performShuffle(options = {}) {
-  const { category, spiceLevel = 'all', ingredientCount = 3, ingredientType = 'all', selectedIngredients: passedNames, preferredDishId } = options
+  const { category, spiceLevel = 'all', ingredientCount = 3, ingredientType = 'all', selectedIngredients: passedNames, preferredDishId, excludedIngredients = [] } = options
 
   let selectedIngredients
 
@@ -115,7 +121,14 @@ function performShuffle(options = {}) {
   }
 
   // 匹配菜品：主推荐 + 多个备选组合，避免结果页只有一种选择。
-  const matchedDishes = matchTopDishes(selectedIngredients, RECOMMENDATION_COUNT, category, spiceLevel, preferredDishId)
+  const matchedDishes = matchTopDishes(
+    selectedIngredients,
+    RECOMMENDATION_COUNT,
+    category,
+    spiceLevel,
+    preferredDishId,
+    excludedIngredients
+  )
 
   return {
     selectedIngredients,
@@ -131,9 +144,23 @@ function performShuffle(options = {}) {
  * @param {number} topN - 返回前 N 个
  * @param {string} category - 可选，筛选菜系
  */
-function matchTopDishes(selectedIngredients, topN = 3, category = 'all', spiceLevel = 'all', preferredDishId) {
+function matchTopDishes(selectedIngredients, topN = 3, category = 'all', spiceLevel = 'all', preferredDishId, excludedIngredients = []) {
   const selectedNames = selectedIngredients.map(i => i.name || i).filter(Boolean)
-  let scored = dishes.map(dish => scoreDish(dish, selectedIngredients, category, spiceLevel, preferredDishId))
+  const excluded = new Set((excludedIngredients || []).filter(Boolean))
+  let candidates = dishes.filter(dish => !dishIngredientNames(dish).some(name => excluded.has(name)))
+
+  if (!isAll(category)) {
+    const categoryMatches = candidates.filter(dish => dish.cuisine === category || dish.category === category)
+    if (categoryMatches.length) candidates = categoryMatches
+  }
+
+  const normalizedSpice = normalizeSpiceLevel(spiceLevel)
+  if (!isAll(normalizedSpice)) {
+    const spiceMatches = candidates.filter(dish => dish.spiceLevel === normalizedSpice)
+    if (spiceMatches.length) candidates = spiceMatches
+  }
+
+  let scored = candidates.map(dish => scoreDish(dish, selectedIngredients, category, normalizedSpice, preferredDishId))
 
   // 摇杆已经给出食材时，推荐必须优先命中这些食材。只要有命中菜，就不展示 0 命中的菜。
   if (selectedNames.length) {

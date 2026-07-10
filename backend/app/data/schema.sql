@@ -122,6 +122,40 @@ CREATE INDEX IF NOT EXISTS idx_users_openid ON users(wx_openid);
 CREATE INDEX IF NOT EXISTS idx_favorites_user ON user_favorites(user_id);
 CREATE INDEX IF NOT EXISTS idx_history_user ON user_history(user_id);
 
+CREATE TABLE IF NOT EXISTS user_preferences (
+    user_id          INTEGER PRIMARY KEY,
+    preferences_json TEXT NOT NULL DEFAULT '{}',
+    updated_at       TEXT DEFAULT (datetime('now','localtime')),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS user_shopping_items (
+    id         TEXT NOT NULL,
+    user_id    INTEGER NOT NULL,
+    name       TEXT NOT NULL,
+    amount     TEXT DEFAULT '',
+    dish_id    TEXT DEFAULT 'manual',
+    dish_name  TEXT DEFAULT '手动添加',
+    checked    INTEGER DEFAULT 0,
+    updated_at TEXT DEFAULT (datetime('now','localtime')),
+    PRIMARY KEY (id, user_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_shopping_user ON user_shopping_items(user_id);
+
+-- 管理员敏感操作审计
+CREATE TABLE IF NOT EXISTS admin_audit_logs (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    admin_id    INTEGER NOT NULL,
+    action      TEXT NOT NULL,
+    target_type TEXT DEFAULT '',
+    target_id   TEXT DEFAULT '',
+    detail      TEXT DEFAULT '',
+    created_at  TEXT DEFAULT (datetime('now','localtime')),
+    FOREIGN KEY (admin_id) REFERENCES users(id) ON DELETE RESTRICT
+);
+CREATE INDEX IF NOT EXISTS idx_admin_audit_created ON admin_audit_logs(created_at DESC);
+
 -- ⑩ 菜品教学视频表（一菜多视频，外链为主）
 CREATE TABLE IF NOT EXISTS dish_videos (
     id                        TEXT PRIMARY KEY,

@@ -13,6 +13,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from app.deps import get_current_user
 from app import database as db
 from app.models.schemas import FavoriteRequest
+from app.models.schemas import ShoppingListRequest
 
 router = APIRouter()
 
@@ -61,3 +62,17 @@ async def clear_history(user: dict = Depends(get_current_user)):
     """清空推荐历史"""
     db.clear_user_history(user["id"])
     return {"message": "历史已清空"}
+
+
+@router.get("/shopping-list")
+async def get_shopping_list(user: dict = Depends(get_current_user)):
+    return {"items": db.get_user_shopping_list(user["id"])}
+
+
+@router.put("/shopping-list")
+async def replace_shopping_list(
+    req: ShoppingListRequest,
+    user: dict = Depends(get_current_user),
+):
+    items = [item.model_dump() for item in req.items]
+    return {"items": db.replace_user_shopping_list(user["id"], items)}

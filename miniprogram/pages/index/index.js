@@ -20,11 +20,13 @@ Page({
 
   onLoad() {
     const prefs = getUserPreferences()
+    const spiceAliases = { mild: '不辣', light: '微辣', medium: '中辣', hot: '重辣' }
+    const savedSpice = prefs.default_spice || prefs.spiceLevel || this.data.activeSpiceLevel
     this.setData({
       activeCount: prefs.ingredientCount || this.data.activeCount,
       activeIngredientType: prefs.ingredientType || this.data.activeIngredientType,
       activeCuisine: prefs.cuisine || this.data.activeCuisine,
-      activeSpiceLevel: prefs.spiceLevel || this.data.activeSpiceLevel
+      activeSpiceLevel: spiceAliases[savedSpice] || savedSpice
     })
     this._loadHistory()
   },
@@ -59,13 +61,16 @@ Page({
     const selectedIngredients = (e && e.detail && e.detail.selectedIngredients) || []
     const preferredDishId = e && e.detail && e.detail.preferredDishId
 
+    const preferences = getUserPreferences()
+    const excludedIngredients = (preferences.disliked_ingredients || []).concat(preferences.allergens || [])
     const options = {
       category: this.data.activeCuisine,
       spiceLevel: this.data.activeSpiceLevel,
       ingredientCount: this.data.activeCount,
       ingredientType: this.data.activeIngredientType,
       selectedIngredients: selectedIngredients.map(i => i.name),
-      preferredDishId
+      preferredDishId,
+      excludedIngredients
     }
 
     try {
@@ -75,7 +80,10 @@ Page({
       this.setData({ spinning: false })
 
       if (!dish) {
-        wx.showToast({ title: '暂时没找到合适菜品', icon: 'none' })
+        wx.showToast({
+          title: excludedIngredients.length ? '当前忌口条件下暂无合适菜品' : '暂时没找到合适菜品',
+          icon: 'none'
+        })
         return
       }
 
@@ -85,6 +93,7 @@ Page({
       app.globalData.matchedDishes = matchedDishes
       setTimeout(() => { wx.navigateTo({ url: '/pages/result/result' }) }, 420)
     } catch (err) {
+      console.error('[shuffle] recommendation failed', err)
       this.setData({ spinning: false })
       wx.showToast({ title: '推荐失败，请再试一次', icon: 'none' })
     }
@@ -99,7 +108,7 @@ Page({
   onSpiceTap(e) {
     const activeSpiceLevel = e.currentTarget.dataset.spice
     this.setData({ activeSpiceLevel })
-    this._savePreferences({ spiceLevel: activeSpiceLevel })
+    this._savePreferences({ spiceLevel: activeSpiceLevel, default_spice: activeSpiceLevel })
   },
 
   onCountTap(e) {

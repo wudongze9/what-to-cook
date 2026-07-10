@@ -24,7 +24,7 @@
       <text>今日灵感厨房</text>
     </view>
     <view class="title-wrap">
-      <image class="title-icon" src="/images/icons/chef.svg" mode="aspectFit" />
+      <image class="title-icon brand-title-icon" src="/images/brand-logo.png" mode="aspectFill" />
       <text class="title">今天吃什么</text>
     </view>
     <text class="subtitle">拉下摇杆，把冰箱里的可能性变成一道菜</text>

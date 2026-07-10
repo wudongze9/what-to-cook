@@ -4,7 +4,7 @@
     <image class="ai-header-leaf" src="/images/icons/leaf.svg" mode="aspectFit" />
     <view class="ai-profile">
       <view class="ai-avatar-wrap {{isSpeaking ? 'speaking' : ''}} {{isTyping ? 'thinking' : ''}}">
-        <image class="ai-avatar" src="/images/icons/ai.svg" mode="aspectFit" />
+        <image class="ai-avatar" src="/images/ai-chef-v2.png" mode="aspectFill" />
         <view class="avatar-pulse"></view>
       </view>
       <view class="ai-info">
@@ -23,6 +23,9 @@
           </button>
           <button class="mini-action-btn" bindtap="onSuggestionTap">
             <image class="mini-action-icon" src="/images/icons/dice.svg" mode="aspectFit" />
+          </button>
+          <button class="mini-action-btn" bindtap="onNewConversation" aria-label="开始新对话">
+            <image class="mini-action-icon" src="/images/icons/new-chat.svg" mode="aspectFit" />
           </button>
         </view>
       </view>
@@ -57,14 +60,32 @@
       </view>
     </view>
 
+    <view wx:if="{{messages.length <= 1}}" class="quick-questions">
+      <text class="quick-label">你也可以这样问</text>
+      <scroll-view scroll-x class="quick-scroll" show-scrollbar="{{false}}">
+        <view class="quick-list">
+          <view
+            wx:for="{{quickQuestions}}"
+            wx:key="*this"
+            class="quick-item"
+            bindtap="onQuickQuestion"
+            data-question="{{item}}"
+          >
+            {{item}}
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
     <view wx:for="{{messages}}" wx:key="index" id="msg-{{index}}" class="msg-row">
       <chat-bubble
+        wx:if="{{item.text}}"
         message="{{item.text}}"
         isUser="{{item.isUser}}"
         showAvatar="{{!item.isUser && (index === 0 || messages[index-1].isUser)}}"
       />
       <view
-        wx:if="{{!item.isUser}}"
+        wx:if="{{!item.isUser && item.text && (!isTyping || index !== messages.length - 1)}}"
         class="msg-tts-row"
         catchtap="onToggleTTS"
         data-index="{{index}}"
@@ -78,7 +99,7 @@
       </view>
     </view>
 
-    <view wx:if="{{showSuggestion}}" class="suggestion-card" bindtap="onSuggestionTap">
+    <view wx:if="{{showSuggestion && !isTyping}}" class="suggestion-card" bindtap="onSuggestionTap">
       <image class="suggestion-icon" src="/images/icons/dice.svg" mode="aspectFit" />
       <view>
         <text class="suggestion-title">还没决定吃什么？</text>
@@ -86,7 +107,12 @@
       </view>
     </view>
 
-    <view wx:if="{{isTyping}}" class="typing-indicator" id="typing">
+    <view wx:if="{{serviceNotice}}" class="service-notice">
+      <text>{{serviceNotice}}</text>
+      <button wx:if="{{lastFailedQuestion}}" class="retry-btn" bindtap="onRetryLast">重试</button>
+    </view>
+
+    <view wx:if="{{isTyping && (!messages.length || !messages[messages.length - 1].text)}}" class="typing-indicator" id="typing">
       <view class="typing-dots">
         <view class="dot"></view>
         <view class="dot"></view>
@@ -98,23 +124,6 @@
     <view id="msg-bottom" class="chat-bottom-spacer"></view>
   </scroll-view>
 
-  <view wx:if="{{messages.length <= 1}}" class="quick-questions">
-    <text class="quick-label">试试这样问</text>
-    <scroll-view scroll-x class="quick-scroll" show-scrollbar="{{false}}">
-      <view class="quick-list">
-        <view
-          wx:for="{{quickQuestions}}"
-          wx:key="*this"
-          class="quick-item"
-          bindtap="onQuickQuestion"
-          data-question="{{item}}"
-        >
-          {{item}}
-        </view>
-      </view>
-    </scroll-view>
-  </view>
-
   <view class="input-area">
     <view class="input-row">
       <input
@@ -125,6 +134,7 @@
         bindconfirm="onSend"
         confirm-type="send"
         adjust-position="{{true}}"
+        cursor-spacing="{{176}}"
       />
       <view
         class="action-btn voice-btn {{isRecording ? 'recording' : ''}}"
@@ -132,8 +142,13 @@
       >
         <image class="input-icon" src="/images/icons/mic.svg" mode="aspectFit" />
       </view>
-      <button class="send-text-btn {{(inputText || isTyping) ? 'active' : ''}} {{(!inputText && !isTyping) ? 'disabled' : ''}}" bindtap="onSend" disabled="{{!inputText && !isTyping}}">
-        {{isTyping ? '停止' : '发送'}}
+      <button
+        class="send-icon-btn {{(inputText || isTyping) ? 'active' : ''}} {{(!inputText && !isTyping) ? 'disabled' : ''}}"
+        bindtap="onSend"
+        disabled="{{!inputText && !isTyping}}"
+        aria-label="{{isTyping ? '停止生成' : '发送消息'}}"
+      >
+        <image class="send-icon" src="{{isTyping ? '/images/icons/stop.svg' : '/images/icons/send.svg'}}" mode="aspectFit" />
       </button>
     </view>
   </view>

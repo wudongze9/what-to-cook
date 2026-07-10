@@ -89,9 +89,10 @@ Component({
 
     _getPool() {
       const ingredientType = this.properties.ingredientType
-      const pool = (!ingredientType || ingredientType === 'all')
+      const filtered = (!ingredientType || ingredientType === 'all')
         ? allIngredients
         : allIngredients.filter(i => i.type === ingredientType)
+      const pool = filtered.length ? filtered : allIngredients
       return pool.map(enrichIngredient)
     },
 

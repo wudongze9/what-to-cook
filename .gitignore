@@ -15,6 +15,11 @@ build/
 miniprogram/miniprogram_npm/
 miniprogram/package-lock.json
 
+# Web admin
+admin-web/node_modules/
+admin-web/dist/
+admin-web/.env
+
 # IDE
 .vscode/
 .idea/

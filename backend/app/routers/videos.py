@@ -5,6 +5,7 @@ from app.database import (
     get_video_sources, add_dish_video, delete_dish_video
 )
 from app.deps import require_admin
+from app.services import auth_service
 
 router = APIRouter()
 
@@ -40,7 +41,10 @@ async def admin_add_video(data: dict = Body(...), user: dict = Depends(require_a
     """管理员新增视频"""
     if not data.get("dish_id") or not data.get("title"):
         raise HTTPException(status_code=400, detail="dish_id 和 title 必填")
-    return add_dish_video(data)
+    result = add_dish_video(data)
+    video_id = (result.get("video") or {}).get("id", data.get("id", ""))
+    auth_service.record_audit_log(user["id"], "save_video", "video", video_id)
+    return result
 
 
 @router.delete("/admin/{video_id}")
@@ -49,6 +53,7 @@ async def admin_delete_video(video_id: str, user: dict = Depends(require_admin))
     ok = delete_dish_video(video_id)
     if not ok:
         raise HTTPException(status_code=404, detail="视频不存在")
+    auth_service.record_audit_log(user["id"], "delete_video", "video", video_id)
     return {"message": "已删除"}
 
 

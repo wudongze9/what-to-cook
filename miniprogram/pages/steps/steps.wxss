@@ -107,10 +107,11 @@
   padding: 18rpx;
   border-radius: 28rpx;
   background: rgba(255,255,255,0.94);
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   gap: 14rpx;
-  flex-wrap: wrap;
+  box-sizing: border-box;
 }
 
 .timer-icon {
@@ -128,15 +129,19 @@
 }
 
 .timer-actions {
-  margin-left: auto;
+  grid-column: 1 / -1;
+  width: 100%;
+  margin-left: 0;
   display: flex;
-  gap: 10rpx;
-  flex-shrink: 0;
+  gap: 12rpx;
+  box-sizing: border-box;
 }
 
 .timer-btn {
-  min-width: 94rpx;
-  height: 58rpx;
+  flex: 1;
+  min-width: 0;
+  height: 64rpx;
+  margin: 0;
   padding: 0 18rpx;
   border: none;
   border-radius: 999rpx;
@@ -147,6 +152,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .timer-btn::after {
@@ -156,6 +162,7 @@
 .timer-btn.primary {
   color: #fff;
   background: linear-gradient(135deg, #ff3d6e 0%, #ff7a1a 100%);
+  box-shadow: 0 8rpx 18rpx rgba(255, 90, 31, 0.22);
 }
 
 .timer-btn-icon {

@@ -4,6 +4,6 @@
 
   <!-- 气泡 -->
   <view class="bubble {{isUser ? 'user-bubble' : 'ai-bubble'}}">
-    <text class="bubble-text">{{message}}</text>
+    <rich-text class="bubble-text" nodes="{{renderedMessage}}"></rich-text>
   </view>
 </view>

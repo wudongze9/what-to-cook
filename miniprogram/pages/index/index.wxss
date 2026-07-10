@@ -147,6 +147,11 @@
   filter: drop-shadow(0 10rpx 20rpx rgba(255,107,26,0.22));
 }
 
+.brand-title-icon {
+  border-radius: 24rpx;
+  box-shadow: 0 12rpx 28rpx rgba(255, 90, 31, 0.22);
+}
+
 .title {
   font-size: 58rpx;
   font-weight: 900;

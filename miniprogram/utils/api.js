@@ -3,9 +3,11 @@
  * 优先调用 FastAPI 后端；后端不可用时自动降级到本地 Mock。
  */
 
-const BASE_URL = 'http://localhost:8001/api'
-// 微信开发者工具默认会拦截 localhost 请求；本地预览先走 mock，联调后端时再改为 true。
-const USE_API = true
+const runtime = require('../config/env')
+const BASE_URL = runtime.API_BASE_URL
+const USE_API = runtime.USE_API
+const REQUEST_TIMEOUT = runtime.REQUEST_TIMEOUT
+const STREAM_TIMEOUT = runtime.STREAM_TIMEOUT
 const { normalizeDish, normalizeDishList, normalizeShuffleResult } = require('./video-match')
 const { getToken } = require('./storage')
 
@@ -19,6 +21,12 @@ function videoMatchesCategory(video, category) {
   return video.category === category || categories.includes(category)
 }
 
+function normalizeRequestError(error, url, statusCode) {
+  if (error && error.detail) return error
+  const message = (error && error.errMsg) || '网络请求失败，请稍后重试'
+  return { detail: message, statusCode, url: BASE_URL + url, cause: error }
+}
+
 function request(url, options = {}) {
   if (!USE_API) {
     return Promise.reject({
@@ -27,7 +35,10 @@ function request(url, options = {}) {
     })
   }
 
-  return new Promise((resolve, reject) => {
+  const method = options.method || 'GET'
+  const retries = options.retries === undefined ? (method === 'GET' ? 1 : 0) : options.retries
+
+  const execute = (attempt) => new Promise((resolve, reject) => {
     const header = { 'Content-Type': 'application/json' }
     const token = getToken()
     if (token) {
@@ -35,10 +46,10 @@ function request(url, options = {}) {
     }
     wx.request({
       url: BASE_URL + url,
-      method: options.method || 'GET',
+      method,
       data: options.data,
       header: Object.assign(header, options.header || {}),
-      timeout: options.timeout || 3500,
+      timeout: options.timeout || REQUEST_TIMEOUT,
       success: (res) => {
         if (res.statusCode === 200) {
           resolve(res.data)
@@ -46,13 +57,18 @@ function request(url, options = {}) {
           // token 失效，清除登录态
           const { removeToken } = require('./storage')
           removeToken()
-          reject(res.data)
+          reject(Object.assign(normalizeRequestError(res.data, url, res.statusCode), { statusCode: res.statusCode }))
         } else {
-          reject(res.data)
+          reject(Object.assign(normalizeRequestError(res.data, url, res.statusCode), { statusCode: res.statusCode }))
         }
       },
-      fail: reject
+      fail: (error) => reject(normalizeRequestError(error, url, 0))
     })
+  })
+
+  return execute(0).catch((error) => {
+    if (retries <= 0) throw error
+    return new Promise((resolve) => setTimeout(resolve, 350)).then(() => execute(1))
   })
 }
 
@@ -73,7 +89,7 @@ function getCategories() {
 }
 
 function shuffleDish(options = {}) {
-  const { category, spiceLevel, ingredientCount, ingredientType, selectedIngredients, preferredDishId } = options
+  const { category, spiceLevel, ingredientCount, ingredientType, selectedIngredients, preferredDishId, excludedIngredients } = options
   const { performShuffle } = require('../utils/shuffle')
 
   // 有摇出食材时走 POST，把食材作为匹配依据传给后端
@@ -85,7 +101,8 @@ function shuffleDish(options = {}) {
           selected_ingredients: selectedIngredients,
           preferred_dish_id: preferredDishId,
           category: (category && category !== '全部' && category !== 'all') ? category : null,
-          spice_level: (spiceLevel && spiceLevel !== 'all') ? spiceLevel : null
+          spice_level: (spiceLevel && spiceLevel !== 'all') ? spiceLevel : null,
+          excluded_ingredients: excludedIngredients || []
         }
       })
     }
@@ -100,7 +117,12 @@ function shuffleDish(options = {}) {
   }
 
   return withFallback(
-    () => apiCall().then(normalizeShuffleResult),
+    () => apiCall().then(normalizeShuffleResult).then(result => {
+      if (!result || !result.matchedDish) {
+        return Promise.reject({ detail: '后端没有返回匹配菜品', code: 'EMPTY_RECOMMENDATION' })
+      }
+      return result
+    }),
     () => normalizeShuffleResult(performShuffle(options))
   )
 }
@@ -249,7 +271,7 @@ function sendChatMessage(message, context = []) {
     () => request('/chat', {
       method: 'POST',
       data: { message, context },
-      timeout: 120000
+      timeout: STREAM_TIMEOUT
     }).then(r => r.reply),
     () => getAIReply(message)
   )
@@ -372,7 +394,7 @@ function sendChatMessageStream(message, context = [], handlers = {}) {
       method: 'POST',
       data: { message, context },
       header,
-      timeout: 120000,
+      timeout: STREAM_TIMEOUT,
       enableChunked: true,
       responseType: 'arraybuffer',
       success: (res) => {
@@ -511,6 +533,39 @@ function updateProfile(data) {
   return request('/auth/profile', { method: 'PUT', data })
 }
 
+function getPreferences() {
+  return request('/auth/preferences').then(r => r.preferences || {})
+}
+
+function updatePreferences(data) {
+  return request('/auth/preferences', { method: 'PUT', data })
+}
+
+function uploadAvatar(filePath) {
+  return new Promise((resolve, reject) => {
+    const token = getToken()
+    wx.uploadFile({
+      url: BASE_URL + '/auth/avatar',
+      filePath,
+      name: 'file',
+      header: token ? { Authorization: 'Bearer ' + token } : {},
+      timeout: REQUEST_TIMEOUT,
+      success: (response) => {
+        let data = response.data
+        try { data = JSON.parse(response.data) } catch (e) {}
+        if (response.statusCode === 200) {
+          if (data && data.avatar && data.avatar.indexOf('/') === 0) {
+            data.avatar = BASE_URL.replace(/\/api\/?$/, '') + data.avatar
+          }
+          resolve(data)
+        }
+        else reject(normalizeRequestError(data, '/auth/avatar'))
+      },
+      fail: (error) => reject(normalizeRequestError(error, '/auth/avatar'))
+    })
+  })
+}
+
 function changePassword(oldPassword, newPassword) {
   return request('/auth/password', {
     method: 'PUT',
@@ -546,6 +601,26 @@ function addMyHistory(dishId) {
 
 function clearMyHistory() {
   return request('/user/history', { method: 'DELETE' })
+}
+
+function getCloudShoppingList() {
+  return request('/user/shopping-list').then(r => r.items || [])
+}
+
+function syncCloudShoppingList(items) {
+  return request('/user/shopping-list', {
+    method: 'PUT',
+    data: {
+      items: (items || []).map(item => ({
+        id: String(item.id),
+        name: item.name,
+        amount: item.amount || '',
+        dish_id: String(item.dishId || 'manual'),
+        dish_name: item.dishName || '手动添加',
+        checked: !!item.checked
+      }))
+    }
+  })
 }
 
 // ==================== 管理员 ====================
@@ -598,6 +673,9 @@ module.exports = {
   wxLogin,
   getMe,
   updateProfile,
+  getPreferences,
+  updatePreferences,
+  uploadAvatar,
   changePassword,
   getMyFavorites,
   addMyFavorite,
@@ -606,6 +684,8 @@ module.exports = {
   getMyHistory,
   addMyHistory,
   clearMyHistory,
+  getCloudShoppingList,
+  syncCloudShoppingList,
   adminGetUsers,
   adminToggleUserActive,
   adminSetUserAdmin,

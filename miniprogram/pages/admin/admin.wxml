@@ -1,4 +1,31 @@
 <view class="page-admin">
+  <view class="admin-hero">
+    <view class="admin-title-row">
+      <view class="admin-icon-wrap">
+        <image class="admin-icon" src="/images/icons/user.svg" mode="aspectFit" />
+      </view>
+      <view class="admin-copy">
+        <text class="admin-title">用户与权限</text>
+        <text class="admin-subtitle">管理账号状态、角色和安全操作</text>
+      </view>
+      <text class="admin-status">系统正常</text>
+    </view>
+    <view class="admin-metrics">
+      <view class="metric-item">
+        <text class="metric-value">{{total}}</text>
+        <text class="metric-label">全部用户</text>
+      </view>
+      <view class="metric-item">
+        <text class="metric-value">{{adminCount}}</text>
+        <text class="metric-label">本页管理员</text>
+      </view>
+      <view class="metric-item">
+        <text class="metric-value danger">{{disabledCount}}</text>
+        <text class="metric-label">本页已禁用</text>
+      </view>
+    </view>
+  </view>
+
   <view class="search-bar">
     <input
       class="search-input"
