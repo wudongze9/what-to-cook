@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional
 
 
@@ -54,8 +54,8 @@ class Video(BaseModel):
 
 
 class ChatRequest(BaseModel):
-    message: str
-    context: list[dict] = []
+    message: str = Field(min_length=1, max_length=1000)
+    context: list[dict] = Field(default_factory=list, max_length=12)
 
 
 class ChatResponse(BaseModel):
@@ -137,7 +137,14 @@ class ShoppingItemRequest(BaseModel):
     dish_id: str = "manual"
     dish_name: str = "手动添加"
     checked: bool = False
+    updated_at: int = 0
 
 
 class ShoppingListRequest(BaseModel):
     items: list[ShoppingItemRequest] = []
+
+
+class UserSyncRequest(BaseModel):
+    favorite_ids: list[int] = []
+    history_ids: list[int] = []
+    shopping_items: list[ShoppingItemRequest] = []

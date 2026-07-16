@@ -6,20 +6,23 @@ const ACTIVE_ENV = 'development'
 
 const profiles = {
   development: {
-    API_BASE_URL: 'http://localhost:8001/api',
+    API_BASE_URL: 'http://127.0.0.1:8002/api',
     USE_API: true,
+    DEMO_MODE: false,
     REQUEST_TIMEOUT: 8000,
     STREAM_TIMEOUT: 120000
   },
   test: {
     API_BASE_URL: 'https://test-api.example.com/api',
     USE_API: true,
+    DEMO_MODE: false,
     REQUEST_TIMEOUT: 10000,
     STREAM_TIMEOUT: 120000
   },
   production: {
     API_BASE_URL: 'https://api.example.com/api',
     USE_API: true,
+    DEMO_MODE: false,
     REQUEST_TIMEOUT: 10000,
     STREAM_TIMEOUT: 120000
   }
@@ -31,6 +34,8 @@ if (!config) throw new Error('Unknown Mini Program environment: ' + ACTIVE_ENV)
 if (ACTIVE_ENV === 'production' && /example\.com|localhost/.test(config.API_BASE_URL)) {
   throw new Error('Configure the production HTTPS API_BASE_URL before release')
 }
+if (ACTIVE_ENV === 'production' && config.DEMO_MODE) {
+  throw new Error('DEMO_MODE must be disabled in production')
+}
 
 module.exports = Object.assign({ ENV_NAME: ACTIVE_ENV }, config)
-

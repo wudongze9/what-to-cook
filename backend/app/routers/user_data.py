@@ -13,7 +13,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from app.deps import get_current_user
 from app import database as db
 from app.models.schemas import FavoriteRequest
-from app.models.schemas import ShoppingListRequest
+from app.models.schemas import ShoppingListRequest, UserSyncRequest
 
 router = APIRouter()
 
@@ -76,3 +76,11 @@ async def replace_shopping_list(
 ):
     items = [item.model_dump() for item in req.items]
     return {"items": db.replace_user_shopping_list(user["id"], items)}
+
+
+@router.post("/sync")
+async def sync_user_data(req: UserSyncRequest, user: dict = Depends(get_current_user)):
+    return db.sync_user_data(
+        user["id"], req.favorite_ids, req.history_ids,
+        [item.model_dump() for item in req.shopping_items],
+    )

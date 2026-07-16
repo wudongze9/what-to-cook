@@ -439,14 +439,30 @@ def record_audit_log(admin_id: int, action: str, target_type: str = "", target_i
         )
 
 
-def list_audit_logs(page: int = 1, page_size: int = 30) -> dict:
+def list_audit_logs(
+    page: int = 1, page_size: int = 30, keyword: str = "", action: str = "",
+) -> dict:
     offset = (page - 1) * page_size
+    clauses = []
+    params = []
+    if keyword:
+        clauses.append("(u.username LIKE ? OR l.detail LIKE ? OR l.target_id LIKE ?)")
+        like = f"%{keyword}%"
+        params.extend([like, like, like])
+    if action:
+        clauses.append("l.action = ?")
+        params.append(action)
+    where = "WHERE " + " AND ".join(clauses) if clauses else ""
     with get_conn() as conn:
-        total = conn.execute("SELECT COUNT(*) AS c FROM admin_audit_logs").fetchone()["c"]
+        total = conn.execute(
+            "SELECT COUNT(*) AS c FROM admin_audit_logs l "
+            f"LEFT JOIN users u ON u.id = l.admin_id {where}", params,
+        ).fetchone()["c"]
         rows = conn.execute(
             "SELECT l.*, u.username AS admin_username FROM admin_audit_logs l "
-            "LEFT JOIN users u ON u.id = l.admin_id ORDER BY l.id DESC LIMIT ? OFFSET ?",
-            (page_size, offset),
+            f"LEFT JOIN users u ON u.id = l.admin_id {where} "
+            "ORDER BY l.id DESC LIMIT ? OFFSET ?",
+            params + [page_size, offset],
         ).fetchall()
     return {"total": total, "page": page, "page_size": page_size, "logs": [dict(row) for row in rows]}
 
@@ -459,12 +475,29 @@ def get_admin_dashboard() -> dict:
         ).fetchone()
         dishes = conn.execute("SELECT COUNT(*) AS c FROM dishes").fetchone()["c"]
         videos = conn.execute("SELECT COUNT(*) AS c FROM dish_videos").fetchone()["c"]
+        playable_videos = conn.execute(
+            "SELECT COUNT(*) AS c FROM dish_videos WHERE playable_in_miniprogram = 1"
+        ).fetchone()["c"]
         favorites = conn.execute("SELECT COUNT(*) AS c FROM user_favorites").fetchone()["c"]
+        complete_dishes = conn.execute(
+            "SELECT COUNT(*) AS c FROM dishes d WHERE "
+            "COALESCE(NULLIF(d.cover, ''), NULLIF(d.image_url, '')) IS NOT NULL "
+            "AND EXISTS (SELECT 1 FROM dish_ingredients di WHERE di.dish_id = d.id) "
+            "AND EXISTS (SELECT 1 FROM dish_steps ds WHERE ds.dish_id = d.id)"
+        ).fetchone()["c"]
+        recent_rows = conn.execute(
+            "SELECT l.*, u.username AS admin_username FROM admin_audit_logs l "
+            "LEFT JOIN users u ON u.id = l.admin_id ORDER BY l.id DESC LIMIT 5"
+        ).fetchall()
     return {
         "users": users["total"] or 0,
         "admins": users["admins"] or 0,
         "disabled_users": users["disabled"] or 0,
         "dishes": dishes,
         "videos": videos,
+        "playable_videos": playable_videos,
         "favorites": favorites,
+        "complete_dishes": complete_dishes,
+        "incomplete_dishes": max(0, dishes - complete_dishes),
+        "recent_logs": [dict(row) for row in recent_rows],
     }

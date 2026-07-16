@@ -1,4 +1,4 @@
-const { login, register, wxLogin } = require('../../utils/api')
+const { login, register, wxLogin, syncUserData } = require('../../utils/api')
 const { setToken, setUserInfo } = require('../../utils/storage')
 
 Page({
@@ -79,6 +79,18 @@ Page({
     const app = getApp()
     app.globalData.token = resp.token
     app.globalData.userInfo = resp.user
+
+    const localData = {
+      favorites: wx.getStorageSync('favorites') || [],
+      history: wx.getStorageSync('dishHistory') || [],
+      shoppingItems: wx.getStorageSync('shoppingList') || []
+    }
+    syncUserData(localData).then((merged) => {
+      wx.setStorageSync('favorites', merged.favorites || [])
+      wx.setStorageSync('dishHistory', merged.history || [])
+      wx.setStorageSync('shoppingList', merged.shopping_items || [])
+      wx.removeStorageSync('syncPending')
+    }).catch(() => wx.setStorageSync('syncPending', true))
 
     wx.showToast({ title: resp.message || '成功', icon: 'success' })
 

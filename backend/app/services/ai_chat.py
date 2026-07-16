@@ -8,6 +8,7 @@ import json
 import random
 import logging
 from app.data.dishes import dishes
+from app.config import AI_PROVIDER, AI_API_BASE, AI_API_KEY, AI_MODEL, IS_PRODUCTION
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +31,8 @@ SYSTEM_PROMPT = """你是小厨娘，一位友好的中文烹饪助手。你的�
 - 如果用户问食材替换，给出常见的替换方案
 
 你内置了 100 道家常菜谱，包括家常菜、川菜、粤菜、湘菜、鲁菜、东北菜、海鲜、汤煲、主食等菜系。
-常见菜有：番茄炒蛋、麻婆豆腐、宫保鸡丁、红烧肉、鱼香肉丝、清蒸鲈鱼、白切鸡、回锅肉等。"""
+常见菜有：番茄炒蛋、麻婆豆腐、宫保鸡丁、红烧肉、鱼香肉丝、清蒸鲈鱼、白切鸡、回锅肉等。
+只回答烹饪、食材和厨房安全问题。涉及过敏、食物中毒或医疗问题时，明确建议停止食用并咨询专业人员，不作诊断。"""
 
 
 def _build_dish_summary():
@@ -118,36 +120,43 @@ def get_ai_reply(user_message: str) -> str:
 # ==================== Ollama 调用 ====================
 
 async def call_ai_api(user_message: str, context: list[dict] = None) -> str:
-    """调用本地 Ollama qwen3.5 模型，失败时降级到本地匹配"""
+    """Call the selected provider; production never disguises an upstream failure as AI output."""
+    if AI_PROVIDER == "rules":
+        return get_ai_reply(user_message)
     try:
         import httpx
     except ImportError:
         logger.warning("httpx 未安装，降级到本地匹配")
         return get_ai_reply(user_message)
 
+    is_openai = AI_PROVIDER == "openai_compatible"
+    url = AI_API_BASE if is_openai else OLLAMA_URL
     payload = {
-        "model": OLLAMA_MODEL,
+        "model": AI_MODEL if is_openai else OLLAMA_MODEL,
         "messages": _build_messages(user_message, context),
         "stream": False,
-        "think": False,  # 关闭 qwen3.5 思考模式，直接返回 content
-        "options": {
-            "temperature": 0.7,
-            "num_predict": 400,
-        }
     }
+    if is_openai:
+        payload.update({"temperature": 0.7, "max_tokens": 400})
+    else:
+        payload.update({"think": False, "options": {"temperature": 0.7, "num_predict": 400}})
+    headers = {"Authorization": f"Bearer {AI_API_KEY}"} if is_openai else {}
 
     try:
         async with httpx.AsyncClient(timeout=OLLAMA_TIMEOUT, trust_env=False) as client:
-            resp = await client.post(OLLAMA_URL, json=payload)
+            resp = await client.post(url, json=payload, headers=headers)
             resp.raise_for_status()
             data = resp.json()
-            content = data.get("message", {}).get("content", "").strip()
+            content = (data.get("choices", [{}])[0].get("message", {}).get("content", "")
+                       if is_openai else data.get("message", {}).get("content", "")).strip()
             if content:
                 return content
             logger.warning("Ollama 返回空 content，降级到本地匹配")
             return get_ai_reply(user_message)
     except Exception as e:
-        logger.warning(f"Ollama 调用失败：{e}，降级到本地匹配")
+        logger.warning("AI provider call failed: %s", e)
+        if IS_PRODUCTION:
+            raise RuntimeError("AI 服务暂时不可用，请稍后重试") from e
         return get_ai_reply(user_message)
 
 
@@ -158,7 +167,11 @@ def _split_reply(text: str, size: int = 8):
 
 
 async def stream_ai_reply(user_message: str, context: list[dict] = None):
-    """Yield reply text chunks from Ollama. Falls back to local chunks on failure."""
+    """Yield provider chunks. Local fallback is limited to non-production environments."""
+    if AI_PROVIDER == "rules":
+        for chunk in _split_reply(get_ai_reply(user_message)):
+            yield chunk
+        return
     try:
         import httpx
     except ImportError:
@@ -167,31 +180,44 @@ async def stream_ai_reply(user_message: str, context: list[dict] = None):
             yield chunk
         return
 
+    is_openai = AI_PROVIDER == "openai_compatible"
+    url = AI_API_BASE if is_openai else OLLAMA_URL
     payload = {
-        "model": OLLAMA_MODEL,
+        "model": AI_MODEL if is_openai else OLLAMA_MODEL,
         "messages": _build_messages(user_message, context),
         "stream": True,
-        "think": False,
-        "options": {
-            "temperature": 0.7,
-            "num_predict": 400,
-        }
     }
+    if is_openai:
+        payload.update({"temperature": 0.7, "max_tokens": 400})
+    else:
+        payload.update({"think": False, "options": {"temperature": 0.7, "num_predict": 400}})
+    headers = {"Authorization": f"Bearer {AI_API_KEY}"} if is_openai else {}
 
     try:
         async with httpx.AsyncClient(timeout=OLLAMA_TIMEOUT, trust_env=False) as client:
-            async with client.stream("POST", OLLAMA_URL, json=payload) as resp:
+            async with client.stream("POST", url, json=payload, headers=headers) as resp:
                 resp.raise_for_status()
                 async for line in resp.aiter_lines():
                     if not line:
                         continue
-                    data = json.loads(line)
-                    content = data.get("message", {}).get("content", "")
+                    if is_openai:
+                        if not line.startswith("data:"):
+                            continue
+                        raw = line[5:].strip()
+                        if raw == "[DONE]":
+                            break
+                        data = json.loads(raw)
+                        content = data.get("choices", [{}])[0].get("delta", {}).get("content", "")
+                    else:
+                        data = json.loads(line)
+                        content = data.get("message", {}).get("content", "")
                     if content:
                         yield content
-                    if data.get("done"):
+                    if not is_openai and data.get("done"):
                         break
     except Exception as e:
-        logger.warning(f"Ollama 流式调用失败：{e}，降级到本地匹配")
+        logger.warning("AI provider stream failed: %s", e)
+        if IS_PRODUCTION:
+            raise RuntimeError("AI 服务暂时不可用，请稍后重试") from e
         for chunk in _split_reply(get_ai_reply(user_message)):
             yield chunk

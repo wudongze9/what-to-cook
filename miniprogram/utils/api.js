@@ -6,6 +6,7 @@
 const runtime = require('../config/env')
 const BASE_URL = runtime.API_BASE_URL
 const USE_API = runtime.USE_API
+const DEMO_MODE = runtime.DEMO_MODE === true
 const REQUEST_TIMEOUT = runtime.REQUEST_TIMEOUT
 const STREAM_TIMEOUT = runtime.STREAM_TIMEOUT
 const { normalizeDish, normalizeDishList, normalizeShuffleResult } = require('./video-match')
@@ -23,6 +24,15 @@ function videoMatchesCategory(video, category) {
 
 function normalizeRequestError(error, url, statusCode) {
   if (error && error.detail) return error
+  if (error && error.error) {
+    return {
+      detail: error.error.message || '请求失败',
+      code: error.error.code,
+      requestId: error.error.request_id,
+      statusCode,
+      url: BASE_URL + url
+    }
+  }
   const message = (error && error.errMsg) || '网络请求失败，请稍后重试'
   return { detail: message, statusCode, url: BASE_URL + url, cause: error }
 }
@@ -57,7 +67,17 @@ function request(url, options = {}) {
           // token 失效，清除登录态
           const { removeToken } = require('./storage')
           removeToken()
+          try {
+            const app = getApp()
+            app.globalData.token = ''
+            app.globalData.userInfo = null
+          } catch (e) {}
           reject(Object.assign(normalizeRequestError(res.data, url, res.statusCode), { statusCode: res.statusCode }))
+        } else if (res.statusCode === 403) {
+          reject(Object.assign(normalizeRequestError(res.data, url, res.statusCode), {
+            statusCode: res.statusCode,
+            detail: (res.data && res.data.error && res.data.error.message) || '没有权限执行此操作'
+          }))
         } else {
           reject(Object.assign(normalizeRequestError(res.data, url, res.statusCode), { statusCode: res.statusCode }))
         }
@@ -468,12 +488,12 @@ function getSpiceLevels() {
 // ==================== 用户认证 ====================
 
 function register(username, password, nickname) {
-  return withFallback(
-    () => request('/auth/register', {
+  const apiCall = () => request('/auth/register', {
       method: 'POST',
       data: { username, password, nickname: nickname || '' }
-    }),
-    () => ({
+    })
+  if (!DEMO_MODE) return apiCall()
+  return withFallback(apiCall, () => ({
       token: 'mock-token-' + Date.now(),
       user: {
         id: 'local-' + username,
@@ -487,12 +507,12 @@ function register(username, password, nickname) {
 }
 
 function login(username, password) {
-  return withFallback(
-    () => request('/auth/login', {
+  const apiCall = () => request('/auth/login', {
       method: 'POST',
       data: { username, password }
-    }),
-    () => ({
+    })
+  if (!DEMO_MODE) return apiCall()
+  return withFallback(apiCall, () => ({
       token: 'mock-token-' + Date.now(),
       user: {
         id: 'local-' + username,
@@ -506,12 +526,12 @@ function login(username, password) {
 }
 
 function wxLogin(code, nickname, avatar) {
-  return withFallback(
-    () => request('/auth/wx-login', {
+  const apiCall = () => request('/auth/wx-login', {
       method: 'POST',
       data: { code, nickname: nickname || '', avatar: avatar || '' }
-    }),
-    () => ({
+    })
+  if (!DEMO_MODE) return apiCall()
+  return withFallback(apiCall, () => ({
       token: 'mock-wx-token-' + Date.now(),
       user: {
         id: 'wx-local',
@@ -623,6 +643,24 @@ function syncCloudShoppingList(items) {
   })
 }
 
+function syncUserData(data) {
+  const favorites = Array.isArray(data.favorites) ? data.favorites : []
+  const history = Array.isArray(data.history) ? data.history : []
+  const shopping = Array.isArray(data.shoppingItems) ? data.shoppingItems : []
+  return request('/user/sync', {
+    method: 'POST',
+    data: {
+      favorite_ids: favorites.map(item => Number(item.id)).filter(Number.isFinite),
+      history_ids: history.map(item => Number(item.id)).filter(Number.isFinite),
+      shopping_items: shopping.map(item => ({
+        id: String(item.id), name: item.name, amount: item.amount || '',
+        dish_id: String(item.dishId || 'manual'), dish_name: item.dishName || '手动添加',
+        checked: !!item.checked, updated_at: Number(item.updatedAt || 0)
+      }))
+    }
+  })
+}
+
 // ==================== 管理员 ====================
 
 function adminGetUsers(keyword, page, pageSize) {
@@ -686,6 +724,7 @@ module.exports = {
   clearMyHistory,
   getCloudShoppingList,
   syncCloudShoppingList,
+  syncUserData,
   adminGetUsers,
   adminToggleUserActive,
   adminSetUserAdmin,

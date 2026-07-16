@@ -1,5 +1,7 @@
 # 今天吃什么 / WhatToCook
 
+> MVP 加固、部署与发布进度见 [开发路线](docs/DEVELOPMENT_ROADMAP.md)、[部署说明](docs/DEPLOYMENT.md) 和 [发布检查表](docs/RELEASE_CHECKLIST.md)。
+
 <p align="center">
   <img src="docs/images/logo.png" width="128" alt="今天吃什么 Logo" />
 </p>
@@ -32,7 +34,7 @@
 | 视频教学 | 一菜多视频，支持小程序内 MP4/HLS 播放和第三方视频外链 |
 | AI 问答 | Ollama `qwen3.5:0.8b`、NDJSON 流式输出、停止生成、重试与 TTS |
 | 用户系统 | 账号注册登录、微信登录接口、资料、头像、收藏、历史与采购清单 |
-| 管理能力 | 当前小程序内提供用户管理；独立 Web 管理台正在建设 |
+| 管理能力 | 独立 Vue 管理台，支持运营概览、用户与角色、菜品、教学视频和审计日志管理 |
 | 离线降级 | 菜品和 AI 服务不可用时可切换本地 Mock，保证核心演示流程可用 |
 
 ## 技术架构
@@ -53,7 +55,7 @@ FastAPI + SQLite + JWT
 - 后端：Python 3.10+、FastAPI、Pydantic、PyJWT、bcrypt、httpx、edge-tts。
 - 数据：100 道菜、160 种食材、100 条教学视频、10 张 SQLite 表。
 - 深入文档：[PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md) 包含完整流程、数据结构与 API 清单。
-- 启动后可访问 Swagger：`http://localhost:8001/docs`。
+- 本地启动后可访问 Swagger：`http://127.0.0.1:8002/docs`。
 
 ## 快速开始
 
@@ -66,29 +68,41 @@ FastAPI + SQLite + JWT
 ### 2. 启动后端
 
 ```powershell
+Copy-Item .env.example .env
 cd backend
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-Copy-Item .env.example .env
 python migrate.py
-uvicorn main:app --reload --host 0.0.0.0 --port 8001
+uvicorn main:app --reload --host 127.0.0.1 --port 8002
 ```
 
 健康检查：
 
 ```powershell
-Invoke-RestMethod http://localhost:8001/api/health
+Invoke-RestMethod http://127.0.0.1:8002/api/health/ready
 ```
 
-### 3. 启动 Ollama（可选）
+### 3. 启动管理后台
+
+```powershell
+cd admin-web
+npm install
+npm run dev
+```
+
+管理后台固定使用 `http://127.0.0.1:5175/`，本地 API 默认为 `http://127.0.0.1:8002/api`。后端的 `CORS_ORIGINS` 必须包含管理后台的完整来源（协议、主机和端口）。
+
+本地管理员账号为 `admin`，当前开发密码为 `admin123`。该密码仅用于本地调试，生产环境必须设置强密码并及时更换。
+
+### 4. 启动 Ollama（可选）
 
 ```powershell
 ollama pull qwen3.5:0.8b
 ollama serve
 ```
 
-### 4. 运行小程序
+### 5. 运行小程序
 
 1. 在微信开发者工具中导入仓库根目录，不要只导入 `miniprogram/`。
 2. 确认 `project.config.json` 的 `miniprogramRoot` 为 `miniprogram/`。
@@ -100,11 +114,17 @@ ollama serve
 
 ### 后端环境变量
 
-从 `backend/.env.example` 创建本地 `.env`，生产环境应由部署平台注入变量。
+项目统一使用仓库根目录的 `.env`。从根目录 `.env.example` 复制后修改，后端、管理后台和 Docker Compose 会读取同一份配置；生产环境应由部署平台注入变量。
+
+```powershell
+Copy-Item .env.example .env
+```
 
 | 变量 | 默认/要求 | 说明 |
 | --- | --- | --- |
 | `APP_ENV` | `development` | `development`、`test` 或 `production` |
+| `ADMIN_HOST` / `ADMIN_PORT` | `127.0.0.1` / `5175` | 管理后台开发服务监听地址 |
+| `VITE_API_BASE_URL` | `http://127.0.0.1:8002/api` | 管理后台调用的 API 地址 |
 | `JWT_SECRET` | 开发环境可省略 | 生产环境必填，建议至少 32 字符随机值 |
 | `JWT_EXPIRE_HOURS` | `72` | 登录令牌有效期 |
 | `WX_APPID` | 空 | 正式微信登录必填 |
@@ -177,8 +197,9 @@ git diff --check
 
 ### P2：运营管理
 
-- [ ] 完成 `admin-web/` 独立管理台
-- [ ] 补齐菜品、食材、步骤、视频、AI 配置和审计日志管理
+- [x] 完成 `admin-web/` 独立管理台基础页面与统一视觉
+- [x] 补齐菜品、食材、步骤、视频、用户和审计日志基础管理
+- [ ] 补齐 AI 配置页面、细粒度角色权限和审计导出
 - [ ] 将生产数据库迁移到 PostgreSQL 或微信云开发数据库
 
 ## License

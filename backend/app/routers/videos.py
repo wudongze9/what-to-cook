@@ -1,13 +1,27 @@
-from fastapi import APIRouter, Query, Depends, HTTPException, Body
+from fastapi import APIRouter, Query, Depends, HTTPException, Body, File, UploadFile
 from app.data.videos import videos as legacy_videos, video_categories
 from app.database import (
     get_videos_by_dish, get_video_by_id, get_all_videos,
-    get_video_sources, add_dish_video, delete_dish_video
+    get_video_sources, add_dish_video, delete_dish_video, admin_list_videos
 )
 from app.deps import require_admin
 from app.services import auth_service
+from app.services.storage_service import save_bytes
 
 router = APIRouter()
+
+
+@router.post("/admin/upload")
+async def admin_upload_video(file: UploadFile = File(...), user: dict = Depends(require_admin)):
+    content_type = (file.content_type or "").lower()
+    if content_type != "video/mp4":
+        raise HTTPException(status_code=400, detail="当前仅支持 MP4 视频上传")
+    content = await file.read()
+    if not content or len(content) > 200 * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="视频不能为空且不能超过 200MB")
+    url = await save_bytes(content, folder="videos", owner=f"u{user['id']}", extension=".mp4", content_type=content_type)
+    auth_service.record_audit_log(user["id"], "upload_video", "video_file", "", url)
+    return {"url": url, "content_type": content_type, "size": len(content)}
 
 
 @router.get("/categories")
@@ -23,10 +37,24 @@ async def list_sources():
 
 
 @router.get("/all/list")
-async def list_all_videos(category: str = Query(None)):
+async def list_all_videos(
+    category: str = Query(None),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(50, ge=1, le=100),
+):
     """获取所有菜品教学视频（新版，可按菜系筛选）"""
     result = get_all_videos(category)
-    return {"videos": result, "total": len(result)}
+    start = (page - 1) * page_size
+    return {"videos": result[start:start + page_size], "total": len(result), "page": page, "page_size": page_size}
+
+
+@router.get("/admin/list")
+async def admin_video_list(
+    keyword: str = Query(""), source: str = Query(""),
+    page: int = Query(1, ge=1), page_size: int = Query(20, ge=1, le=100),
+    user: dict = Depends(require_admin),
+):
+    return admin_list_videos(keyword.strip(), source.strip(), page, page_size)
 
 
 @router.get("/dish/{dish_id}")

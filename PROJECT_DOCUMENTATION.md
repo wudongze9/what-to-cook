@@ -151,7 +151,7 @@ app.globalData.matchedDishes
 当前基础地址：
 
 ```js
-const BASE_URL = 'http://localhost:8001/api'
+const API_BASE_URL = 'http://127.0.0.1:8002/api'
 const USE_API = true
 ```
 
@@ -534,25 +534,38 @@ pip install -r requirements.txt
 启动服务：
 
 ```bash
-uvicorn main:app --reload --host 0.0.0.0 --port 8001
+uvicorn main:app --reload --host 127.0.0.1 --port 8002
 ```
 
 启动后可访问：
 
 ```txt
-http://localhost:8001/api/health
-http://localhost:8001/docs
+http://127.0.0.1:8002/api/health/live
+http://127.0.0.1:8002/api/health/ready
+http://127.0.0.1:8002/docs
 ```
+
+### 启动管理后台
+
+```bash
+cd admin-web
+npm install
+npm run dev
+```
+
+管理后台地址为 `http://127.0.0.1:5175/`，API 地址由 `VITE_API_BASE_URL` 配置，本地默认使用 `http://127.0.0.1:8002/api`。后端开发环境默认允许 `http://localhost:5175` 和 `http://127.0.0.1:5175` 跨域访问。
+
+本地调试管理员为 `admin / admin123`。禁止在测试或生产环境继续使用该密码。
 
 ### 启动小程序
 
 1. 打开微信开发者工具。
 2. 导入项目根目录 `what-to-cook`。
 3. 确认 `project.config.json` 中的 `miniprogramRoot` 为 `miniprogram/`。
-4. 确认后端已运行在 `http://localhost:8001`。
+4. 确认后端已运行在 `http://127.0.0.1:8002`。
 5. 编译运行。
 
-如果在真机调试，需要将 `miniprogram/utils/api.js` 中的 `BASE_URL` 改成局域网可访问地址或线上 HTTPS 地址，并在小程序后台配置 request 合法域名。
+如果在真机调试，需要修改 `miniprogram/config/env.js` 对应环境的 `API_BASE_URL`，使用局域网可访问地址或线上 HTTPS 地址，并在小程序后台配置 request 合法域名。
 
 ## 10. 当前状态与验证结果
 
@@ -574,7 +587,7 @@ http://localhost:8001/docs
 
 ## 11. 已知注意点
 
-1. `BASE_URL` 当前写死为 `http://localhost:8001/api`，适合本地开发，不适合真机或线上环境。
+1. 本地开发 API 为 `http://127.0.0.1:8002/api`；测试和生产地址由 `miniprogram/config/env.js` 管理，发布前必须替换示例域名。
 2. `USE_API = true` 时小程序默认调用后端，如果后端没有启动，请求会失败。
 3. `profile` 页面查看菜品详情时仍读取本地 mock 数据，建议改为后端接口，避免数据不一致。
 4. 视频数据中 `videoUrl` 目前为空，视频播放功能需要接入真实视频地址。
@@ -615,4 +628,3 @@ http://localhost:8001/docs
 - 增加收藏夹分类。
 - 增加“今天不想吃这个，换一个”的快速反馈。
 - 增加做菜计时器和步骤提醒。
-

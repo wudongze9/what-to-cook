@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
@@ -6,6 +7,11 @@ from contextlib import asynccontextmanager
 from app.routers import dishes, videos, chat, auth, admin, user_data
 from app.services import auth_service
 from app.config import CORS_ORIGINS
+from app.database import get_conn
+from app.http import (
+    RateLimitMiddleware, RequestContextMiddleware,
+    http_exception_handler, validation_exception_handler,
+)
 
 
 @asynccontextmanager
@@ -21,6 +27,10 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
+app.add_exception_handler(HTTPException, http_exception_handler)
+app.add_exception_handler(RequestValidationError, validation_exception_handler)
+app.add_middleware(RateLimitMiddleware)
+app.add_middleware(RequestContextMiddleware)
 
 UPLOAD_DIR = Path(__file__).resolve().parent / "static" / "uploads"
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
@@ -47,3 +57,15 @@ app.include_router(user_data.router, prefix="/api/user", tags=["用户数据"])
 @app.get("/api/health")
 async def health():
     return {"status": "ok", "service": "今天吃什么"}
+
+
+@app.get("/api/health/live")
+async def health_live():
+    return {"status": "ok"}
+
+
+@app.get("/api/health/ready")
+async def health_ready():
+    with get_conn() as conn:
+        conn.execute("SELECT 1").fetchone()
+    return {"status": "ok", "database": "ready"}

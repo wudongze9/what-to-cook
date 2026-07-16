@@ -1,9 +1,12 @@
 """
 数据访问层 - 封装所有 SQLite 数据库操作
 """
-import sqlite3
 import os
 import json
+from typing import Any
+from datetime import datetime
+from app.config import IS_POSTGRES
+from app.db_connection import get_connection, assert_schema_ready
 
 DB_PATH = os.environ.get(
     'DATABASE_PATH',
@@ -12,16 +15,27 @@ DB_PATH = os.environ.get(
 SCHEMA_PATH = os.path.join(os.path.dirname(__file__), 'data', 'schema.sql')
 
 
+def _timestamp_ms(value: Any) -> int:
+    if not value:
+        return 0
+    if isinstance(value, datetime):
+        return int(value.timestamp() * 1000)
+    try:
+        return int(__import__('time').mktime(__import__('time').strptime(str(value)[:19], '%Y-%m-%d %H:%M:%S'))) * 1000
+    except (TypeError, ValueError):
+        return 0
+
+
 def get_conn():
-    """获取数据库连接"""
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    conn.execute("PRAGMA foreign_keys = ON")
-    return conn
+    """Return a transaction-scoped SQLAlchemy-backed compatibility connection."""
+    return get_connection()
 
 
 def init_db():
     """初始化数据库（建表）"""
+    if IS_POSTGRES:
+        assert_schema_ready()
+        return
     with get_conn() as conn:
         with open(SCHEMA_PATH, 'r', encoding='utf-8') as f:
             conn.executescript(f.read())
@@ -119,13 +133,13 @@ def _format_dish(conn, row):
 
     # 食材列表（含用量 amount）
     ing_rows = conn.execute("""
-        SELECT i.name, di.amount FROM dish_ingredients di
+        SELECT i.id, i.name, di.amount, di.is_main FROM dish_ingredients di
         JOIN ingredients i ON di.ingredient_id = i.id
         WHERE di.dish_id = ?
         ORDER BY di.id
     """, (dish_id,)).fetchall()
     dish['ingredients'] = [
-        {'name': r['name'], 'amount': r['amount'] or ''}
+        {'id': r['id'], 'name': r['name'], 'amount': r['amount'] or '', 'is_main': bool(r['is_main'])}
         for r in ing_rows
     ]
 
@@ -353,9 +367,7 @@ def get_user_favorites(user_id: int) -> list[dict]:
                 'cover': r['cover'],
                 'cuisine': r['cuisine'],
                 'tags': r['tags'],
-                'timestamp': int(__import__('time').mktime(
-                    __import__('time').strptime(r['created_at'], '%Y-%m-%d %H:%M:%S')
-                )) * 1000 if r['created_at'] else 0,
+                'timestamp': _timestamp_ms(r['created_at']),
             }
             for r in rows
         ]
@@ -407,9 +419,7 @@ def get_user_history(user_id: int, limit: int = 50) -> list[dict]:
                 'cover': r['cover'],
                 'cuisine': r['cuisine'],
                 'tags': r['tags'],
-                'timestamp': int(__import__('time').mktime(
-                    __import__('time').strptime(r['created_at'], '%Y-%m-%d %H:%M:%S')
-                )) * 1000 if r['created_at'] else 0,
+                'timestamp': _timestamp_ms(r['created_at']),
             }
             for r in rows
         ]
@@ -432,7 +442,10 @@ def admin_list_dishes(keyword: str = "", page: int = 1, page_size: int = 20) -> 
             f"SELECT COUNT(*) AS c FROM dishes d {where}", params
         ).fetchone()["c"]
         rows = conn.execute(
-            f"SELECT d.*, c.name AS category_name FROM dishes d "
+            f"SELECT d.*, c.name AS category_name, "
+            "(SELECT COUNT(*) FROM dish_ingredients di WHERE di.dish_id = d.id) AS ingredient_count, "
+            "(SELECT COUNT(*) FROM dish_steps ds WHERE ds.dish_id = d.id) AS step_count "
+            "FROM dishes d "
             f"LEFT JOIN categories c ON c.id = d.category_id {where} "
             "ORDER BY d.id DESC LIMIT ? OFFSET ?",
             params + [page_size, offset],
@@ -475,6 +488,21 @@ def admin_delete_dish(dish_id: int) -> bool:
     return cursor.rowcount > 0
 
 
+def admin_dish_delete_impact(dish_id: int) -> dict | None:
+    with get_conn() as conn:
+        dish = conn.execute("SELECT id, name FROM dishes WHERE id = ?", (dish_id,)).fetchone()
+        if not dish:
+            return None
+        return {
+            "id": dish["id"], "name": dish["name"],
+            "ingredients": conn.execute("SELECT COUNT(*) AS c FROM dish_ingredients WHERE dish_id = ?", (dish_id,)).fetchone()["c"],
+            "steps": conn.execute("SELECT COUNT(*) AS c FROM dish_steps WHERE dish_id = ?", (dish_id,)).fetchone()["c"],
+            "videos": conn.execute("SELECT COUNT(*) AS c FROM dish_videos WHERE dish_id = ?", (dish_id,)).fetchone()["c"],
+            "favorites": conn.execute("SELECT COUNT(*) AS c FROM user_favorites WHERE dish_id = ?", (dish_id,)).fetchone()["c"],
+            "history": conn.execute("SELECT COUNT(*) AS c FROM user_history WHERE dish_id = ?", (dish_id,)).fetchone()["c"],
+        }
+
+
 def admin_replace_steps(dish_id: int, steps: list[dict]) -> list[dict]:
     with get_conn() as conn:
         conn.execute("DELETE FROM dish_steps WHERE dish_id = ?", (dish_id,))
@@ -483,6 +511,32 @@ def admin_replace_steps(dish_id: int, steps: list[dict]) -> list[dict]:
             [(dish_id, index + 1, step.get("title", "步骤"), step.get("description", ""), step.get("time", 0)) for index, step in enumerate(steps)],
         )
     return get_dish_steps(dish_id)
+
+
+def admin_replace_dish_ingredients(dish_id: int, ingredients: list[dict]) -> list[dict]:
+    with get_conn() as conn:
+        if not conn.execute("SELECT id FROM dishes WHERE id = ?", (dish_id,)).fetchone():
+            raise ValueError("菜品不存在")
+        valid_ids = {
+            row["id"] for row in conn.execute("SELECT id FROM ingredients").fetchall()
+        }
+        normalized = []
+        seen = set()
+        for item in ingredients:
+            ingredient_id = int(item.get("ingredient_id") or item.get("id") or 0)
+            if ingredient_id not in valid_ids:
+                raise ValueError(f"食材不存在：{ingredient_id}")
+            if ingredient_id in seen:
+                continue
+            seen.add(ingredient_id)
+            normalized.append((dish_id, ingredient_id, 1 if item.get("is_main") else 0, str(item.get("amount", "")).strip()))
+        conn.execute("DELETE FROM dish_ingredients WHERE dish_id = ?", (dish_id,))
+        conn.executemany(
+            "INSERT INTO dish_ingredients (dish_id, ingredient_id, is_main, amount) VALUES (?, ?, ?, ?)",
+            normalized,
+        )
+    detail = get_dish_detail(dish_id)
+    return (detail or {}).get("ingredients", [])
 
 
 def admin_save_ingredient(data: dict, ingredient_id: int | None = None) -> dict:
@@ -522,7 +576,7 @@ def get_user_shopping_list(user_id: int) -> list[dict]:
         {
             "id": row["id"], "name": row["name"], "amount": row["amount"],
             "dishId": row["dish_id"], "dishName": row["dish_name"],
-            "checked": bool(row["checked"]), "updatedAt": row["updated_at"],
+            "checked": bool(row["checked"]), "updatedAt": _timestamp_ms(row["updated_at"]),
         }
         for row in rows
     ]
@@ -543,9 +597,65 @@ def replace_user_shopping_list(user_id: int, items: list[dict]) -> list[dict]:
     return get_user_shopping_list(user_id)
 
 
+def sync_user_data(user_id: int, favorite_ids: list[int], history_ids: list[int], shopping_items: list[dict]) -> dict:
+    """Idempotently merge anonymous device data into the authenticated account."""
+    valid_ids: set[int] = set()
+    requested = {int(value) for value in favorite_ids + history_ids if str(value).isdigit()}
+    if requested:
+        placeholders = ",".join("?" for _ in requested)
+        with get_conn() as conn:
+            rows = conn.execute(f"SELECT id FROM dishes WHERE id IN ({placeholders})", tuple(requested)).fetchall()
+            valid_ids = {row["id"] for row in rows}
+
+    with get_conn() as conn:
+        for dish_id in favorite_ids:
+            if dish_id in valid_ids:
+                conn.execute(
+                    "INSERT OR IGNORE INTO user_favorites (user_id, dish_id) VALUES (?, ?)",
+                    (user_id, dish_id),
+                )
+        # One latest row per dish makes retries idempotent while retaining recency order.
+        for dish_id in reversed(history_ids[-50:]):
+            if dish_id not in valid_ids:
+                continue
+            conn.execute("DELETE FROM user_history WHERE user_id = ? AND dish_id = ?", (user_id, dish_id))
+            conn.execute("INSERT INTO user_history (user_id, dish_id) VALUES (?, ?)", (user_id, dish_id))
+        conn.execute(
+            "DELETE FROM user_history WHERE user_id = ? AND id NOT IN "
+            "(SELECT id FROM user_history WHERE user_id = ? ORDER BY id DESC LIMIT 50)",
+            (user_id, user_id),
+        )
+        for item in shopping_items:
+            existing = conn.execute(
+                "SELECT updated_at FROM user_shopping_items WHERE user_id = ? AND id = ?",
+                (user_id, item["id"]),
+            ).fetchone()
+            # Client millisecond timestamps represent explicit device edits and win over older server rows.
+            if existing and not item.get("updated_at"):
+                continue
+            conn.execute(
+                "DELETE FROM user_shopping_items WHERE user_id = ? AND id = ?",
+                (user_id, item["id"]),
+            )
+            conn.execute(
+                "INSERT INTO user_shopping_items "
+                "(id, user_id, name, amount, dish_id, dish_name, checked, updated_at) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now','localtime'))",
+                (item["id"], user_id, item["name"], item.get("amount", ""),
+                 item.get("dish_id", "manual"), item.get("dish_name", "手动添加"),
+                 1 if item.get("checked") else 0),
+            )
+
+    return {
+        "favorites": get_user_favorites(user_id),
+        "history": get_user_history(user_id, 50),
+        "shopping_items": get_user_shopping_list(user_id),
+    }
+
+
 # ==================== 菜品教学视频 ====================
 
-def _format_video(row: sqlite3.Row) -> dict:
+def _format_video(row: Any) -> dict:
     """格式化视频行 → 前端友好字典"""
     tags_raw = row["tags"] or "[]"
     try:
@@ -612,6 +722,32 @@ def get_all_videos(category: str | None = None) -> list[dict]:
         return [_format_video(r) for r in rows]
 
 
+def admin_list_videos(
+    keyword: str = "", source: str = "", page: int = 1, page_size: int = 20,
+) -> dict:
+    clauses = []
+    params: list[Any] = []
+    if keyword:
+        clauses.append("(title LIKE ? OR dish_name LIKE ? OR author LIKE ?)")
+        like = f"%{keyword}%"
+        params.extend([like, like, like])
+    if source:
+        clauses.append("source = ?")
+        params.append(source)
+    where = "WHERE " + " AND ".join(clauses) if clauses else ""
+    offset = (page - 1) * page_size
+    with get_conn() as conn:
+        total = conn.execute(f"SELECT COUNT(*) AS c FROM dish_videos {where}", params).fetchone()["c"]
+        rows = conn.execute(
+            f"SELECT * FROM dish_videos {where} ORDER BY dish_id DESC, id DESC LIMIT ? OFFSET ?",
+            params + [page_size, offset],
+        ).fetchall()
+    return {
+        "videos": [_format_video(row) for row in rows],
+        "total": total, "page": page, "page_size": page_size,
+    }
+
+
 def get_video_sources() -> list[str]:
     """获取所有视频来源平台"""
     with get_conn() as conn:
@@ -627,8 +763,9 @@ def add_dish_video(data: dict) -> dict:
     tags = data.get("tags", [])
     tags_json = json.dumps(tags, ensure_ascii=False) if tags else ""
     with get_conn() as conn:
+        conn.execute("DELETE FROM dish_videos WHERE id = ?", (vid,))
         conn.execute("""
-            INSERT OR REPLACE INTO dish_videos
+            INSERT INTO dish_videos
                 (id, dish_id, dish_name, title, category, tags, cover, duration,
                  source, author, external_url, video_url, playable_in_miniprogram, description)
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)

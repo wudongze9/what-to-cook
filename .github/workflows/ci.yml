@@ -1,0 +1,51 @@
+name: CI
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -r backend/requirements.txt
+      - run: python -m compileall -q backend
+      - run: python -m pytest backend/tests -q
+      - uses: actions/setup-node@v4
+        with: { node-version: "22", cache: npm, cache-dependency-path: admin-web/package-lock.json }
+      - run: node tests/miniprogram-smoke.js
+      - run: find miniprogram -name '*.js' -print0 | xargs -0 -n1 node --check
+      - run: npm ci
+        working-directory: admin-web
+      - run: npm run build
+        working-directory: admin-web
+      - run: git diff --check
+
+  postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: whattocook_test
+          POSTGRES_USER: whattocook
+          POSTGRES_PASSWORD: test-password
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U whattocook -d whattocook_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      APP_ENV: test
+      JWT_SECRET: test-secret-that-is-long-enough-for-repeatable-tests
+      DATABASE_URL: postgresql+psycopg://whattocook:test-password@127.0.0.1:5432/whattocook_test
+      CORS_ORIGINS: http://testserver
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -r backend/requirements.txt
+      - run: alembic upgrade head
+        working-directory: backend
+      - run: python -m pytest backend/tests -q

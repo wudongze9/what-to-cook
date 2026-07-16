@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8002/api',
   timeout: 12000,
 })
 
@@ -23,5 +23,5 @@ api.interceptors.response.use(
 )
 
 export function errorMessage(error: any) {
-  return error?.response?.data?.detail || error?.message || '请求失败，请稍后重试'
+  return error?.response?.data?.error?.message || error?.response?.data?.detail || error?.message || '请求失败，请稍后重试'
 }

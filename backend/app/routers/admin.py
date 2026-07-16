@@ -8,11 +8,12 @@
 """
 import secrets
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
 from app.deps import require_admin
 from app.services import auth_service
 from app import database as db
 from fastapi import Body
+from app.services.storage_service import save_bytes
 
 router = APIRouter()
 
@@ -26,9 +27,11 @@ async def dashboard(admin: dict = Depends(require_admin)):
 async def audit_logs(
     page: int = Query(1, ge=1),
     page_size: int = Query(30, ge=1, le=100),
+    keyword: str = Query(""),
+    action: str = Query(""),
     admin: dict = Depends(require_admin),
 ):
-    return auth_service.list_audit_logs(page, page_size)
+    return auth_service.list_audit_logs(page, page_size, keyword.strip(), action.strip())
 
 
 @router.get("/dishes")
@@ -37,6 +40,31 @@ async def admin_dishes(
     page_size: int = Query(20, ge=1, le=100), admin: dict = Depends(require_admin),
 ):
     return db.admin_list_dishes(keyword.strip(), page, page_size)
+
+
+@router.get("/dishes/{dish_id}")
+async def admin_dish_detail(dish_id: int, admin: dict = Depends(require_admin)):
+    dish = db.get_dish_detail(dish_id)
+    if not dish:
+        raise HTTPException(status_code=404, detail="菜品不存在")
+    return {"dish": dish}
+
+
+@router.post("/dish-images")
+async def upload_dish_image(file: UploadFile = File(...), admin: dict = Depends(require_admin)):
+    content_type = (file.content_type or "").lower()
+    extensions = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp"}
+    if content_type not in extensions:
+        raise HTTPException(status_code=400, detail="仅支持 JPG、PNG 或 WebP 图片")
+    content = await file.read()
+    if not content or len(content) > 8 * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="图片不能为空且不能超过 8MB")
+    url = await save_bytes(
+        content, folder="dishes", owner=f"u{admin['id']}",
+        extension=extensions[content_type], content_type=content_type,
+    )
+    auth_service.record_audit_log(admin["id"], "upload_dish_image", "dish_image", "", url)
+    return {"url": url}
 
 
 @router.post("/dishes")
@@ -67,11 +95,34 @@ async def delete_dish(dish_id: int, admin: dict = Depends(require_admin)):
     return {"message": "菜品已删除"}
 
 
+@router.get("/dishes/{dish_id}/delete-impact")
+async def dish_delete_impact(dish_id: int, admin: dict = Depends(require_admin)):
+    impact = db.admin_dish_delete_impact(dish_id)
+    if not impact:
+        raise HTTPException(status_code=404, detail="菜品不存在")
+    return {"impact": impact}
+
+
 @router.put("/dishes/{dish_id}/steps")
 async def replace_steps(dish_id: int, steps: list[dict] = Body(...), admin: dict = Depends(require_admin)):
     result = db.admin_replace_steps(dish_id, steps)
     auth_service.record_audit_log(admin["id"], "replace_steps", "dish", dish_id, f"count={len(steps)}")
     return result
+
+
+@router.put("/dishes/{dish_id}/ingredients")
+async def replace_dish_ingredients(
+    dish_id: int, ingredients: list[dict] = Body(...), admin: dict = Depends(require_admin),
+):
+    try:
+        result = db.admin_replace_dish_ingredients(dish_id, ingredients)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    auth_service.record_audit_log(
+        admin["id"], "replace_dish_ingredients", "dish", dish_id,
+        f"count={len(result)}",
+    )
+    return {"ingredients": result}
 
 
 @router.post("/ingredients")
@@ -158,6 +209,8 @@ async def toggle_user_admin(
 @router.put("/users/{user_id}/password")
 async def reset_password(user_id: int, admin: dict = Depends(require_admin)):
     """Generate a one-time temporary password for an account."""
+    if user_id == admin["id"]:
+        raise HTTPException(status_code=400, detail="请通过个人安全设置修改自己的密码")
     temporary_password = secrets.token_urlsafe(9)
     ok = auth_service.reset_user_password(user_id, temporary_password)
     if not ok:

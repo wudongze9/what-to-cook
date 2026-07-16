@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, HTTPException
 from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel
 from typing import Optional
@@ -79,6 +79,8 @@ async def text_to_speech(req: TTSRequest):
     前端拿到 filename 后，用 wx.createInnerAudioContext 播放：
       audio.src = BASE_URL + '/chat/tts-file/' + filename
     """
+    if len(req.text.strip()) > 500:
+        raise HTTPException(status_code=422, detail="语音文本不能超过 500 字")
     filename = await synthesize_speech(req.text)
     if filename:
         return {"success": True, "filename": filename, "url": f"/api/chat/tts-file/{filename}"}
@@ -92,5 +94,5 @@ async def get_tts_file(filename: str):
     safe_name = os.path.basename(filename)
     filepath = os.path.join(AUDIO_DIR, safe_name)
     if not os.path.exists(filepath):
-        return {"error": "文件不存在"}, 404
+        raise HTTPException(status_code=404, detail="文件不存在")
     return FileResponse(filepath, media_type="audio/mpeg", filename=safe_name)

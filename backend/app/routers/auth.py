@@ -8,17 +8,15 @@
 - PUT  /password     修改密码
 """
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
-from pathlib import Path
-import uuid
 from app.services import auth_service
 from app.deps import get_current_user
 from app.models.schemas import (
     RegisterRequest, LoginRequest, WxLoginRequest,
     UpdateProfileRequest, ChangePasswordRequest, UserPreferencesRequest, UserResponse,
 )
+from app.services.storage_service import save_bytes
 
 router = APIRouter()
-AVATAR_DIR = Path(__file__).resolve().parents[2] / "static" / "uploads" / "avatars"
 
 
 def _user_response(user: dict) -> dict:
@@ -110,10 +108,11 @@ async def change_password(
     user: dict = Depends(get_current_user),
 ):
     """修改密码"""
-    if not req.new_password or len(req.new_password) < 6:
+    minimum = 10 if user.get("is_admin") else 6
+    if not req.new_password or len(req.new_password) < minimum:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="新密码至少 6 位",
+            detail=f"新密码至少 {minimum} 位",
         )
     success = auth_service.change_password(
         user["id"], req.old_password, req.new_password,
@@ -123,6 +122,8 @@ async def change_password(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="原密码错误",
         )
+    if user.get("is_admin"):
+        auth_service.record_audit_log(user["id"], "change_own_password", "user", user["id"])
     return {"message": "密码修改成功"}
 
 
@@ -154,7 +155,9 @@ async def upload_avatar(
     content = await file.read()
     if len(content) > 2 * 1024 * 1024:
         raise HTTPException(status_code=400, detail="头像不能超过 2MB")
-    AVATAR_DIR.mkdir(parents=True, exist_ok=True)
-    filename = f"u{user['id']}-{uuid.uuid4().hex}{extensions[content_type]}"
-    (AVATAR_DIR / filename).write_bytes(content)
-    return {"avatar": f"/uploads/avatars/{filename}"}
+    avatar = await save_bytes(
+        content, folder="avatars", owner=f"u{user['id']}",
+        extension=extensions[content_type], content_type=content_type,
+    )
+    updated = auth_service.update_user_profile(user["id"], avatar=avatar)
+    return {"avatar": avatar, "user": _user_response(updated)}

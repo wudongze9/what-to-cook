@@ -19,6 +19,8 @@ miniprogram/package-lock.json
 admin-web/node_modules/
 admin-web/dist/
 admin-web/.env
+admin-web/tsconfig.tsbuildinfo
+admin-web/src/*.js
 
 # IDE
 .vscode/
@@ -48,9 +50,13 @@ Thumbs.db
 
 # TTS 音频缓存
 backend/static/audio/*.mp3
+backend/static/uploads/**
 
 # 微信开发者工具私有配置（含个人设置）
 project.private.config.json
 
 # 数据采集工作目录
 backend/app/data/raw/
+
+# 工具本地状态
+.codex/

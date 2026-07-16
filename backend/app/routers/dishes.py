@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, HTTPException
 from pydantic import BaseModel
 from typing import Optional
 from app import database as db
@@ -45,11 +45,28 @@ async def list_ingredient_types():
     return {"types": db.get_ingredient_types()}
 
 
+@router.get("/spice-levels")
+async def list_spice_levels():
+    """Return the stable filter values shared by API and Mini Program."""
+    return {"levels": [
+        {"key": "all", "name": "不限", "emoji": "🍳"},
+        {"key": "不辣", "name": "不辣", "emoji": "🚫"},
+        {"key": "微辣", "name": "微辣", "emoji": "🌶️"},
+        {"key": "中辣", "name": "中辣", "emoji": "🌶️🌶️"},
+        {"key": "特辣", "name": "特辣", "emoji": "🔥"},
+    ]}
+
+
 @router.get("")
-async def list_dishes(category: str = Query(None, description="筛选菜系")):
+async def list_dishes(
+    category: str = Query(None, description="筛选菜系"),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(50, ge=1, le=100),
+):
     """获取菜品列表，支持按菜系筛选"""
     result = db.get_dishes(category)
-    return {"dishes": result, "total": len(result)}
+    start = (page - 1) * page_size
+    return {"dishes": result[start:start + page_size], "total": len(result), "page": page, "page_size": page_size}
 
 
 @router.get("/random")
@@ -121,7 +138,7 @@ async def get_dish(dish_id: int):
     dish = db.get_dish_detail(dish_id)
     if dish:
         return {"dish": dish}
-    return {"error": "菜品不存在"}, 404
+    raise HTTPException(status_code=404, detail="菜品不存在")
 
 
 @router.get("/{dish_id}/steps")
@@ -130,4 +147,4 @@ async def get_dish_steps(dish_id: int):
     result = db.get_dish_steps(dish_id)
     if result:
         return result
-    return {"error": "菜品不存在"}, 404
+    raise HTTPException(status_code=404, detail="菜品不存在")
